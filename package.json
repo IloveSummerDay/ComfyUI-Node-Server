@@ -9,7 +9,7 @@
     "dev-stylize-local": "dotenvx run --env-file=.env -- nodemon index.js",
     "pack": "npx dotenvx run --env-file=.env.pack.prod -- node index.js",
     "dev-pack-local": "dotenvx run --env-file=.env.pack.dev -- nodemon index.js",
-    "dev-pack-docker": "npx dotenvx run --debug --env-file=/app/.env.pack.prod -- forever start -c 'node --harmony' -l /logs/access.log -e /logs/err.log -a /app/index.js",
+    "dev-pack-docker": "npx dotenvx run --debug --env-file=/app/.env.pack.prod -- forever start -c 'node --harmony' -l /logs/access.log -e /logs/err.log -a -w /app/index.js",
     "dev-pack-restart": "npx dotenvx run --debug --env-file=/app/.env.pack.prod -- forever restart -c 'node --harmony' -l /logs/access.log -e /logs/err.log -a /app/index.js"
   },
   "keywords": [],
