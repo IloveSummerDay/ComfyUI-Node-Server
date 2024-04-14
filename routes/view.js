@@ -50,7 +50,7 @@ router.get('/', (req, res) => {
         // return res.json({ "此次任务生成图列表": imgs_already })
         const imgs_online = await handleUpOSS(imgs_already, client_id)
         if (imgs_online.statusCode !== 200) return res.status(500).json(imgs_online)
-        return res.json(imgs_online)
+        // return res.json(imgs_online)
         // return oss images of the client in this prompt
         Object.keys(imgs_online.data).length == 0 ? (() => { return res.status(200).json(noImgInfo) })() :
             (() => { res.status(200).json(imgs_online); console.log('///// 预览图片成功'); })()
