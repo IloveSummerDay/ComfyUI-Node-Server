@@ -1,0 +1,172 @@
+{
+  "3": {
+    "inputs": {
+      "seed": 1111652618508813,
+      "steps": 14,
+      "cfg": 7,
+      "sampler_name": "dpmpp_2m_sde",
+      "scheduler": "karras",
+      "denoise": 0.56,
+      "model": [
+        "24",
+        0
+      ],
+      "positive": [
+        "6",
+        0
+      ],
+      "negative": [
+        "7",
+        0
+      ],
+      "latent_image": [
+        "12",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "K采样器"
+    }
+  },
+  "4": {
+    "inputs": {
+      "ckpt_name": "ghostxl_v10BakedVAE.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Checkpoint加载器(简易)"
+    }
+  },
+  "6": {
+    "inputs": {
+      "text": "(best quality),((masterpiece)),New Chinese Art style, paintings of human in front of a chinese dragon, detailed, highly-detailed, ultra-high resolutions, 8K resolutions, best quality, masterpiece,mineral color painting, Asian art style，ethereal，",
+      "clip": [
+        "24",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP文本编码器"
+    }
+  },
+  "7": {
+    "inputs": {
+      "text": [
+        "13",
+        0
+      ],
+      "clip": [
+        "24",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP文本编码器"
+    }
+  },
+  "8": {
+    "inputs": {
+      "samples": [
+        "3",
+        0
+      ],
+      "vae": [
+        "4",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE解码"
+    }
+  },
+  "9": {
+    "inputs": {
+      "filename_prefix": "GhostAnime",
+      "images": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "保存图像"
+    }
+  },
+  "10": {
+    "inputs": {
+      "image": "微信图片_20240308194455 (7).jpg",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "加载图像"
+    }
+  },
+  "11": {
+    "inputs": {
+      "pixels": [
+        "10",
+        0
+      ],
+      "vae": [
+        "4",
+        2
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE编码"
+    }
+  },
+  "12": {
+    "inputs": {
+      "upscale_method": "bicubic",
+      "width": 1000,
+      "height": 1200,
+      "crop": "center",
+      "samples": [
+        "11",
+        0
+      ]
+    },
+    "class_type": "LatentUpscale",
+    "_meta": {
+      "title": "Latent缩放"
+    }
+  },
+  "13": {
+    "inputs": {
+      "embedding": "negativeXL_D.safetensors",
+      "emphasis": 1,
+      "append": false,
+      "text": "(low quality, worst quality,NSFW:1.4),negativeXL_D,cgi,text,signature,watermark,extra limbs,"
+    },
+    "class_type": "EmbeddingPicker",
+    "_meta": {
+      "title": "Embedding Picker"
+    }
+  },
+  "24": {
+    "inputs": {
+      "lora_name": "CeCaiJiaQiangV1.safetensors",
+      "strength_model": 0.7000000000000001,
+      "strength_clip": 0.7000000000000001,
+      "model": [
+        "4",
+        0
+      ],
+      "clip": [
+        "4",
+        1
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "LoRA加载器"
+    }
+  }
+}

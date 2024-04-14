@@ -1,0 +1,36 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "stylize": "npx dotenvx run --env-file=.env -- node index.js",
+    "dev-stylize-local": "dotenvx run --env-file=.env -- nodemon index.js",
+    "pack": "npx dotenvx run --env-file=.env.pack.prod -- node index.js",
+    "dev-pack-local": "dotenvx run --env-file=.env.pack.dev -- nodemon index.js",
+    "dev-pack-docker": "npx dotenvx run --debug --env-file=/app/.env.pack.prod -- forever start -c 'node --harmony' -l /logs/access.log -e /logs/err.log -a /app/index.js",
+    "dev-pack-restart": "npx dotenvx run --debug --env-file=/app/.env.pack.prod -- forever restart -c 'node --harmony' -l /logs/access.log -e /logs/err.log -a /app/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@dotenvx/dotenvx": "^0.32.0",
+    "axios": "^1.6.7",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.3",
+    "file-type": "^19.0.0",
+    "forever": "^4.0.3",
+    "form-data": "^4.0.0",
+    "http": "^0.0.1-security",
+    "https": "^1.0.0",
+    "mime-types": "^2.1.35",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.9.4",
+    "nodemon": "^3.1.0",
+    "ws": "^8.16.0"
+  }
+}
