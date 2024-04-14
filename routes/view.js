@@ -86,7 +86,7 @@ async function handleUpOSS(imgs_already, client_id) {
             clientId: client_id
         })
     })
-    // console.log("OSS result: ", result.data);
+    // console.log("OSS result: \n", result.data);
 
     if (result.data.statusCode !== 200) return { ...errInfo, ...result.data, message: '服务器请求OSS存储出错' }
     for (let i = 0; i < fileNames.length; i++) {
