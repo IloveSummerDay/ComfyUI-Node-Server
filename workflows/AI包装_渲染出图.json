@@ -1,0 +1,201 @@
+{
+  "3": {
+    "inputs": {
+      "seed": 156680208700286,
+      "steps": 20,
+      "cfg": 14,
+      "sampler_name": "dpm_adaptive",
+      "scheduler": "normal",
+      "denoise": 0.6900000000000001,
+      "model": ["4", 0],
+      "positive": ["18", 0],
+      "negative": ["22", 0],
+      "latent_image": ["14", 0]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "render"
+    }
+  },
+  "4": {
+    "inputs": {
+      "ckpt_name": "realisticVisionV60B1_v51VAE.ckpt",
+      "+": null
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "style"
+    }
+  },
+  "8": {
+    "inputs": {
+      "samples": ["3", 0],
+      "vae": ["4", 2]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "9": {
+    "inputs": {
+      "filename_prefix": "Mizune",
+      "images": ["42", 0]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Output the effect diagram"
+    }
+  },
+  "10": {
+    "inputs": {
+      "from_translate": "auto",
+      "to_translate": "english",
+      "add_proxies": "disable",
+      "proxies": "",
+      "auth_data": "",
+      "service": "GoogleTranslator [free]",
+      "text": "薯片",
+      "Show proxy": "proxy_hide",
+      "Show authorization": "authorization_hide",
+      "clip": ["4", 1]
+    },
+    "class_type": "DeepTranslatorCLIPTextEncodeNode",
+    "_meta": {
+      "title": "Product description"
+    }
+  },
+  "11": {
+    "inputs": {
+      "text": ["10", 1]
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "Show Text 🐍"
+    }
+  },
+  "13": {
+    "inputs": {
+      "upscale_method": "nearest-exact",
+      "width": 512,
+      "height": 512,
+      "crop": "disabled",
+      "image": ["30", 0]
+    },
+    "class_type": "ImageScale",
+    "_meta": {
+      "title": "Upscale Image"
+    }
+  },
+  "14": {
+    "inputs": {
+      "pixels": ["13", 0],
+      "vae": ["4", 2]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "VAE Encode"
+    }
+  },
+  "17": {
+    "inputs": {
+      "text": "(Masterpiece, high quality, best quality),Packaging",
+      "clip": ["4", 1]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "18": {
+    "inputs": {
+      "conditioning_1": ["10", 0],
+      "conditioning_2": ["17", 0]
+    },
+    "class_type": "ConditioningCombine",
+    "_meta": {
+      "title": "Conditioning (Combine)"
+    }
+  },
+  "19": {
+    "inputs": {
+      "from_translate": "auto",
+      "to_translate": "english",
+      "add_proxies": "disable",
+      "proxies": "",
+      "auth_data": "",
+      "service": "GoogleTranslator [free]",
+      "text": "",
+      "Show proxy": "proxy_hide",
+      "Show authorization": "authorization_hide",
+      "clip": ["4", 1]
+    },
+    "class_type": "DeepTranslatorCLIPTextEncodeNode",
+    "_meta": {
+      "title": "Product avoidance"
+    }
+  },
+  "20": {
+    "inputs": {
+      "text": ["19", 1]
+    },
+    "class_type": "ShowText|pysssss",
+    "_meta": {
+      "title": "Show Text 🐍"
+    }
+  },
+  "21": {
+    "inputs": {
+      "text": "low quality,blurry_background,monotonous\nBlurry,Pixelated,Grainy,Fuzzy,Distorted,Low-resolution,Hazy,Muddy,Unfocused,Jagged,Noisy,Washed out,Overexposed,\nUnderexposed,Dull,Poorly defined,Ghosting,Artifacts,Vignetting,Color distortion,Discolored,\nUneven lighting,Smudged,Chromatic aberration,Flare,Compression artifacts,Banding,Off-center,NSFW,(worst quality:2),(low quality:2),(normal quality:2),normal quality,\n",
+      "clip": ["4", 1]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "22": {
+    "inputs": {
+      "conditioning_1": ["19", 0],
+      "conditioning_2": ["21", 0]
+    },
+    "class_type": "ConditioningCombine",
+    "_meta": {
+      "title": "Conditioning (Combine)"
+    }
+  },
+  "30": {
+    "inputs": {
+      "rem_mode": "RMBG-1.4",
+      "image_output": "Preview",
+      "save_prefix": "ComfyUI",
+      "images": ["35", 0]
+    },
+    "class_type": "easy imageRemBg",
+    "_meta": {
+      "title": "Image Remove Bg"
+    }
+  },
+  "35": {
+    "inputs": {
+      "image": "revAnimated_v122EOL-水瓶.png",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Product Image"
+    }
+  },
+  "42": {
+    "inputs": {
+      "rem_mode": "RMBG-1.4",
+      "image_output": "Preview",
+      "save_prefix": "ComfyUI",
+      "images": ["8", 0]
+    },
+    "class_type": "easy imageRemBg",
+    "_meta": {
+      "title": "Image Remove Bg"
+    }
+  }
+}

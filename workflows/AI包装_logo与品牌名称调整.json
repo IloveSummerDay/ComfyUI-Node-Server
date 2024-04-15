@@ -37,16 +37,6 @@
       "title": "VAE Decode"
     }
   },
-  "9": {
-    "inputs": {
-      "filename_prefix": "ComfyUI",
-      "images": ["8", 0]
-    },
-    "class_type": "SaveImage",
-    "_meta": {
-      "title": "Output the effect diagram"
-    }
-  },
   "10": {
     "inputs": {
       "from_translate": "auto",
@@ -55,14 +45,14 @@
       "proxies": "",
       "auth_data": "",
       "service": "GoogleTranslator [free]",
-      "text": "蛋糕盒包装，包装精美，浪漫，设计简洁独特，色彩鲜艳，密封完美，",
+      "text": "",
       "Show proxy": "proxy_hide",
       "Show authorization": "authorization_hide",
       "clip": ["4", 1]
     },
     "class_type": "DeepTranslatorCLIPTextEncodeNode",
     "_meta": {
-      "title": "Product description"
+      "title": "Deep Translator CLIP Text Encode Node"
     }
   },
   "11": {
@@ -166,7 +156,7 @@
   },
   "27": {
     "inputs": {
-      "text": "蛋糕盒",
+      "text": "1蛋糕盒",
       "font_file": "汉仪雅酷黑75W.ttf",
       "spacing": -500,
       "leading": 0,
@@ -174,10 +164,10 @@
       "vertical_border": 20,
       "scale": 30,
       "variation_range": 0,
-      "variation_seed": 1712477536,
+      "variation_seed": 1712477570,
       "layout": "horizontal",
-      "width": 1024,
-      "height": 1024,
+      "width": 1043,
+      "height": 1061,
       "text_color": "#000000",
       "background_color": "#FFFFFF"
     },
@@ -197,12 +187,12 @@
   },
   "29": {
     "inputs": {
-      "image": "logo-test (3).jfif",
+      "image": "LOGO1.png",
       "upload": "image"
     },
     "class_type": "LoadImage",
     "_meta": {
-      "title": "load logo"
+      "title": "logo Image"
     }
   },
   "30": {
@@ -236,7 +226,7 @@
     },
     "class_type": "LayerUtility: ImageBlendAdvance",
     "_meta": {
-      "title": "LayerUtility: ImageBlendAdvance"
+      "title": "text transform scale"
     }
   },
   "32": {
@@ -284,17 +274,17 @@
     },
     "class_type": "LayerUtility: ImageBlendAdvance",
     "_meta": {
-      "title": "LayerUtility: ImageBlendAdvance"
+      "title": "logo transform scale"
     }
   },
   "35": {
     "inputs": {
-      "image": "手提纸盒 (1).png",
+      "image": "majicmixRealistic_v4-单扣手提盒.png",
       "upload": "image"
     },
     "class_type": "LoadImage",
     "_meta": {
-      "title": "Load packaging"
+      "title": "Product Image"
     }
   },
   "36": {
@@ -329,15 +319,6 @@
       "title": "Constrain Image 🐍"
     }
   },
-  "40": {
-    "inputs": {
-      "images": ["33", 0]
-    },
-    "class_type": "PreviewImage",
-    "_meta": {
-      "title": "Preview Image"
-    }
-  },
   "41": {
     "inputs": {
       "filename_prefix": "ComfyUI",
@@ -345,7 +326,28 @@
     },
     "class_type": "SaveImage",
     "_meta": {
-      "title": "Save Image"
+      "title": "Preview production drawing"
+    }
+  },
+  "42": {
+    "inputs": {
+      "rem_mode": "RMBG-1.4",
+      "image_output": "Preview",
+      "save_prefix": "ComfyUI",
+      "images": ["8", 0]
+    },
+    "class_type": "easy imageRemBg",
+    "_meta": {
+      "title": "Image Remove Bg"
+    }
+  },
+  "43": {
+    "inputs": {
+      "images": ["42", 0]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
     }
   }
 }

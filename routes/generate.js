@@ -126,32 +126,32 @@ router.post('/',
              * - 单张接受图片；
              * - 重命图片后缀+1进行存储
              */
-            uploadImgsName.length == 0 ? next() :
-                uploadImgsName.map(async (name, index) => {
-                    let imgsFormData = new FormData()
-                    imgsFormData.append(
-                        "image",
-                        fs.createReadStream(path.join(__dirname, '../uploads', name))
-                    )
-                    await axios({
-                        url: `${process.env.AIGC_BASE_URL}/upload/image`,
-                        method: 'post',
-                        headers: {
-                            'Content-Type': 'multipart/form-data',
-                        },
-                        data: imgsFormData
-                    }).then(resp => {
-                        index == uploadImgsName.length - 1 ? next() : null
+            if (uploadImgsName.length == 0) next()
+            uploadImgsName.map(async (name, index) => {
+                let imgsFormData = new FormData()
+                imgsFormData.append(
+                    "image",
+                    fs.createReadStream(path.join(__dirname, '../uploads', name))
+                )
+                await axios({
+                    url: `${process.env.AIGC_BASE_URL}/upload/image`,
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                    data: imgsFormData
+                }).then(resp => {
+                    index == uploadImgsName.length - 1 ? next() : null
 
-                    }).catch(err => {
-                        console.log('///算力服务端文件下载失败');
-                        return res.status(500).send({
-                            api: req.originalUrl,
-                            method: req.method,
-                            message: '算力服务端文件下载失败，请重试',
-                        })
+                }).catch(err => {
+                    console.log('///算力服务端文件下载失败');
+                    next({
+                        api: req.originalUrl,
+                        method: req.method,
+                        message: '算力服务端文件下载失败，请重试',
                     })
                 })
+            })
         } catch (error) {
             next({
                 api: req.originalUrl,

@@ -7,7 +7,7 @@
  * @desc 产品线 —— 后端请求接口时需要在请求体中携带此字段以区分产品线
  * @var products 产品线名称
  */
-const products = ['logo', 'poster', 'pack']
+const products = ['logo', 'poster', 'pack_logo_brand_adjust', 'pack_render']
 
 
 /**
@@ -20,12 +20,15 @@ const multerField = [
     { name: 'logoReference', maxCount: 1 }, // Logo
     { name: 'packageRef', maxCount: 1 }, // pack
     { name: 'logoRef', maxCount: 1 }, // pack
+    { name: 'productRef', maxCount: 1 }, // pack
 ]
 
 /**
  * @desc 海报产品线
- * @var poster_ImageVarToModelArgs 自定义图片变量名 => model参数名
- * @var poster_ModelArgsToTextVarArgs model参数名 => 自定义文本变量名
+ * @attation poster_ModelArgsToTypeArgs 内前面全是文本字段参数，文件名字段参数放在后面
+ * @var poster_ModelArgsToTypeArgs model工作流结点 .mets.title => 自定义图片变量名
+ * @var poster_ModelArgsToTextVarArgs model工作流结点 .mets.title => 自定义文本变量名
+ * @var poster_ImageVarToModelArgs 自定义图片变量名 => model工作流结点 .mets.title
  */
 const poster_ModelArgsToTypeArgs = [
     { key: 'TitleTextInput', value: 'text' },
@@ -45,8 +48,10 @@ const poster_ImageVarToModelArgs = [
 
 /**
  * @desc Logo产品线
- * @var logo_ImageVarToModelArgs 自定义图片变量名 => model参数名
- * @var logo_ModelArgsToTextVarArgs model参数名 => 自定义文本变量名
+ * @attation logo_ModelArgsToTypeArgs 内前面全是文本字段参数，文件名字段参数放在后面
+ * @var logo_ModelArgsToTypeArgs model工作流结点 .mets.title => 自定义图片变量名
+ * @var logo_ModelArgsToTextVarArgs model工作流结点 .mets.title => 自定义文本变量名
+ * @var logo_ImageVarToModelArgs 自定义图片变量名 => model工作流结点 .mets.title
  */
 const logo_ModelArgsToTypeArgs = [
     { key: 'TextInput', value: 'text' },
@@ -66,34 +71,68 @@ const logo_ImageVarToModelArgs = [
 
 
 /**
- * @desc pack产品线
- * @var pack_ImageVarToModelArgs 自定义图片变量名 => model参数名
- * @var pack_ModelArgsToTextVarArgs model参数名 => 自定义文本变量名
+ * @desc pack_logo_brand_adjust - AI包装-logo与品牌名称调整 - 产品线
+ * @attation pack_logo_brand_adjust_ModelArgsToTypeArgs 内前面全是文本字段参数，文件名字段参数放在后面
+ * @var pack_logo_brand_adjust_ModelArgsToTypeArgs model工作流结点 .mets.title => 自定义图片变量名
+ * @var pack_logo_brand_adjust_ModelArgsToTextVarArgs model工作流结点 .mets.title => 自定义文本变量名
+ * @var pack_logo_brand_adjust_ImageVarToModelArgs 自定义图片变量名 => model工作流结点 .mets.title
  */
-const pack_ModelArgsToTypeArgs = [
-    { key: 'Product description', value: 'from_translate' }, // 指定翻译起始语言，默认为自动检测
-    { key: "Product description", value: 'to_translate' }, // 指定翻译目标语言，默认为英语
-    { key: "Product description", value: 'text' }, // 提供给模型的文本内容
+const pack_logo_brand_adjust_ModelArgsToTypeArgs = [
+    { key: "text transform scale", value: 'x_percent' }, // text调整位置x
+    { key: "text transform scale", value: 'y_percent' }, // text调整位置y
+    { key: "logo transform scale", value: 'x_percent' }, // logo调整位置x
+    { key: "logo transform scale", value: 'y_percent' }, // logo调整位置y
+    { key: "logo transform scale", value: 'scale' }, // logo调整大小
     { key: "Brand name", value: 'text' }, // 生成图像中的文本内容
     { key: "Brand name", value: 'font_file' }, // 用于生成图像的字体文件
     { key: "Brand name", value: 'spacing' }, // -500 文本布局的其他细节，如字间距、行间距、边界、缩放、颜色等
-    { key: "Load packaging", value: 'image' }, // 指定加载图像的文件名
-    { key: "load logo", value: 'image' }, // 指定加载图像的文件名
+    { key: "Brand name", value: 'scale' }, // 字体大小
+    { key: "Product Image", value: 'image' }, // 载入包装图片文件名
+    { key: "load logo", value: 'image' }, // 载入logo图片文件名
 ]
 
-const pack_ModelArgsToTextVarArgs = [
-    { key: 'Product description', value: 'from_translate' }, // 指定翻译起始语言，默认为自动检测
-    { key: "Product description", value: 'to_translate' }, // 指定翻译目标语言，默认为英语
-    { key: "Product description", value: 'packKeys' }, // 提供给模型的文本内容
+const pack_logo_brand_adjust_ModelArgsToTextVarArgs = [
+    { key: "text transform scale", value: 'text_x_percent' }, // text调整位置x
+    { key: "text transform scale", value: 'text_y_percent' }, // text调整位置x
+    { key: "logo transform scale", value: 'logo_x_percent' }, // logo调整位置x
+    { key: "logo transform scale", value: 'logo_y_percent' }, // logo调整位置y
+    { key: "logo transform scale", value: 'logo_scale' }, // logo调整大小
     { key: "Brand name", value: 'text' }, // 生成图像中的文本内容
-    { key: "Brand name", value: 'font_file' }, // 用于生成图像的字体文件，文件字体存于模型服务器
+    { key: "Brand name", value: 'font_file' }, // 用于生成图像的字体文件
     { key: "Brand name", value: 'spacing' }, // -500 文本布局的其他细节，如字间距、行间距、边界、缩放、颜色等
+    { key: "Brand name", value: 'brand_scale' }, // 品牌名称字体大小
 ]
-const pack_ImageVarToModelArgs = [
-    { key: "packageRef", value: 'Load packaging' }, // 包装参考图
+const pack_logo_brand_adjust_ImageVarToModelArgs = [
+    { key: "packageRef", value: 'Product Image' }, // 包装参考图
     { key: "logoRef", value: 'load logo' }, // Logo参考图
 ]
 
+/**
+ * @desc pack_render - AI包装-渲染出图 - 产品线
+ * @attation pack_render_ModelArgsToTypeArgs 内前面全是文本字段参数，文件名字段参数放在后面
+ * @var pack_render_ModelArgsToTypeArgs model工作流结点 .mets.title => 自定义图片变量名
+ * @var pack_render_ModelArgsToTextVarArgs model工作流结点 .mets.title => 自定义文本变量名
+ * @var pack_render_ImageVarToModelArgs 自定义图片变量名 => model工作流结点 .mets.title
+ */
+const pack_render_ModelArgsToTypeArgs = [
+    { key: "render", value: 'steps' }, // 渲染步数
+    { key: "render", value: 'cfg' }, // 渲染深度
+    { key: "render", value: 'denoise' }, // 渲染降噪
+    { key: "Product description", value: 'text' }, // 产品描述
+    { key: "style", value: 'ckpt_name' }, // 风格选择
+    { key: "Product Image", value: 'image' }, // 载入产品图文件名
+]
+
+const pack_render_ModelArgsToTextVarArgs = [
+    { key: "render", value: 'steps' }, // 渲染步数
+    { key: "render", value: 'deep' }, // 渲染深度
+    { key: "render", value: 'denoise' }, // 渲染降噪
+    { key: "Product description", value: 'productDesc' }, // 产品描述
+    { key: "style", value: 'style' }, // 风格选择
+]
+const pack_render_ImageVarToModelArgs = [
+    { key: "productRef", value: 'Product Image' }, // 产品参考图
+]
 
 module.exports = {
     multerField,
@@ -106,7 +145,11 @@ module.exports = {
     logo_ImageVarToModelArgs,
     logo_ModelArgsToTextVarArgs,
 
-    pack_ModelArgsToTypeArgs,
-    pack_ModelArgsToTextVarArgs,
-    pack_ImageVarToModelArgs
+    pack_logo_brand_adjust_ModelArgsToTypeArgs,
+    pack_logo_brand_adjust_ImageVarToModelArgs,
+    pack_logo_brand_adjust_ModelArgsToTextVarArgs,
+
+    pack_render_ModelArgsToTypeArgs,
+    pack_render_ImageVarToModelArgs,
+    pack_render_ModelArgsToTextVarArgs,
 }

@@ -14,16 +14,20 @@ const viewRouter = require('./routes/view');
 const deleteossRouter = require('./routes/deleteoss');
 const stylizeRouter = require('./routes/stylize');
 const generateRouter = require('./routes/generate');
+const useradminRouter = require('./routes/useradmin');
+const ossadminRouter = require('./routes/ossadmin-test');
 // init config
 const app = express();
 const port = process.env.PORT;
 
 // middware
-app.use(cors({
-    origin: '*'
-}))
+app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+
+// 用户管理
+app.use('/', useradminRouter)
+app.use('/', ossadminRouter)
 
 // upload + prompt
 app.use('/stylize', stylizeRouter)
@@ -58,7 +62,7 @@ app.use((err, req, res, next) => {
      */
     res.status(500).send({
         ...err,
-        error: err.error.message, // 覆盖 err 里的 error 原始对象。使用原始 error 对象的 message 查看具体错误信息
+        _sys_error: err.error ? err.error.message : '', // 覆盖 err 里的 error 原始对象。使用原始 error 对象的 message 查看具体错误信息
         _desc: '这是一个全局兜底的错误处理中间件 - END'
     });
 });

@@ -1,45 +1,120 @@
-const mysql = require('mysql2');
-
-async function setUsers() {
-    const connection = mysql.createConnection({
-        host: process.env.MYSQL_URL,
-        user: process.env.MYSQL_USER,
-        database: process.env.MYSQL_DATABASE,
-        password: process.env.MYSQL_PASSWORD,
-        port: process.env.MYSQL_PORT
-
-    });
-
-    // SQL预处理
-    // execute 将在内部调用 prepare 和 query
-    connection.execute(
-        ' INSERT INTO users (client, pw) VALUES (? , ? , ?) ',
-        ['client1', 'pw1'],
-        function (err, results, fields) {
-            console.log("results", results); // 结果集
-            console.log("fields", fields); // 额外的元数据（如果有的话）
-        }
-    );
+/**
+ * @desc user.js
+ * @var schema 代表数据库中的一个特定部分或命名空间，如表、视图、存储过程等。
+ * - 默认情况下，schema 的概念与数据库的名称相同.
+ * - 在某些情况下，它可以代表数据库中的一个特定部分或命名空间.
+ */
+const mysqlx = require('@mysql/xdevapi');
+const registeredInfo = {
+    statusCode: 201,
+    message: '该用户已存在'
 }
-async function getUsers() {
-    const connection = mysql.createConnection({
-        host: process.env.MYSQL_URL,
-        user: process.env.MYSQL_USER,
-        database: process.env.MYSQL_DATABASE,
-        password: process.env.MYSQL_PASSWORD,
-        port: process.env.MYSQL_PORT
+const registereSuccessInfo = {
+    statusCode: 200,
+    message: '注册成功'
+}
+const loginInErrorInfo = {
+    statusCode: 201,
+    message: '用户名或密码错误'
+}
+const loginInSuccessInfo = {
+    statusCode: 200,
+    message: '登录成功'
+}
+const connectErrorInfo = {
+    statusCode: 500,
+    message: '数据库AIpack users连接失败'
+}
+const config = {
+    user: process.env.MYSQL_USER,
+    host: process.env.MYSQL_URL,
+    port: process.env.MYSQL_PORT,
+    password: process.env.MYSQL_PASSWORD
+}
+const dbTable = 'users'
 
-    });
-    // SQL预处理
-    // execute 将在内部调用 prepare 和 query
-    connection.execute(
-        'SELECT * FROM `users` WHERE `client` = ? ',
-        ['zl'],
-        function (err, results, fields) {
-            console.log("results", results); // 结果集
-            console.log("fields", fields); // 额外的元数据（如果有的话）
-        }
-    );
+// 注册
+async function setUsers(client, pw) {
+    return mysqlx.getSession(config).then(async (session) => {
+        // console.log('///查询中', process.en`v.MYSQL_DATABASE, dbTable);
+
+        let resInfo
+        const table = session.getSchema(process.env.MYSQL_DATABASE).getTable(dbTable);
+        return table.select(['client'])
+            .where('client = :client')
+            .bind('client', client)
+            .execute()
+            .then(res => {
+                return res.fetchAll()
+            })
+            .then((res) => {
+                // console.log(res, res.length);
+                if (res.length > 0) {
+                    resInfo = registeredInfo
+                }
+                else {
+                    // possible err: Duplicate entry 'client_test' for key 'users.PRIMARY
+                    return table.insert(['client', 'pw'])
+                        .values([client, pw])
+                        // .values([client, pw]) // 插入多条数据
+                        // .values([client, pw])
+                        .execute()
+                        .then(() => {
+                            resInfo = registereSuccessInfo
+                        })
+                }
+            })
+            // // 查看全部用户信息
+            // .then(() => {
+            //     return table.select(['client', 'pw'])
+            //         .where('client like :client && pw like :pw')
+            //         .bind('client', `client%`)
+            //         .bind('pw', `pw%`)
+            //         .execute()
+            // })
+            // .then(res => {
+            //     // console.log("res.fetchAll()", res.fetchAll());
+            // })
+            .then(() => {
+                session.close();
+                return resInfo
+            });
+    }).catch(error => {
+        return connectErrorInfo
+    })
+
+
+}
+
+// 登录
+async function getUsers(client, pw) {
+    return mysqlx.getSession(config).then(async (session) => {
+        let resInfo
+        const table = session.getSchema(process.env.MYSQL_DATABASE).getTable(dbTable);
+        return table.select(['client'])
+            .where('client = :client and pw = :pw')
+            .bind('client', client)
+            .bind('pw', pw)
+            .execute()
+            .then(res => {
+                return res.fetchAll()
+            })
+            .then((res) => {
+                // console.log(res, res.length);
+                if (res.length > 0) {
+                    resInfo = loginInSuccessInfo
+                }
+                else {
+                    resInfo = loginInErrorInfo
+                }
+            })
+            .then(() => {
+                session.close();
+                return resInfo
+            });
+    }).catch(error => {
+        return connectErrorInfo
+    })
 }
 
 module.exports = { getUsers, setUsers }
