@@ -39,9 +39,9 @@ router.post('/',
             // 根据产品线分类，确定一类模型入参
             models.products.map(product => {
                 if (product == req.query.product) {
-                    req.temp_imageVarToModelArgsMap = models[`${product}_ImageVarToModelArgs`]
-                    req.temp_modelArgsToTextVarMap = models[`${product}_ModelArgsToTextVarArgs`]
-                    req.modelArgsToTypeMap = models[`${product}_ModelArgsToTypeArgs`]
+                    req.temp_imageVarToModelArgsMap = models[`${product}_ImageVarToModelArgs`] ? models[`${product}_ImageVarToModelArgs`] : undefined
+                    req.temp_modelArgsToTextVarMap = models[`${product}_ModelArgsToTextVarArgs`] ? models[`${product}_ModelArgsToTextVarArgs`] : undefined
+                    req.modelArgsToTypeMap = models[`${product}_ModelArgsToTypeArgs`] ? models[`${product}_ModelArgsToTypeArgs`] : undefined
                 }
             })
 
@@ -63,12 +63,14 @@ router.post('/',
             // const { mainTitle, posterContent } = req.body
 
             // ser 'text' value to model args
-            req.temp_modelArgsToTextVarMap.map(modelArg => {
-                // req.modelArgsToValueMap.set(modelArg, req.body[req.temp_modelArgsToTextVarMap[modelArg]])
-                req.modelArgsToValueMap.push({
-                    key: modelArg.key, value: req.body[modelArg.value]
+            if (req.temp_modelArgsToTextVarMap) {
+                req.temp_modelArgsToTextVarMap.map(modelArg => {
+                    // req.modelArgsToValueMap.set(modelArg, req.body[req.temp_modelArgsToTextVarMap[modelArg]])
+                    req.modelArgsToValueMap.push({
+                        key: modelArg.key, value: req.body[modelArg.value]
+                    })
                 })
-            })
+            }
 
             /**
              * @desc download image
@@ -93,7 +95,6 @@ router.post('/',
                     })
 
                     // 为每个文件创建 写入promise
-                    uploadImgsName.push(file.originalname)
                     const writePromise = new Promise((resolve, reject) => {
                         fs.writeFile(path.resolve(__dirname, '../uploads',
                             file.originalname,
@@ -103,10 +104,15 @@ router.post('/',
                         })
                     })
                     wPromises.push(writePromise)
+                    uploadImgsName.push(file.originalname)
+
                 })
             })
 
-            await Promise.all(wPromises).catch(error => {
+            if (uploadImgsName.length == 0) { console.log('/// 无文件上传'); next() }
+            else await Promise.all(wPromises).then(() => {
+                console.log('/// 文件全部写入本地',)
+            }).catch(error => {
                 return res.status(500).send({
                     api: req.originalUrl,
                     method: req.method,
@@ -114,7 +120,7 @@ router.post('/',
                 });
             });
 
-            console.log('/// 文件全部写入本地',)
+
             /**
              * @desc download image request body
              * - FormData中存在相同key值的字段，可以实现多文件同key上传。
@@ -126,7 +132,6 @@ router.post('/',
              * - 单张接受图片；
              * - 重命图片后缀+1进行存储
              */
-            if (uploadImgsName.length == 0) next()
             uploadImgsName.map(async (name, index) => {
                 let imgsFormData = new FormData()
                 imgsFormData.append(
@@ -172,7 +177,8 @@ router.post('/',
             // console.log(req.modelArgsToTypeMap, req.modelArgsToValueMap)
             // console.log("********************");
 
-            const newWorkFlowOBJ = handleReplaceNode(oldWorkflowOBJ, req.modelArgsToValueMap, req.modelArgsToTypeMap)
+            // 替换json工作流结点参数
+            const newWorkFlowOBJ = prompt == 't2i' ? oldWorkflowOBJ : handleReplaceNode(oldWorkflowOBJ, req.modelArgsToValueMap, req.modelArgsToTypeMap)
 
             // return res.json(newWorkFlowOBJ)
 

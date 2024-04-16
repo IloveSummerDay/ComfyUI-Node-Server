@@ -54,7 +54,7 @@ router.get('/', async (req, res, next) => {
      */
     return axios({ url: `${process.env.AIGC_BASE_URL}/history/${prompt_id}` })
         .then(async (resp) => {
-            // return res.json(resp.data[prompt_id])
+            return res.json(resp.data[prompt_id])
 
             if (!resp.data[prompt_id] || !resp.data[prompt_id].outputs ||
                 Object.values(resp.data[prompt_id].outputs).length == 0) {
@@ -129,9 +129,9 @@ async function handleUpOSS(imgs_already, client_id) {
             clientId: client_id
         })
     })
-    // console.log("OSS result: \n", result.data);
+    console.log("OSS result: \n", result.data);
 
-    if (result.data.statusCode !== 200) return { ...errInfo, ...result.data, message: '服务器请求OSS存储出错' }
+    if (result.data.statusCode !== 200) return { ...errInfo, ...result.data, message: '请求OSS在线地址出错, OSS没有成功返回(200)' }
     for (let i = 0; i < fileNames.length; i++) {
         ossMap[fileNames[i]] = result.data.data[i]
     }

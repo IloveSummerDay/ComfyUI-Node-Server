@@ -7,7 +7,7 @@
  * @desc 产品线 —— 后端请求接口时需要在请求体中携带此字段以区分产品线
  * @var products 产品线名称
  */
-const products = ['logo', 'poster', 'pack_logo_brand_adjust', 'pack_render']
+const products = ['logo', 'poster', 'pack_logo_brand_adjust', 'pack_render', 't2i']
 
 
 /**
