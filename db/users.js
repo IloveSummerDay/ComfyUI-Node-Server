@@ -81,6 +81,7 @@ async function setUsers(client, pw) {
                     return resInfo
                 });
         }).catch(error => {
+            console.log("连接数据库失败错误信息：", error);
             return { ...connectErrorInfo, error }
         })
 
@@ -114,6 +115,7 @@ async function getUsers(client, pw) {
                 return resInfo
             });
     }).catch(error => {
+        console.log("连接数据库失败错误信息：", error);
         return { ...connectErrorInfo, error }
     })
 }
