@@ -35,9 +35,10 @@ const dbTable = 'users'
 
 // 注册
 async function setUsers(client, pw) {
+    // console.log('///连接中', process.env.MYSQL_URL, process.env.MYSQL_PORT);
     return mysqlx.getSession(config)
         .then(async (session) => {
-            console.log('///查询中', process.env.MYSQL_DATABASE, dbTable);
+            // console.log('///查询中', process.env.MYSQL_DATABASE, dbTable);
 
             let resInfo
             const table = session.getSchema(process.env.MYSQL_DATABASE).getTable(dbTable);
@@ -90,9 +91,12 @@ async function setUsers(client, pw) {
 
 // 登录
 async function getUsers(client, pw) {
+    // console.log('///连接中', process.env.MYSQL_URL, process.env.MYSQL_PORT);
+
     return mysqlx.getSession(config).then(async (session) => {
         let resInfo
         const table = session.getSchema(process.env.MYSQL_DATABASE).getTable(dbTable);
+        // console.log('///查询中', process.env.MYSQL_DATABASE, dbTable);
         return table.select(['client'])
             .where('client = :client and pw = :pw')
             .bind('client', client)
