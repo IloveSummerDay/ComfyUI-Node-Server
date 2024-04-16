@@ -4,13 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "stylize": "npx dotenvx run --debug --env-file=.env -- node index.js",
     "dev-stylize-local": "dotenvx run --debug --env-file=.env -- nodemon index.js",
-    "pack": "npx dotenvx run --debug --env-file=.env.pack.prod -- node index.js",
     "dev-pack-local": "dotenvx run --debug --env-file=.env.pack.dev -- nodemon index.js",
-    "dev-pack-docker": "npx dotenvx run --debug --env-file=/app/.env.pack.prod -- forever start -c 'node --harmony' -l /logs/access.log -e /logs/err.log -a /app/index.js",
-    "dev-pack-restart": "npx dotenvx run --debug --env-file=/app/.env.pack.prod -- forever restart -c 'node --harmony' -l /logs/access.log -e /logs/err.log -a /app/index.js"
+    "stylize": "npx dotenvx run --debug --env-file=.env -- node index.js",
+    "pack": "npx dotenvx run --debug --env-file=/app/.env.pack.prod -- forever start -c 'node --harmony' -l /logs/access.log -e /logs/err.log -a /app/index.js",
+    "pack-re": "npx dotenvx run --debug --env-file=/app/.env.pack.prod -- forever restart -c 'node --harmony' -l /logs/access.log -e /logs/err.log -a /app/index.js"
   },
   "keywords": [],
   "author": "",

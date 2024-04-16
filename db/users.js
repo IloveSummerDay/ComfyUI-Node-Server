@@ -35,53 +35,54 @@ const dbTable = 'users'
 
 // 注册
 async function setUsers(client, pw) {
-    return mysqlx.getSession(config).then(async (session) => {
-        // console.log('///查询中', process.en`v.MYSQL_DATABASE, dbTable);
+    return mysqlx.getSession(config)
+        .then(async (session) => {
+            console.log('///查询中', process.env.MYSQL_DATABASE, dbTable);
 
-        let resInfo
-        const table = session.getSchema(process.env.MYSQL_DATABASE).getTable(dbTable);
-        return table.select(['client'])
-            .where('client = :client')
-            .bind('client', client)
-            .execute()
-            .then(res => {
-                return res.fetchAll()
-            })
-            .then((res) => {
-                // console.log(res, res.length);
-                if (res.length > 0) {
-                    resInfo = registeredInfo
-                }
-                else {
-                    // possible err: Duplicate entry 'client_test' for key 'users.PRIMARY
-                    return table.insert(['client', 'pw'])
-                        .values([client, pw])
-                        // .values([client, pw]) // 插入多条数据
-                        // .values([client, pw])
-                        .execute()
-                        .then(() => {
-                            resInfo = registereSuccessInfo
-                        })
-                }
-            })
-            // // 查看全部用户信息
-            // .then(() => {
-            //     return table.select(['client', 'pw'])
-            //         .where('client like :client && pw like :pw')
-            //         .bind('client', `client%`)
-            //         .bind('pw', `pw%`)
-            //         .execute()
-            // })
-            // .then(res => {
-            //     // console.log("res.fetchAll()", res.fetchAll());
-            // })
-            .then(() => {
-                session.close();
-                return resInfo
-            });
-    }).catch(error => {
-        return connectErrorInfo
-    })
+            let resInfo
+            const table = session.getSchema(process.env.MYSQL_DATABASE).getTable(dbTable);
+            return table.select(['client'])
+                .where('client = :client')
+                .bind('client', client)
+                .execute()
+                .then(res => {
+                    return res.fetchAll()
+                })
+                .then((res) => {
+                    // console.log(res, res.length);
+                    if (res.length > 0) {
+                        resInfo = registeredInfo
+                    }
+                    else {
+                        // possible err: Duplicate entry 'client_test' for key 'users.PRIMARY
+                        return table.insert(['client', 'pw'])
+                            .values([client, pw])
+                            // .values([client, pw]) // 插入多条数据
+                            // .values([client, pw])
+                            .execute()
+                            .then(() => {
+                                resInfo = registereSuccessInfo
+                            })
+                    }
+                })
+                // // 查看全部用户信息
+                // .then(() => {
+                //     return table.select(['client', 'pw'])
+                //         .where('client like :client && pw like :pw')
+                //         .bind('client', `client%`)
+                //         .bind('pw', `pw%`)
+                //         .execute()
+                // })
+                // .then(res => {
+                //     // console.log("res.fetchAll()", res.fetchAll());
+                // })
+                .then(() => {
+                    session.close();
+                    return resInfo
+                });
+        }).catch(error => {
+            return { ...connectErrorInfo, error }
+        })
 
 
 }
@@ -113,7 +114,7 @@ async function getUsers(client, pw) {
                 return resInfo
             });
     }).catch(error => {
-        return connectErrorInfo
+        return { ...connectErrorInfo, error }
     })
 }
 

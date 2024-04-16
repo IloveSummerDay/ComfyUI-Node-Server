@@ -5,6 +5,13 @@ const router = express.Router();
 router.post('/signup', async (req, res, next) => {
     try {
         const dbres = await userdb.setUsers(req.body.client, req.body.pw)
+        if (dbres.statusCode == 500) {
+            next({
+                api: req.originalUrl,
+                method: req.method,
+                ...dbres
+            })
+        }
         res.send(dbres)
     } catch (error) {
         next({
@@ -19,6 +26,13 @@ router.post('/signup', async (req, res, next) => {
 router.post('/login', async (req, res, next) => {
     try {
         const dbres = await userdb.getUsers(req.body.client, req.body.pw)
+        if (dbres.statusCode == 500) {
+            next({
+                api: req.originalUrl,
+                method: req.method,
+                ...dbres
+            })
+        }
         res.send(dbres)
     } catch (error) {
         next({

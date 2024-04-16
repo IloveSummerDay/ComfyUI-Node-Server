@@ -1,7 +1,7 @@
 ### DOCKER MYSQL:LATEST
 
 docker run --name mysql \
--dp 8488:3306 \
+-dp 8488:3306 8588:33060 \
 --mount type=volume,src=AIpack,target=/var/lib/mysql \
 -e MYSQL_ROOT_PASSWORD=800630_mysql \
 mysql:latest
@@ -32,3 +32,9 @@ node:21.2.0 \
 http://101.37.30.39:8388/test
 /bin/bash -c "npm install "
 /bin/bash -c "npm install && node /app/index.js"
+
+docker run -d --name mysql \
+--network container:node \
+--mount type=volume,src=AIpack,target=/var/lib/mysql \
+-e MYSQL_ROOT_PASSWORD=800630_mysql \
+mysql:latest
