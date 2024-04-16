@@ -35,9 +35,10 @@ async function getOssPhotos(client, prompt) {
                     }
                     return ossDataMap
                 }).then((res) => {
+
                     session.close();
                     return {
-                        isFetch: true,
+                        isFetch: Object.keys(res).length == 0 ? false : true,
                         data: res
                     }
                 })
