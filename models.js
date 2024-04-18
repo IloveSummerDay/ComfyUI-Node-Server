@@ -30,19 +30,28 @@ const multerField = [
  * @var poster_ModelArgsToTextVarArgs model工作流结点 .mets.title => 自定义文本变量名
  * @var poster_ImageVarToModelArgs 自定义图片变量名 => model工作流结点 .mets.title
  */
+// const poster_ModelArgsToTypeArgs = [
+//     { key: 'TitleTextInput', value: 'text' },
+//     { key: "ChineseInput", value: 'text' },
+//     { key: "EasyKSampler", value: 'seed' },
+//     { key: "LogoInput", value: 'image' },
+//     { key: "ChanPingInput", value: 'image' },
+// ]
 const poster_ModelArgsToTypeArgs = [
-    { key: 'TitleTextInput', value: 'text' },
-    { key: "ChineseInput", value: 'text' },
-    { key: "LogoInput", value: 'image' },
-    { key: "ChanPingInput", value: 'image' },
+    { key: "EasyKSampler", value: 'seed' }, // 64
+    { key: "ChineseInput", value: 'text' }, // 151
+    { key: 'TitleTextInput', value: 'text' }, // 170
+    { key: "ChanPingInput", value: 'image' }, // 16
+    { key: "LogoInput", value: 'image' }, // 172
 ]
 const poster_ModelArgsToTextVarArgs = [
-    { key: 'TitleTextInput', value: 'mainTitle' },// 主标题输入
+    { key: "EasyKSampler", value: 'seed' }, // 随机种子，相同参数下，生成不同的图
     { key: "ChineseInput", value: 'posterContent' },// 前端海报内容输入
+    { key: 'TitleTextInput', value: 'mainTitle' },// 主标题输入
 ]
 const poster_ImageVarToModelArgs = [
-    { key: 'logo', value: 'LogoInput' },// 传入LOGO图片
     { key: "mainImg", value: 'ChanPingInput' },// 前端产品主图输入
+    { key: 'logo', value: 'LogoInput' },// 传入LOGO图片
 ]
 
 

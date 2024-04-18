@@ -1,7 +1,7 @@
 {
   "3": {
     "inputs": {
-      "seed": 156680208700286,
+      "seed": 896182018980601,
       "steps": 20,
       "cfg": 14,
       "sampler_name": "dpm_adaptive",
@@ -14,17 +14,16 @@
     },
     "class_type": "KSampler",
     "_meta": {
-      "title": "render"
+      "title": "KSampler"
     }
   },
   "4": {
     "inputs": {
-      "ckpt_name": "realisticVisionV60B1_v51VAE.ckpt",
-      "+": null
+      "ckpt_name": "realisticVisionV60B1_v51VAE.ckpt"
     },
     "class_type": "CheckpointLoaderSimple",
     "_meta": {
-      "title": "style"
+      "title": "Load Checkpoint"
     }
   },
   "8": {
@@ -44,7 +43,7 @@
     },
     "class_type": "SaveImage",
     "_meta": {
-      "title": "Output the effect diagram"
+      "title": "Save Image"
     }
   },
   "10": {
@@ -62,16 +61,7 @@
     },
     "class_type": "DeepTranslatorCLIPTextEncodeNode",
     "_meta": {
-      "title": "Product description"
-    }
-  },
-  "11": {
-    "inputs": {
-      "text": ["10", 1]
-    },
-    "class_type": "ShowText|pysssss",
-    "_meta": {
-      "title": "Show Text 🐍"
+      "title": "Deep Translator CLIP Text Encode Node"
     }
   },
   "13": {
@@ -132,16 +122,7 @@
     },
     "class_type": "DeepTranslatorCLIPTextEncodeNode",
     "_meta": {
-      "title": "Product avoidance"
-    }
-  },
-  "20": {
-    "inputs": {
-      "text": ["19", 1]
-    },
-    "class_type": "ShowText|pysssss",
-    "_meta": {
-      "title": "Show Text 🐍"
+      "title": "Deep Translator CLIP Text Encode Node"
     }
   },
   "21": {
@@ -178,12 +159,12 @@
   },
   "35": {
     "inputs": {
-      "image": "revAnimated_v122EOL-水瓶.png",
+      "image": "pack_packageType (6).png",
       "upload": "image"
     },
     "class_type": "LoadImage",
     "_meta": {
-      "title": "Product Image"
+      "title": "Load Image"
     }
   },
   "42": {

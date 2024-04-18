@@ -35,7 +35,7 @@
       "resolution": "576 x 1024",
       "empty_latent_width": 1024,
       "empty_latent_height": 1536,
-      "positive": ["241", 0],
+      "positive": ["100", 0],
       "negative": "longbody,lowres,bad anatomy,bad hands,missing fingers,pubic hair,extra digit,fewer digits,cropped,worst quality,low quality, ",
       "batch_size": 1,
       "a1111_prompt_style": true,
@@ -87,19 +87,6 @@
       "title": "GrowMask"
     }
   },
-  "54": {
-    "inputs": {
-      "text": "foam,(((masterpiece))),(((best quality))),((ultra-detailed)),",
-      "Select to add LoRA": "Select the LoRA to add to the text",
-      "Select to add Wildcard": "Select the Wildcard to add to the text",
-      "seed": 31419327850572,
-      "multiline_mode": false
-    },
-    "class_type": "easy wildcards",
-    "_meta": {
-      "title": "Wildcards"
-    }
-  },
   "58": {
     "inputs": {
       "control_net_name": "control_v11p_sd15_lineart.safetensors",
@@ -118,7 +105,7 @@
   "59": {
     "inputs": {
       "preprocessor": "LineArtPreprocessor",
-      "resolution": 2048,
+      "resolution": 1344,
       "image": ["205", 0]
     },
     "class_type": "AIO_Preprocessor",
@@ -153,7 +140,7 @@
   "62": {
     "inputs": {
       "preprocessor": "Zoe_DepthAnythingPreprocessor",
-      "resolution": 2048,
+      "resolution": 1280,
       "image": ["205", 0]
     },
     "class_type": "AIO_Preprocessor",
@@ -180,7 +167,7 @@
       "image_output": "Preview",
       "link_id": 0,
       "save_prefix": "ComfyUI",
-      "seed": 506523893149229,
+      "seed": 930944177294428,
       "pipe": ["61", 0],
       "model": ["201", 0],
       "positive": ["169", 0],
@@ -188,7 +175,7 @@
     },
     "class_type": "easy fullkSampler",
     "_meta": {
-      "title": "EasyKSampler (Full)"
+      "title": "EasyKSampler"
     }
   },
   "66": {
@@ -212,19 +199,10 @@
       "title": "🔧 Mask Blur"
     }
   },
-  "90": {
-    "inputs": {
-      "text": ["144", 0]
-    },
-    "class_type": "ShowText|pysssss",
-    "_meta": {
-      "title": "Show Text 🐍"
-    }
-  },
   "100": {
     "inputs": {
-      "text1": ["54", 0],
-      "text2": ["90", 0],
+      "text1": ["282", 0],
+      "text2": ["144", 0],
       "separator": ""
     },
     "class_type": "CR Text Concatenate",
@@ -314,7 +292,7 @@
   },
   "119": {
     "inputs": {
-      "filename_prefix": "XinHaiBaoBlend",
+      "filename_prefix": "JingShiGuoFeng",
       "images": ["223", 0]
     },
     "class_type": "SaveImage",
@@ -324,22 +302,13 @@
   },
   "144": {
     "inputs": {
-      "text1": ["266", 0],
+      "text1": ["267", 0],
       "text2": ["10", 0],
       "separator": ""
     },
     "class_type": "CR Text Concatenate",
     "_meta": {
       "title": "🔤 CR Text Concatenate"
-    }
-  },
-  "150": {
-    "inputs": {
-      "text": ["151", 0]
-    },
-    "class_type": "ShowText|pysssss",
-    "_meta": {
-      "title": "Show Text 🐍"
     }
   },
   "151": {
@@ -415,7 +384,7 @@
       "vertical_border": 10,
       "scale": 60,
       "variation_range": 0,
-      "variation_seed": 1712477536,
+      "variation_seed": 0,
       "layout": "horizontal",
       "width": 576,
       "height": 1024,
@@ -668,28 +637,10 @@
       "title": "PlaySound 🐍"
     }
   },
-  "241": {
-    "inputs": {
-      "text": ["100", 0]
-    },
-    "class_type": "ShowText|pysssss",
-    "_meta": {
-      "title": "Show Text 🐍"
-    }
-  },
-  "266": {
-    "inputs": {
-      "text": ["267", 0]
-    },
-    "class_type": "ShowText|pysssss",
-    "_meta": {
-      "title": "Show Text 🐍"
-    }
-  },
   "267": {
     "inputs": {
       "text1": ["197", 0],
-      "text2": ["150", 0],
+      "text2": ["151", 0],
       "separator": ""
     },
     "class_type": "CR Text Concatenate",
@@ -699,7 +650,7 @@
   },
   "268": {
     "inputs": {
-      "spent_time": "扩散:7.276秒, 解码:0.14秒",
+      "spent_time": "扩散:6.945秒, 解码:0.139秒",
       "pipe": ["64", 0]
     },
     "class_type": "easy showSpentTime",
@@ -728,7 +679,7 @@
   "278": {
     "inputs": {
       "preprocessor": "Zoe_DepthAnythingPreprocessor",
-      "resolution": 2048,
+      "resolution": 1344,
       "image": ["178", 0]
     },
     "class_type": "AIO_Preprocessor",
@@ -739,7 +690,7 @@
   "279": {
     "inputs": {
       "preprocessor": "LineArtPreprocessor",
-      "resolution": 2048,
+      "resolution": 1216,
       "image": ["178", 0]
     },
     "class_type": "AIO_Preprocessor",
@@ -765,6 +716,15 @@
     "class_type": "CR LoRA Stack",
     "_meta": {
       "title": "💊 CR LoRA Stack"
+    }
+  },
+  "282": {
+    "inputs": {
+      "prompt": "foam,(((masterpiece))),(((best quality))),((ultra-detailed)),"
+    },
+    "class_type": "CR Prompt Text",
+    "_meta": {
+      "title": "⚙️ CR Prompt Text"
     }
   }
 }

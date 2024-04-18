@@ -119,6 +119,7 @@ async function handleUpOSS(imgs_already, client_id) {
          */
         imgs_already[i].type == "output" ? fileNames.push(imgs_already[i].filename) : null
     }
+    console.log(fileNames);
     const result = await axios(`${process.env.OSS_URL}/SaveImgToOSS`, {
         method: 'post',
         headers: {

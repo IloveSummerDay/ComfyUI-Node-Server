@@ -35,7 +35,7 @@
       "resolution": "576 x 1024",
       "empty_latent_width": 1024,
       "empty_latent_height": 1536,
-      "positive": ["241", 0],
+      "positive": ["100", 0],
       "negative": "longbody,lowres,bad anatomy,bad hands,missing fingers,pubic hair,extra digit,fewer digits,cropped,worst quality,low quality, ",
       "batch_size": 1,
       "a1111_prompt_style": true,
@@ -87,23 +87,10 @@
       "title": "GrowMask"
     }
   },
-  "54": {
-    "inputs": {
-      "text": "foam,(((masterpiece))),(((best quality))),((ultra-detailed)),",
-      "Select to add LoRA": "Select the LoRA to add to the text",
-      "Select to add Wildcard": "Select the Wildcard to add to the text",
-      "seed": 1050414017303991,
-      "multiline_mode": false
-    },
-    "class_type": "easy wildcards",
-    "_meta": {
-      "title": "Wildcards"
-    }
-  },
   "58": {
     "inputs": {
       "control_net_name": "control_v11p_sd15_lineart.safetensors",
-      "strength": 0.9,
+      "strength": 1.03,
       "start_percent": 0,
       "end_percent": 1,
       "scale_soft_weights": 1,
@@ -118,7 +105,7 @@
   "59": {
     "inputs": {
       "preprocessor": "LineArtPreprocessor",
-      "resolution": 2048,
+      "resolution": 1408,
       "image": ["205", 0]
     },
     "class_type": "AIO_Preprocessor",
@@ -152,8 +139,8 @@
   },
   "62": {
     "inputs": {
-      "preprocessor": "Zoe_DepthAnythingPreprocessor",
-      "resolution": 2048,
+      "preprocessor": "Zoe-DepthMapPreprocessor",
+      "resolution": 1152,
       "image": ["205", 0]
     },
     "class_type": "AIO_Preprocessor",
@@ -180,7 +167,7 @@
       "image_output": "Preview",
       "link_id": 0,
       "save_prefix": "ComfyUI",
-      "seed": 891566485826579,
+      "seed": 396651543725793,
       "pipe": ["61", 0],
       "model": ["201", 0],
       "positive": ["169", 0],
@@ -188,7 +175,7 @@
     },
     "class_type": "easy fullkSampler",
     "_meta": {
-      "title": "EasyKSampler (Full)"
+      "title": "EasyKSampler"
     }
   },
   "66": {
@@ -212,19 +199,10 @@
       "title": "🔧 Mask Blur"
     }
   },
-  "90": {
-    "inputs": {
-      "text": ["144", 0]
-    },
-    "class_type": "ShowText|pysssss",
-    "_meta": {
-      "title": "Show Text 🐍"
-    }
-  },
   "100": {
     "inputs": {
-      "text1": ["54", 0],
-      "text2": ["90", 0],
+      "text1": ["281", 0],
+      "text2": ["144", 0],
       "separator": ""
     },
     "class_type": "CR Text Concatenate",
@@ -267,7 +245,7 @@
   },
   "105": {
     "inputs": {
-      "weight": 0.7000000000000001,
+      "weight": 1.05,
       "weight_type": "linear",
       "combine_embeds": "concat",
       "start_at": 0,
@@ -314,7 +292,7 @@
   },
   "119": {
     "inputs": {
-      "filename_prefix": "XinHaiBaoBlend",
+      "filename_prefix": "ShanShuiZiRan",
       "images": ["223", 0]
     },
     "class_type": "SaveImage",
@@ -324,22 +302,13 @@
   },
   "144": {
     "inputs": {
-      "text1": ["266", 0],
+      "text1": ["267", 0],
       "text2": ["10", 0],
       "separator": ""
     },
     "class_type": "CR Text Concatenate",
     "_meta": {
       "title": "🔤 CR Text Concatenate"
-    }
-  },
-  "150": {
-    "inputs": {
-      "text": ["151", 0]
-    },
-    "class_type": "ShowText|pysssss",
-    "_meta": {
-      "title": "Show Text 🐍"
     }
   },
   "151": {
@@ -382,9 +351,9 @@
       "end_percent_2": 0.987,
       "switch_3": "On",
       "controlnet_3": "control_v11p_sd15_lineart.safetensors",
-      "controlnet_strength_3": 1,
-      "start_percent_3": 0.015,
-      "end_percent_3": 0.971,
+      "controlnet_strength_3": 1.59,
+      "start_percent_3": 0,
+      "end_percent_3": 1,
       "image_1": ["278", 0],
       "image_3": ["279", 0]
     },
@@ -503,14 +472,14 @@
     "inputs": {
       "switch_1": "On",
       "lora_name_1": "电商场景花草集丨NIUNIUAICG_V1.0.safetensors",
-      "model_weight_1": 0.87,
-      "clip_weight_1": 0.89,
+      "model_weight_1": 0.93,
+      "clip_weight_1": 0.9500000000000001,
       "switch_2": "Off",
-      "lora_name_2": "绿意盎然春色茶饮_v1.0.safetensors",
+      "lora_name_2": "None",
       "model_weight_2": 0.29,
       "clip_weight_2": 0.29,
       "switch_3": "Off",
-      "lora_name_3": "粿条cartoon grass scene model.safetensors",
+      "lora_name_3": "None",
       "model_weight_3": 0.33,
       "clip_weight_3": 0.33
     },
@@ -679,27 +648,9 @@
       "title": "PlaySound 🐍"
     }
   },
-  "241": {
-    "inputs": {
-      "text": ["100", 0]
-    },
-    "class_type": "ShowText|pysssss",
-    "_meta": {
-      "title": "Show Text 🐍"
-    }
-  },
-  "266": {
-    "inputs": {
-      "text": ["267", 0]
-    },
-    "class_type": "ShowText|pysssss",
-    "_meta": {
-      "title": "Show Text 🐍"
-    }
-  },
   "267": {
     "inputs": {
-      "text2": ["150", 0],
+      "text2": ["151", 0],
       "separator": ""
     },
     "class_type": "CR Text Concatenate",
@@ -709,7 +660,7 @@
   },
   "268": {
     "inputs": {
-      "spent_time": "扩散:7.407秒, 解码:0.142秒",
+      "spent_time": "扩散:6.826秒, 解码:0.141秒",
       "pipe": ["64", 0]
     },
     "class_type": "easy showSpentTime",
@@ -737,8 +688,8 @@
   },
   "278": {
     "inputs": {
-      "preprocessor": "Zoe_DepthAnythingPreprocessor",
-      "resolution": 2048,
+      "preprocessor": "Zoe-DepthMapPreprocessor",
+      "resolution": 1088,
       "image": ["178", 0]
     },
     "class_type": "AIO_Preprocessor",
@@ -749,12 +700,21 @@
   "279": {
     "inputs": {
       "preprocessor": "LineArtPreprocessor",
-      "resolution": 2048,
+      "resolution": 1152,
       "image": ["178", 0]
     },
     "class_type": "AIO_Preprocessor",
     "_meta": {
       "title": "AIO Aux Preprocessor"
+    }
+  },
+  "281": {
+    "inputs": {
+      "prompt": "foam,(((masterpiece))),(((best quality))),((ultra-detailed)),"
+    },
+    "class_type": "CR Prompt Text",
+    "_meta": {
+      "title": "⚙️ CR Prompt Text"
     }
   }
 }

@@ -173,9 +173,9 @@ router.post('/',
 
             // new workflow changed args
             const oldWorkflowOBJ = JSON.parse(fs.readFileSync(path.resolve(__dirname, `../workflows/${prompt}.json`)).toString())
-            // console.log("********************");
-            // console.log(req.modelArgsToTypeMap, req.modelArgsToValueMap)
-            // console.log("********************");
+            console.log("********************");
+            console.log(req.modelArgsToTypeMap, req.modelArgsToValueMap)
+            console.log("********************");
 
             // 替换json工作流结点参数
             const newWorkFlowOBJ = prompt == 't2i' ? oldWorkflowOBJ : handleReplaceNode(oldWorkflowOBJ, req.modelArgsToValueMap, req.modelArgsToTypeMap)
@@ -255,6 +255,24 @@ function handleReplaceNode(workflowOBJ, modelArgsToValueMap, modelArgsToTypeMap)
             }
         })
     }
+    // modelArgsToTypeMap.map((_meta, i) => {
+    //     modelArgsToValueMap.map((item) => {
+    //         if (_meta.key == item.key) {
+    //             modelArgsToTypeMap[i]['param'] = item.value
+    //         }
+    //     })
+    // })
+    // console.log("总表:  ", modelArgsToTypeMap);
+    // for (let i = 0; i < Object.keys(workflowOBJ).length; i++) {
+    //     const node = workflowOBJ[Object.keys(workflowOBJ)[i]]
+    //     modelArgsToTypeMap.map((arg, index) => {
+    //         if (node._meta.title == arg.key && modelArgsToTypeMap[index].param) {
+    //             console.log('一个参数');
+    //             node.inputs[arg.value] = modelArgsToTypeMap[index].param
+    //         }
+    //     })
+    // }
+
     return workflowOBJ
 }
 

@@ -1,7 +1,7 @@
 {
   "3": {
     "inputs": {
-      "seed": 980883848789380,
+      "seed": 783867331867403,
       "steps": 20,
       "cfg": 7.96,
       "sampler_name": "dpmpp_3m_sde_gpu",
@@ -14,7 +14,7 @@
     },
     "class_type": "KSampler",
     "_meta": {
-      "title": "K采样器"
+      "title": "KSampler"
     }
   },
   "4": {
@@ -23,7 +23,7 @@
     },
     "class_type": "CheckpointLoaderSimple",
     "_meta": {
-      "title": "Checkpoint加载器(简易)"
+      "title": "Load Checkpoint"
     }
   },
   "5": {
@@ -34,7 +34,7 @@
     },
     "class_type": "EmptyLatentImage",
     "_meta": {
-      "title": "空Latent"
+      "title": "Empty Latent Image"
     }
   },
   "6": {
@@ -44,7 +44,7 @@
     },
     "class_type": "CLIPTextEncode",
     "_meta": {
-      "title": "CLIP文本编码器"
+      "title": "CLIP Text Encode (Prompt)"
     }
   },
   "7": {
@@ -54,7 +54,7 @@
     },
     "class_type": "CLIPTextEncode",
     "_meta": {
-      "title": "CLIP文本编码器"
+      "title": "CLIP Text Encode (Prompt)"
     }
   },
   "8": {
@@ -64,7 +64,7 @@
     },
     "class_type": "VAEDecode",
     "_meta": {
-      "title": "VAE解码"
+      "title": "VAE Decode"
     }
   },
   "10": {
@@ -77,7 +77,7 @@
     },
     "class_type": "LoraLoader",
     "_meta": {
-      "title": "LoRA加载器"
+      "title": "Load LoRA"
     }
   },
   "13": {
@@ -87,12 +87,12 @@
     },
     "class_type": "VAEDecode",
     "_meta": {
-      "title": "VAE解码"
+      "title": "VAE Decode"
     }
   },
   "14": {
     "inputs": {
-      "seed": 954940439854795,
+      "seed": 430225074720765,
       "steps": 20,
       "cfg": 8.040000000000001,
       "sampler_name": "dpmpp_3m_sde_gpu",
@@ -105,27 +105,27 @@
     },
     "class_type": "KSampler",
     "_meta": {
-      "title": "K采样器"
+      "title": "KSampler"
     }
   },
   "15": {
     "inputs": {
       "filename_prefix": "ComfyUI",
-      "images": ["96", 0]
+      "images": ["110", 0]
     },
     "class_type": "SaveImage",
     "_meta": {
-      "title": "ImageTwo"
+      "title": "Save Image"
     }
   },
   "16": {
     "inputs": {
-      "image": "ComfyUI_08928_.png",
+      "image": "1713250366745.jpg",
       "upload": "image"
     },
     "class_type": "LoadImage",
     "_meta": {
-      "title": "加载图像"
+      "title": "Load Image"
     }
   },
   "17": {
@@ -134,7 +134,7 @@
     },
     "class_type": "ControlNetLoader",
     "_meta": {
-      "title": "ControlNet加载器"
+      "title": "Load ControlNet Model"
     }
   },
   "18": {
@@ -149,7 +149,7 @@
     },
     "class_type": "ControlNetApplyAdvanced",
     "_meta": {
-      "title": "ControlNet应用(高级)"
+      "title": "Apply ControlNet (Advanced)"
     }
   },
   "19": {
@@ -161,7 +161,7 @@
     },
     "class_type": "CannyEdgePreprocessor",
     "_meta": {
-      "title": "Canny细致线预处理器"
+      "title": "Canny Edge"
     }
   },
   "20": {
@@ -170,7 +170,7 @@
     },
     "class_type": "PreviewImage",
     "_meta": {
-      "title": "预览图像"
+      "title": "Preview Image"
     }
   },
   "21": {
@@ -181,7 +181,7 @@
     },
     "class_type": "EmptyLatentImage",
     "_meta": {
-      "title": "空Latent"
+      "title": "Empty Latent Image"
     }
   },
   "27": {
@@ -199,16 +199,7 @@
     },
     "class_type": "DeepTranslatorCLIPTextEncodeNode",
     "_meta": {
-      "title": "TextInput"
-    }
-  },
-  "30": {
-    "inputs": {
-      "text": ["27", 1]
-    },
-    "class_type": "ShowText|pysssss",
-    "_meta": {
-      "title": "展示文本"
+      "title": "Deep Translator CLIP Text Encode Node"
     }
   },
   "31": {
@@ -218,7 +209,7 @@
     },
     "class_type": "CLIPTextEncode",
     "_meta": {
-      "title": "CLIP文本编码器"
+      "title": "CLIP Text Encode (Prompt)"
     }
   },
   "33": {
@@ -228,7 +219,7 @@
     },
     "class_type": "ConditioningCombine",
     "_meta": {
-      "title": "条件合并"
+      "title": "Conditioning (Combine)"
     }
   },
   "53": {
@@ -237,58 +228,27 @@
     },
     "class_type": "IPAdapterModelLoader",
     "_meta": {
-      "title": "IPAdapter加载器"
+      "title": "IPAdapter Model Loader"
     }
   },
   "55": {
     "inputs": {
-      "image": "",
+      "image": "005LpuQ7gy1h6wkdcaflvj318b1p4u0x (1).jpg",
       "upload": "image"
     },
     "class_type": "LoadImage",
     "_meta": {
-      "title": "LoadExample"
-    }
-  },
-
-  "93": {
-    "inputs": {
-      "detail_method": "VITMatte",
-      "detail_erode": 6,
-      "detail_dilate": 6,
-      "black_point": 0.01,
-      "white_point": 0.3,
-      "process_detail": true,
-      "image": ["8", 0]
-    },
-    "class_type": "LayerMask: RmBgUltra V2",
-    "_meta": {
-      "title": "移除背景_V2"
+      "title": "Load Image"
     }
   },
   "95": {
     "inputs": {
       "filename_prefix": "ComfyUI",
-      "images": ["93", 0]
+      "images": ["109", 0]
     },
     "class_type": "SaveImage",
     "_meta": {
-      "title": "ImageOne"
-    }
-  },
-  "96": {
-    "inputs": {
-      "detail_method": "VITMatte",
-      "detail_erode": 6,
-      "detail_dilate": 6,
-      "black_point": 0.01,
-      "white_point": 0.99,
-      "process_detail": true,
-      "image": ["13", 0]
-    },
-    "class_type": "LayerMask: RmBgUltra V2",
-    "_meta": {
-      "title": "移除背景_V2"
+      "title": "Save Image"
     }
   },
   "97": {
@@ -297,7 +257,7 @@
     },
     "class_type": "PreviewImage",
     "_meta": {
-      "title": "预览图像"
+      "title": "Preview Image"
     }
   },
   "104": {
@@ -306,7 +266,7 @@
     },
     "class_type": "CLIPVisionLoader",
     "_meta": {
-      "title": "CLIP视觉加载器"
+      "title": "Load CLIP Vision"
     }
   },
   "106": {
@@ -316,7 +276,7 @@
     },
     "class_type": "LoadImage",
     "_meta": {
-      "title": "加载图像"
+      "title": "Load Image"
     }
   },
   "107": {
@@ -334,7 +294,31 @@
     },
     "class_type": "IPAdapterAdvanced",
     "_meta": {
-      "title": "IPAdapterAdvanced"
+      "title": "IPAdapter Advanced"
+    }
+  },
+  "109": {
+    "inputs": {
+      "rem_mode": "RMBG-1.4",
+      "image_output": "Preview",
+      "save_prefix": "ComfyUI",
+      "images": ["8", 0]
+    },
+    "class_type": "easy imageRemBg",
+    "_meta": {
+      "title": "Image Remove Bg"
+    }
+  },
+  "110": {
+    "inputs": {
+      "rem_mode": "RMBG-1.4",
+      "image_output": "Preview",
+      "save_prefix": "ComfyUI",
+      "images": ["13", 0]
+    },
+    "class_type": "easy imageRemBg",
+    "_meta": {
+      "title": "Image Remove Bg"
     }
   }
 }
