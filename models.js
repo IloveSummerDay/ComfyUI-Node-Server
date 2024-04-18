@@ -25,7 +25,7 @@ const multerField = [
 
 /**
  * @desc 海报产品线
- * @attation poster_ModelArgsToTypeArgs 内前面全是文本字段参数，文件名字段参数放在后面
+ * @attation poster_ModelArgsToTypeArgs 文本字段参数按工作流结点先后顺序在前，文件/图片名字段参数按结点先后顺序在后
  * @var poster_ModelArgsToTypeArgs model工作流结点 .mets.title => 自定义图片变量名
  * @var poster_ModelArgsToTextVarArgs model工作流结点 .mets.title => 自定义文本变量名
  * @var poster_ImageVarToModelArgs 自定义图片变量名 => model工作流结点 .mets.title
@@ -57,7 +57,7 @@ const poster_ImageVarToModelArgs = [
 
 /**
  * @desc Logo产品线
- * @attation logo_ModelArgsToTypeArgs 内前面全是文本字段参数，文件名字段参数放在后面
+ * @attation logo_ModelArgsToTypeArgs 文本字段参数按工作流结点先后顺序在前，文件/图片名字段参数按结点先后顺序在后
  * @var logo_ModelArgsToTypeArgs model工作流结点 .mets.title => 自定义图片变量名
  * @var logo_ModelArgsToTextVarArgs model工作流结点 .mets.title => 自定义文本变量名
  * @var logo_ImageVarToModelArgs 自定义图片变量名 => model工作流结点 .mets.title
@@ -81,7 +81,7 @@ const logo_ImageVarToModelArgs = [
 
 /**
  * @desc pack_logo_brand_adjust - AI包装-logo与品牌名称调整 - 产品线
- * @attation pack_logo_brand_adjust_ModelArgsToTypeArgs 内前面全是文本字段参数，文件名字段参数放在后面
+ * @attation pack_logo_brand_adjust_ModelArgsToTypeArgs 文本字段参数按工作流结点先后顺序在前，文件/图片名字段参数按结点先后顺序在后
  * @var pack_logo_brand_adjust_ModelArgsToTypeArgs model工作流结点 .mets.title => 自定义图片变量名
  * @var pack_logo_brand_adjust_ModelArgsToTextVarArgs model工作流结点 .mets.title => 自定义文本变量名
  * @var pack_logo_brand_adjust_ImageVarToModelArgs 自定义图片变量名 => model工作流结点 .mets.title
@@ -118,7 +118,7 @@ const pack_logo_brand_adjust_ImageVarToModelArgs = [
 
 /**
  * @desc pack_render - AI包装-渲染出图 - 产品线
- * @attation pack_render_ModelArgsToTypeArgs 内前面全是文本字段参数，文件名字段参数放在后面
+ * @attation pack_render_ModelArgsToTypeArgs 文本字段参数按工作流结点先后顺序在前，文件/图片名字段参数按结点先后顺序在后
  * @var pack_render_ModelArgsToTypeArgs model工作流结点 .mets.title => 自定义图片变量名
  * @var pack_render_ModelArgsToTextVarArgs model工作流结点 .mets.title => 自定义文本变量名
  * @var pack_render_ImageVarToModelArgs 自定义图片变量名 => model工作流结点 .mets.title

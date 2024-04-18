@@ -173,9 +173,9 @@ router.post('/',
 
             // new workflow changed args
             const oldWorkflowOBJ = JSON.parse(fs.readFileSync(path.resolve(__dirname, `../workflows/${prompt}.json`)).toString())
-            console.log("********************");
-            console.log(req.modelArgsToTypeMap, req.modelArgsToValueMap)
-            console.log("********************");
+            // console.log("********************");
+            // console.log(req.modelArgsToTypeMap, req.modelArgsToValueMap)
+            // console.log("********************");
 
             // 替换json工作流结点参数
             const newWorkFlowOBJ = prompt == 't2i' ? oldWorkflowOBJ : handleReplaceNode(oldWorkflowOBJ, req.modelArgsToValueMap, req.modelArgsToTypeMap)
