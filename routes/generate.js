@@ -67,7 +67,8 @@ router.post('/',
                 req.temp_modelArgsToTextVarMap.map(modelArg => {
                     // req.modelArgsToValueMap.set(modelArg, req.body[req.temp_modelArgsToTextVarMap[modelArg]])
                     req.modelArgsToValueMap.push({
-                        key: modelArg.key, value: req.body[modelArg.value]
+                        key: modelArg.key, value: Number(req.body[modelArg.value]) ?
+                            Number(req.body[modelArg.value]) : req.body[modelArg.value]
                     })
                 })
             }
@@ -173,13 +174,14 @@ router.post('/',
 
             // new workflow changed args
             const oldWorkflowOBJ = JSON.parse(fs.readFileSync(path.resolve(__dirname, `../workflows/${prompt}.json`)).toString())
-            // console.log("********************");
-            // console.log(req.modelArgsToTypeMap, req.modelArgsToValueMap)
-            // console.log("********************");
+
 
             // 替换json工作流结点参数
             const newWorkFlowOBJ = prompt == 't2i' ? oldWorkflowOBJ : handleReplaceNode(oldWorkflowOBJ, req.modelArgsToValueMap, req.modelArgsToTypeMap)
 
+            // console.log("********************");
+            // console.log(req.modelArgsToTypeMap, req.modelArgsToValueMap)
+            // console.log("********************");
             // return res.json(newWorkFlowOBJ)
 
 
