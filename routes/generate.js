@@ -110,7 +110,7 @@ router.post('/',
                 })
             })
 
-            if (uploadImgsName.length == 0) { console.log('/// 无文件上传'); next() }
+            if (uploadImgsName.length == 0) { console.log('/// 无文件上传',); next() }
             else await Promise.all(wPromises).then(() => {
                 console.log('/// 文件全部写入本地',)
             }).catch(error => {
@@ -174,7 +174,6 @@ router.post('/',
 
             // new workflow changed args
             const oldWorkflowOBJ = JSON.parse(fs.readFileSync(path.resolve(__dirname, `../workflows/${prompt}.json`)).toString())
-
 
             // 替换json工作流结点参数
             const newWorkFlowOBJ = prompt == 't2i' ? oldWorkflowOBJ : handleReplaceNode(oldWorkflowOBJ, req.modelArgsToValueMap, req.modelArgsToTypeMap)
