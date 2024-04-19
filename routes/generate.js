@@ -179,10 +179,10 @@ router.post('/',
             // 替换json工作流结点参数
             const newWorkFlowOBJ = prompt == 't2i' ? oldWorkflowOBJ : handleReplaceNode(oldWorkflowOBJ, req.modelArgsToValueMap, req.modelArgsToTypeMap)
 
-            // console.log("********************");
-            // console.log(req.modelArgsToTypeMap, req.modelArgsToValueMap)
-            // console.log("********************");
-            // return res.json(newWorkFlowOBJ)
+            console.log("********************");
+            console.log(req.modelArgsToValueMap, req.modelArgsToTypeMap)
+            console.log("********************");
+            return res.json(newWorkFlowOBJ)
 
 
             axios({

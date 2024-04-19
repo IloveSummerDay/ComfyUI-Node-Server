@@ -63,13 +63,16 @@ const poster_ImageVarToModelArgs = [
  * @var logo_ImageVarToModelArgs 自定义图片变量名 => model工作流结点 .mets.title
  */
 const logo_ModelArgsToTypeArgs = [
-    { key: 'TextInput', value: 'text' },
-    { key: "TextInput", value: 'from_translate' },
-    { key: "IPAdapterAdvanced", value: 'weight' },
-    { key: "LoadExample", value: 'image' },
+    { key: 'K采样器', value: 'seed' }, // 3
+    // { key: 'K采样器', value: 'seed' }, // 14
+    { key: 'TextInput', value: 'text' }, // 27
+    { key: "TextInput", value: 'from_translate' }, //27
+    { key: "IPAdapterAdvanced", value: 'weight' }, // 107
+    { key: "LoadExample", value: 'image' }, // 55
 ]
 
 const logo_ModelArgsToTextVarArgs = [
+    { key: 'K采样器', value: 'seed' }, // 3
     { key: 'TextInput', value: 'logoKeys' },// 关键词输入
     { key: "TextInput", value: 'language' },// 翻译语言
     { key: "IPAdapterAdvanced", value: 'weight' }// logo参考图权重
@@ -97,7 +100,7 @@ const pack_logo_brand_adjust_ModelArgsToTypeArgs = [
     { key: "Brand name", value: 'spacing' }, // -500 文本布局的其他细节，如字间距、行间距、边界、缩放、颜色等
     { key: "Brand name", value: 'scale' }, // 字体大小
     { key: "Product Image", value: 'image' }, // 载入包装图片文件名
-    { key: "load logo", value: 'image' }, // 载入logo图片文件名
+    { key: "logo Image", value: 'image' }, // 载入logo图片文件名
 ]
 
 const pack_logo_brand_adjust_ModelArgsToTextVarArgs = [
@@ -124,6 +127,7 @@ const pack_logo_brand_adjust_ImageVarToModelArgs = [
  * @var pack_render_ImageVarToModelArgs 自定义图片变量名 => model工作流结点 .mets.title
  */
 const pack_render_ModelArgsToTypeArgs = [
+    { key: "render", value: 'seed' }, // 渲染步数
     { key: "render", value: 'steps' }, // 渲染步数
     { key: "render", value: 'cfg' }, // 渲染深度
     { key: "render", value: 'denoise' }, // 渲染降噪
@@ -133,6 +137,7 @@ const pack_render_ModelArgsToTypeArgs = [
 ]
 
 const pack_render_ModelArgsToTextVarArgs = [
+    { key: "render", value: 'seed' }, // 渲染步数
     { key: "render", value: 'steps' }, // 渲染步数
     { key: "render", value: 'deep' }, // 渲染深度
     { key: "render", value: 'denoise' }, // 渲染降噪

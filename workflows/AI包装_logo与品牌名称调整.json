@@ -55,15 +55,6 @@
       "title": "Deep Translator CLIP Text Encode Node"
     }
   },
-  "11": {
-    "inputs": {
-      "text": ["10", 1]
-    },
-    "class_type": "ShowText|pysssss",
-    "_meta": {
-      "title": "Show Text 🐍"
-    }
-  },
   "13": {
     "inputs": {
       "upscale_method": "nearest-exact",
@@ -123,15 +114,6 @@
     "class_type": "DeepTranslatorCLIPTextEncodeNode",
     "_meta": {
       "title": "Deep Translator CLIP Text Encode Node"
-    }
-  },
-  "20": {
-    "inputs": {
-      "text": ["19", 1]
-    },
-    "class_type": "ShowText|pysssss",
-    "_meta": {
-      "title": "Show Text 🐍"
     }
   },
   "21": {
@@ -263,7 +245,7 @@
       "x_percent": 50,
       "y_percent": 50,
       "mirror": "None",
-      "scale": 0.15,
+      "scale": 10,
       "aspect_ratio": 1,
       "rotate": 0,
       "transform_method": "lanczos",
