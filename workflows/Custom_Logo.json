@@ -243,7 +243,7 @@
   },
   "55": {
     "inputs": {
-      "image": "ComfyUI_08928_ (1).png",
+      "image": "googse.png",
       "upload": "image"
     },
     "class_type": "LoadImage",
