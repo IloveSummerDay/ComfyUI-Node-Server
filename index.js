@@ -7,11 +7,10 @@ const fs = require('fs')
 
 // router
 const testRouter = require('./routes/test');
-const uploadRouter = require('./routes/upload');
-const downloadRouter = require('./routes/download');
-const getossRouter = require('./routes/getoss');
+const uploadRouter = require('./routes/_upload');
+const downloadRouter = require('./routes/_download');
+const historyRouter = require('./routes/history');
 const viewRouter = require('./routes/view');
-const deleteossRouter = require('./routes/deleteoss');
 const stylizeRouter = require('./routes/stylize');
 const generateRouter = require('./routes/generate');
 const useradminRouter = require('./routes/useradmin');
@@ -39,8 +38,7 @@ app.use('/upload', uploadRouter)
 app.use('/download', downloadRouter)
 
 app.use('/view', viewRouter) // 预览图片
-app.use('/getoss', getossRouter) // 获取用户所有的OSS图片在线地址
-app.use('/deleteoss', deleteossRouter) // 删除某个用户OSS上的图片
+app.use('/history', historyRouter) // 获取/删除用户所有生成图片的历史记录
 app.use('/generate', generateRouter) // 生成海报
 
 // TEST

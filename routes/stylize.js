@@ -12,10 +12,15 @@ const router = express.Router();
 
 router.post('/', upload.single('image'), (req, res, next) => {
     // req.file.buffer  <--- A Buffer of the entire file
-    // console.log('///1', req.body, req.file);
+    // console.log('///1 req', req.body, req.file);
     if (!allowedMimeTypes.includes(req.file.mimetype)) {
-        return res.status(400).send('目前仅支持图片类型 jpeg/png');
+        return res.status(400).send({
+            statusCode: 400,
+            message: '目前仅支持图片类型 jpeg/png'
+        });
     }
+    // 检查图片是否上传
+    if (!req.file) return res.status(401).send({ statusCode: 401, message: '请上传图片' })
     fs.writeFileSync(path.join(__dirname, '../uploads', 'temp.' + req.file.originalname.split('.')[1]), req.file.buffer);
     let imgFormData = new FormData()
     imgFormData.append("image", fs.createReadStream(path.join(__dirname, '../uploads',
@@ -34,21 +39,30 @@ router.post('/', upload.single('image'), (req, res, next) => {
 
     }).catch(err => {
         console.log('///文件下载失败');
-        res.sendStatus(err.response.status)
+        res.status(500).json({
+            statusCode: 500,
+            message: '文件下载失败, 请检查算力端服务是否开启'
+        })
+        // res.sendStatus(err.response.status)
     })
 }, (req, res) => {
     // console.log('///2 stylize', req.body, req.file);
     const { prompt, client } = req.body;
     const { originalname } = req.file
-    const workflowJSON = fs.readFileSync(path.resolve(__dirname, `../workflows/${prompt}.json`))
-    const workflowOBJ = JSON.parse(workflowJSON.toString())
+    let workflowOBJ
+    try {
+        const workflowJSON = fs.readFileSync(path.resolve(__dirname, `../workflows/${prompt}.json`))
+        workflowOBJ = JSON.parse(workflowJSON.toString())
+    } catch (error) {
+        return res.status(402).send({ status: 402, message: '未找到对应的工作流, 请检查prompt是否正确' })
+    }
     try {
         const loadImageNodeIndex = handleSearchLoadImageNode(workflowOBJ)
         // console.log('///loadImageNodeIndex', loadImageNodeIndex);
         workflowOBJ[loadImageNodeIndex]["inputs"]['image'] = originalname // hash_image_name
         // console.log("workflowOBJ[loadImageNodeIndex]", workflowOBJ[loadImageNodeIndex]);
     } catch (error) {
-        return res.status(500).send({ status: 400, message: '未找到LoadImage节点' })
+        return res.status(403).send({ status: 403, message: '未找到LoadImage节点, 请检查算力端提供的工作流是否正确' })
     }
 
     const aigc_prompt = {
@@ -62,22 +76,22 @@ router.post('/', upload.single('image'), (req, res, next) => {
             'Content-Type': 'application/json'
         },
         data: JSON.stringify(aigc_prompt)
-    })
-        .then(resp => {
-            console.log('///派发任务成功');
-            return res.status(200).send(resp.data)
+    }).then(resp => {
+        console.log('///派发任务成功');
+        return res.status(200).send(resp.data)
+    }).catch(error => {
+        console.log('///派发任务失败');
+        res.status(500).json({
+            statusCode: 500,
+            message: '派发任务失败, 请检查算力端服务是否开启'
         })
-        .catch(error => {
-            console.log('///派发任务失败');
-            return res.status(400).send('服务器执行过程中出错')
 
-        });
+    });
 })
 
 
 function handleSearchLoadImageNode(workflowOBJ) {
     // console.log(Object.keys(workflowOBJ));
-
     for (let i = 0; i < Object.keys(workflowOBJ).length; i++) {
         const node = workflowOBJ[Object.keys(workflowOBJ)[i]]
         if (node.class_type == "LoadImage") {

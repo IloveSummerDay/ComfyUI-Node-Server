@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const ossadmin = require('../db/oss');
+const ossadmin = require('../db/view');
 
 
 router.get('/getossINDB', async (req, res, next) => {

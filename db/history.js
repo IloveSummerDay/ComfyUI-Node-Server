@@ -1,5 +1,5 @@
 /**
- * @desc ossphotos.js
+ * @desc 从数据库中获取 用户个人 所有生成图的oss_url, 若没有则保存到数据库中
  * @var schema 代表数据库中的一个特定部分或命名空间，如表、视图、存储过程等。
  * - 默认情况下，schema 的概念与数据库的名称相同.
  * - 在某些情况下，它可以代表数据库中的一个特定部分或命名空间.
@@ -10,18 +10,18 @@ const config = {
     user: process.env.MYSQL_USER,
     host: process.env.MYSQL_URL,
     port: process.env.MYSQL_PORT,
-    password: process.env.MYSQL_PASSWORD
+    password: process.env.MYSQL_PASSzWORD
 }
-const dbTable = 'photos'
+// const dbTable = 'photos'
+const dbTable = process.env.MYSQL_TABLE
 
-async function getOssPhotos(client, prompt) {
+async function getOssPhotos(client) {
     return mysqlx.getSession(config)
         .then(async (session) => {
             const table = session.getSchema(process.env.MYSQL_DATABASE).getTable(dbTable);
             return table.select(['client', 'prompt', 'filename', 'oss_url'])
-                .where('client = :client and prompt = :prompt')
+                .where('client = :client')
                 .bind('client', client)
-                .bind('prompt', prompt)
                 .execute()
                 .then(res => {
                     return res.fetchAll()
@@ -35,7 +35,6 @@ async function getOssPhotos(client, prompt) {
                     }
                     return ossDataMap
                 }).then((res) => {
-
                     session.close();
                     return {
                         isFetch: Object.keys(res).length == 0 ? false : true,
@@ -55,7 +54,7 @@ async function getOssPhotos(client, prompt) {
 }
 
 // 设置client prompt filename oss_url
-async function setOssPhotos(client, prompt, imgs_map) {
+async function deleteOssPhotos(client, prompt, imgs_map) {
     return mysqlx.getSession(config).then(async (session) => {
         // console.log('===insert oss connect db success===');
         const table = session.getSchema(process.env.MYSQL_DATABASE).getTable(dbTable);
@@ -97,4 +96,4 @@ async function setOssPhotos(client, prompt, imgs_map) {
 
 
 
-module.exports = { getOssPhotos, setOssPhotos }
+module.exports = { getOssPhotos, deleteOssPhotos }

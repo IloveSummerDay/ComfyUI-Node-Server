@@ -1,8 +1,8 @@
 /**
  * @author: zhangluo
- * @desc AI跑图只需传入工作流和用户名即可派发绘图任务，所以此接口处理了工作流中多入参情况(多图片、多文本)
- * @desc 前端只需要调用此接口，使用 FormData 封装 product、工作流所需参数、数据库所需参数即可实现多产品线公用一套接口进行跑图
- * @desc 此公用性接口依赖于一下4个变量实现，后期维护只需要修改 models.js 即可
+ * @desc AI跑图只需传入工作流和用户名即可派发绘图任务, 所以此接口处理了工作流中多入参情况(多图片、多文本)
+ * @desc 前端只需要调用此接口, 使用 FormData 封装 product、工作流所需参数、数据库所需参数即可实现多产品线公用一套接口进行跑图
+ * @desc 此公用性接口依赖于一下4个变量实现, 后期维护只需要修改 models.js 即可
  * @var req.modelArgsToValueMap // 结点._meta.title : 此结点实际对应参数值
  * @var req.modelArgsToTypeMap // 结点._meta.title : 此结点入参字段
  * @var req.temp_imageVarToModelArgsMap
@@ -36,7 +36,7 @@ router.post('/',
             req.temp_imageVarToModelArgsMap = undefined
             req.temp_modelArgsToTextVarMap = undefined
             req.modelArgsToTypeMap = undefined
-            // 根据产品线分类，确定一类模型入参
+            // 根据产品线分类, 确定一类模型入参
             models.products.map(product => {
                 if (product == req.query.product) {
                     req.temp_imageVarToModelArgsMap = models[`${product}_ImageVarToModelArgs`] ? models[`${product}_ImageVarToModelArgs`] : undefined
@@ -75,7 +75,7 @@ router.post('/',
 
             /**
              * @desc download image
-             * @question 我将图片下载到模型服务的 inputs 文件夹中，是否可以省略手动上传图片的步骤
+             * @question 我将图片下载到模型服务的 inputs 文件夹中, 是否可以省略手动上传图片的步骤
              */
             Object.keys(req.files).map((name) => {
                 req.files[name].map((file) => {
@@ -117,17 +117,17 @@ router.post('/',
                 return res.status(500).send({
                     api: req.originalUrl,
                     method: req.method,
-                    message: '文件写入过程中存在错误，请重试',
+                    message: 'Node服务器文件写入过程中存在错误, 请重试',
                 });
             });
 
 
             /**
              * @desc download image request body
-             * - FormData中存在相同key值的字段，可以实现多文件同key上传。
+             * - FormData中存在相同key值的字段, 可以实现多文件同key上传。
              * - FormData 对象内部会使用某种机制来区分具有相同名称的多个字段。
              * 
-             * @desc 虽然理论是这样，但是 ComfyUI 提供的接口只能一张一张的接收，所以只能采用轮传图片的方案
+             * @desc 虽然理论是这样, 但是 ComfyUI 提供的接口只能一张一张的接收, 所以只能采用轮传图片的方案
              * 
              * ComfyUI接口缺陷：
              * - 单张接受图片；
@@ -154,7 +154,7 @@ router.post('/',
                     next({
                         api: req.originalUrl,
                         method: req.method,
-                        message: '算力服务端文件下载失败，请重试',
+                        message: '算力服务端文件下载失败, 请重试',
                     })
                 })
             })
@@ -162,7 +162,7 @@ router.post('/',
             next({
                 api: req.originalUrl,
                 method: req.method,
-                message: '下载文件中间件执行过程中存在错误',
+                message: 'Node服务器下载文件中间件执行过程中存在错误',
                 error
             })
         }
@@ -182,7 +182,6 @@ router.post('/',
             // console.log(req.modelArgsToValueMap, req.modelArgsToTypeMap)
             // console.log("********************");
             // return res.json(newWorkFlowOBJ)
-
 
             axios({
                 url: `${process.env.AIGC_BASE_URL}/prompt`,
@@ -221,7 +220,7 @@ router.post('/',
                     return res.status(200).json({
                         api: req.originalUrl,
                         method: req.method,
-                        message: '派发任务成功，但工作流结点有错误信息可能会导致出图失败',
+                        message: '派发任务成功, 但工作流结点有错误信息可能会导致出图失败',
                         prompt_id: resData.prompt_id,
                         number: resData.number,
                         node_errors: new_node_errors
@@ -232,7 +231,7 @@ router.post('/',
                 return res.status(500).send({
                     api: req.originalUrl,
                     method: req.method,
-                    message: '请求派发任务过程中存在错误，派发任务失败，请重试',
+                    message: '派发任务失败, 请确认算力端服务启动后重试',
                 })
 
             });
@@ -240,7 +239,7 @@ router.post('/',
             next({
                 api: req.originalUrl,
                 method: req.method,
-                message: '派发绘图任务中间件执行过程中存在错误',
+                message: 'Node服务器派发绘图任务中间件执行过程中存在错误',
                 error
             })
         }
