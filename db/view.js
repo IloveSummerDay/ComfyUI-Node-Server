@@ -13,7 +13,7 @@ const config = {
     password: process.env.MYSQL_PASSWORD
 }
 const dbTable = 'photos'
-// const dbTable = process.env.MYSQL_TABLE
+// const dbTable = process.env.MYSQL_DB_TABLE
 
 async function getOssPhotos(client, prompt) {
     return mysqlx.getSession(config)

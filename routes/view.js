@@ -29,7 +29,8 @@ router.get('/', async (req, res, next) => {
      * - 若有, 则直接使用数据库查询结果
      */
     const db_queryRes = await viewoss_admin.getOssPhotos(client_id, prompt_id)
-    return res.json({ "数据库查询结果": db_queryRes })
+    // return res.json({ "数据库查询结果": db_queryRes })
+
     if (db_queryRes.isFetch && Object.keys(db_queryRes).length > 0) {
         return res.status(200).json({
             statusCode: 200,
