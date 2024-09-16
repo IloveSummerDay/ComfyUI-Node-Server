@@ -35,12 +35,9 @@ const dbTable = 'users'
 
 // 注册
 async function setUsers(client, pw) {
-    // console.log('///连接中', process.env.MYSQL_URL, process.env.MYSQL_PORT);
     return mysqlx.getSession(config)
         .then(async (session) => {
-            // console.log('///查询中', process.env.MYSQL_DATABASE, dbTable);
-
-            let resInfo
+            let resInfo = undefined
             const table = session.getSchema(process.env.MYSQL_DATABASE).getTable(dbTable);
             return table.select(['client'])
                 .where('client = :client')
@@ -50,7 +47,6 @@ async function setUsers(client, pw) {
                     return res.fetchAll()
                 })
                 .then((res) => {
-                    // console.log(res, res.length);
                     if (res.length > 0) {
                         resInfo = registeredInfo
                     }
@@ -66,23 +62,11 @@ async function setUsers(client, pw) {
                             })
                     }
                 })
-                // // 查看全部用户信息
-                // .then(() => {
-                //     return table.select(['client', 'pw'])
-                //         .where('client like :client && pw like :pw')
-                //         .bind('client', `client%`)
-                //         .bind('pw', `pw%`)
-                //         .execute()
-                // })
-                // .then(res => {
-                //     // console.log("res.fetchAll()", res.fetchAll());
-                // })
                 .then(() => {
                     session.close();
                     return resInfo
                 });
         }).catch(error => {
-            console.log("连接数据库失败错误信息：", error);
             return { ...connectErrorInfo, error }
         })
 
@@ -91,12 +75,9 @@ async function setUsers(client, pw) {
 
 // 登录
 async function getUsers(client, pw) {
-    // console.log('///连接中', process.env.MYSQL_URL, process.env.MYSQL_PORT);
-
     return mysqlx.getSession(config).then(async (session) => {
         let resInfo
         const table = session.getSchema(process.env.MYSQL_DATABASE).getTable(dbTable);
-        // console.log('///查询中', process.env.MYSQL_DATABASE, dbTable);
         return table.select(['client'])
             .where('client = :client and pw = :pw')
             .bind('client', client)
@@ -106,7 +87,6 @@ async function getUsers(client, pw) {
                 return res.fetchAll()
             })
             .then((res) => {
-                // console.log(res, res.length);
                 if (res.length > 0) {
                     resInfo = loginInSuccessInfo
                 }
@@ -119,7 +99,6 @@ async function getUsers(client, pw) {
                 return resInfo
             });
     }).catch(error => {
-        console.log("连接数据库失败错误信息：", error);
         return { ...connectErrorInfo, error }
     })
 }

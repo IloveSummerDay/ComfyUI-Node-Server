@@ -12,8 +12,7 @@ const config = {
     port: process.env.MYSQL_PORT,
     password: process.env.MYSQL_PASSzWORD
 }
-const dbTable = 'photos'
-// const dbTable = process.env.MYSQL_DB_TABLE
+const dbTable = process.env.MYSQL_DB_TABLE
 
 async function getOssPhotos(client) {
     return mysqlx.getSession(config)
@@ -56,7 +55,6 @@ async function getOssPhotos(client) {
 // 设置client prompt filename oss_url
 async function deleteOssPhotos(client, prompt, imgs_map) {
     return mysqlx.getSession(config).then(async (session) => {
-        // console.log('===insert oss connect db success===');
         const table = session.getSchema(process.env.MYSQL_DATABASE).getTable(dbTable);
 
         /**

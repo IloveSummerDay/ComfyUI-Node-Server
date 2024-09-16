@@ -1,5 +1,6 @@
 /**
- * @author: zhangluo
+ * @author zhangluo
+ * @useage 智能包装生成接口
  * @desc AI跑图只需传入工作流和用户名即可派发绘图任务, 所以此接口处理了工作流中多入参情况(多图片、多文本)
  * @desc 前端只需要调用此接口, 使用 FormData 封装 product、工作流所需参数、数据库所需参数即可实现多产品线公用一套接口进行跑图
  * @desc 此公用性接口依赖于一下4个变量实现, 后期维护只需要修改 models.js 即可
@@ -23,20 +24,14 @@ const upload = multer({ storage, limits: { fileSize: 1024 * 1024 * 100 } }); // 
 
 
 router.post('/',
-    // 表单文件解析
     upload.fields(models.multerField),
-
-    // 初始化 req.temp_imageVarToModelArgsMap && req.temp_modelArgsToTextVarMap 以应对不同任务下载
     (req, res, next) => {
         try {
-            // console.log("******产品线分类：", req.query.product, req.files);
             models.products.includes(req.query.product) ? null : (() => { throw new Error() })()
             req.modelArgsToValueMap = []
-            // req.temp_imageVarToModelArgsMap && req.temp_modelArgsToTextVarMap => req.modelArgsToValueMap
             req.temp_imageVarToModelArgsMap = undefined
             req.temp_modelArgsToTextVarMap = undefined
             req.modelArgsToTypeMap = undefined
-            // 根据产品线分类, 确定一类模型入参
             models.products.map(product => {
                 if (product == req.query.product) {
                     req.temp_imageVarToModelArgsMap = models[`${product}_ImageVarToModelArgs`] ? models[`${product}_ImageVarToModelArgs`] : undefined
@@ -55,17 +50,12 @@ router.post('/',
         }
     },
 
-    // 下载文件
     async (req, res, next) => {
         try {
             const wPromises = []
             const uploadImgsName = []
-            // const { mainTitle, posterContent } = req.body
-
-            // ser 'text' value to model args
             if (req.temp_modelArgsToTextVarMap) {
                 req.temp_modelArgsToTextVarMap.map(modelArg => {
-                    // req.modelArgsToValueMap.set(modelArg, req.body[req.temp_modelArgsToTextVarMap[modelArg]])
                     req.modelArgsToValueMap.push({
                         key: modelArg.key, value: Number(req.body[modelArg.value]) ?
                             Number(req.body[modelArg.value]) : req.body[modelArg.value]
@@ -95,7 +85,6 @@ router.post('/',
                         }
                     })
 
-                    // 为每个文件创建 写入promise
                     const writePromise = new Promise((resolve, reject) => {
                         fs.writeFile(path.resolve(__dirname, '../uploads',
                             file.originalname,
@@ -110,9 +99,9 @@ router.post('/',
                 })
             })
 
-            if (uploadImgsName.length == 0) { console.log('/// 无文件上传',); next() }
+            if (uploadImgsName.length == 0) { console.log(`[${dayjs()}][no file upload]`); next() }
             else await Promise.all(wPromises).then(() => {
-                console.log('/// 文件全部写入本地',)
+                console.log(`[${dayjs()}][all file write local]`)
             }).catch(error => {
                 return res.status(500).send({
                     api: req.originalUrl,
@@ -126,10 +115,8 @@ router.post('/',
              * @desc download image request body
              * - FormData中存在相同key值的字段, 可以实现多文件同key上传。
              * - FormData 对象内部会使用某种机制来区分具有相同名称的多个字段。
-             * 
              * @desc 虽然理论是这样, 但是 ComfyUI 提供的接口只能一张一张的接收, 所以只能采用轮传图片的方案
-             * 
-             * ComfyUI接口缺陷：
+             * @desc ComfyUI接口缺陷：
              * - 单张接受图片；
              * - 重命图片后缀+1进行存储
              */
@@ -150,7 +137,7 @@ router.post('/',
                     index == uploadImgsName.length - 1 ? next() : null
 
                 }).catch(err => {
-                    console.log('///算力服务端文件下载失败');
+                    console.log(`[${dayjs()}][AI Server image download fail]`);
                     next({
                         api: req.originalUrl,
                         method: req.method,
@@ -167,21 +154,12 @@ router.post('/',
             })
         }
     },
-    // 派发绘图任务
     (req, res, next) => {
         try {
             const { prompt, client } = req.body
 
-            // new workflow changed args
             const oldWorkflowOBJ = JSON.parse(fs.readFileSync(path.resolve(__dirname, `../workflows/${prompt}.json`)).toString())
-
-            // 替换json工作流结点参数
             const newWorkFlowOBJ = prompt == 't2i' ? oldWorkflowOBJ : handleReplaceNode(oldWorkflowOBJ, req.modelArgsToValueMap, req.modelArgsToTypeMap)
-
-            // console.log("********************");
-            // console.log(req.modelArgsToValueMap, req.modelArgsToTypeMap)
-            // console.log("********************");
-            // return res.json(newWorkFlowOBJ)
 
             axios({
                 url: `${process.env.AIGC_BASE_URL}/prompt`,
@@ -194,23 +172,21 @@ router.post('/',
                     prompt: newWorkFlowOBJ,
                 })
             }).then(resp => {
-                console.log('///派发任务成功');
-                const resData = resp.data
+                const res_data = resp.data
 
-                // 简化 错误结点的错误信息
-                if (Object.keys(resData.node_errors).length == 0)
+                if (Object.keys(res_data.node_errors).length == 0)
                     return res.status(200).send(resp.data)
                 else {
                     const new_node_errors = {}
-                    Object.keys(resData.node_errors).map((node) => {
+                    Object.keys(res_data.node_errors).map((node) => {
                         const errors = []
-                        resData.node_errors[node].errors.map((err, index) => {
+                        res_data.node_errors[node].errors.map((err, index) => {
                             const errTypes = {
-                                type: resData.node_errors[node].errors[index].type,
-                                message: resData.node_errors[node].errors[index].message,
+                                type: res_data.node_errors[node].errors[index].type,
+                                message: res_data.node_errors[node].errors[index].message,
                                 extra_info: {
-                                    input_name: resData.node_errors[node].errors[index].extra_info.input_name,
-                                    received_value: resData.node_errors[node].errors[index].extra_info.received_value,
+                                    input_name: res_data.node_errors[node].errors[index].extra_info.input_name,
+                                    received_value: res_data.node_errors[node].errors[index].extra_info.received_value,
                                 }
                             }
                             errors.push(errTypes)
@@ -221,13 +197,13 @@ router.post('/',
                         api: req.originalUrl,
                         method: req.method,
                         message: '派发任务成功, 但工作流结点有错误信息可能会导致出图失败',
-                        prompt_id: resData.prompt_id,
-                        number: resData.number,
+                        prompt_id: res_data.prompt_id,
+                        number: res_data.number,
                         node_errors: new_node_errors
                     })
                 }
             }).catch(error => {
-                console.log('///派发任务失败');
+                console.log(`[${dayjs()}][prompt fail]`);
                 return res.status(500).send({
                     api: req.originalUrl,
                     method: req.method,
@@ -255,23 +231,6 @@ function handleReplaceNode(workflowOBJ, modelArgsToValueMap, modelArgsToTypeMap)
             }
         })
     }
-    // modelArgsToTypeMap.map((_meta, i) => {
-    //     modelArgsToValueMap.map((item) => {
-    //         if (_meta.key == item.key) {
-    //             modelArgsToTypeMap[i]['param'] = item.value
-    //         }
-    //     })
-    // })
-    // console.log("总表:  ", modelArgsToTypeMap);
-    // for (let i = 0; i < Object.keys(workflowOBJ).length; i++) {
-    //     const node = workflowOBJ[Object.keys(workflowOBJ)[i]]
-    //     modelArgsToTypeMap.map((arg, index) => {
-    //         if (node._meta.title == arg.key && modelArgsToTypeMap[index].param) {
-    //             console.log('一个参数');
-    //             node.inputs[arg.value] = modelArgsToTypeMap[index].param
-    //         }
-    //     })
-    // }
 
     return workflowOBJ
 }

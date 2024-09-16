@@ -6,20 +6,19 @@
  */
 
 const mysqlx = require('@mysql/xdevapi');
+const dbTable = process.env.MYSQL_DB_TABLE
 const config = {
     user: process.env.MYSQL_USER,
     host: process.env.MYSQL_URL,
     port: process.env.MYSQL_PORT,
     password: process.env.MYSQL_PASSWORD
 }
-const dbTable = 'photos'
-// const dbTable = process.env.MYSQL_DB_TABLE
 
 async function getOssPhotos(client, prompt) {
     return mysqlx.getSession(config)
         .then(async (session) => {
-            const table = session.getSchema(process.env.MYSQL_DATABASE).getTable(dbTable);
-            return table.select(['client', 'prompt', 'filename', 'oss_url'])
+            return session.getSchema(process.env.MYSQL_DATABASE).getTable(dbTable)
+                .select(['client', 'prompt', 'filename', 'oss_url'])
                 .where('client = :client and prompt = :prompt')
                 .bind('client', client)
                 .bind('prompt', prompt)
@@ -28,37 +27,31 @@ async function getOssPhotos(client, prompt) {
                     return res.fetchAll()
                 })
                 .then((res) => {
-                    let ossDataMap = {}
+                    const oss_data_map = {}
                     if (res.length > 0) {
                         res.map((item) => {
-                            ossDataMap[item[2]] = item[3]
+                            oss_data_map[item[2]] = item[3]
                         })
                     }
-                    return ossDataMap
-                }).then((res) => {
-
                     session.close();
                     return {
-                        isFetch: Object.keys(res).length == 0 ? false : true,
-                        data: res
+                        is_fetch: Object.keys(oss_data_map).length == 0 ? false : true,
+                        data: oss_data_map
                     }
                 })
         }).catch((error) => {
-            // 连接 db 失败
             return {
-                isFetch: false,
+                is_fetch: false,
                 data: {},
+                is_err: true,
                 error
             }
         })
-
-
 }
 
-// 设置client prompt filename oss_url
+
 async function setOssPhotos(client, prompt, imgs_map) {
     return mysqlx.getSession(config).then(async (session) => {
-        // console.log('===insert oss connect db success===');
         const table = session.getSchema(process.env.MYSQL_DATABASE).getTable(dbTable);
 
         /**

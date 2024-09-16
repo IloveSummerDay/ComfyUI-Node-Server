@@ -40,8 +40,6 @@ router.post('/', async (req, res) => {
                     }
                 });
                 resp.on('error', (err) => {
-                    console.log('发生了异常')
-                    console.error(error);
                     return reject(err);
                 });
             });
@@ -54,12 +52,6 @@ router.post('/', async (req, res) => {
                 console.log('数据接收完毕,耗时（毫秒）:', new Date().getTime() - startTime);
             });
 
-            // 可修改原始数据
-            // req.on('data', (data) => {
-            //     // request.write()
-            // })
-
-            // 如果不需要修改内容可以直接使用管道流操作
             req.pipe(request);
         });
         let endTime = new Date().getTime();
@@ -67,7 +59,6 @@ router.post('/', async (req, res) => {
 
         res.status(200).json(result);
     } catch (err) {
-        log.error('上传文件出错:', err);
         res.status(500).json(JSON.stringify(err));
     }
 });
