@@ -1,6 +1,6 @@
-const express = require('express');
-const userdb = require('../db/users');
-const router = express.Router();
+const express = require('express')
+const userdb = require('../db/users')
+const router = express.Router()
 
 router.post('/signup', async (req, res, next) => {
     try {
@@ -9,7 +9,7 @@ router.post('/signup', async (req, res, next) => {
             next({
                 api: req.originalUrl,
                 method: req.method,
-                ...dbres
+                ...dbres,
             })
         }
         res.send(dbres)
@@ -17,8 +17,8 @@ router.post('/signup', async (req, res, next) => {
         next({
             api: req.originalUrl,
             method: req.method,
-            message: "sign up error",
-            error
+            message: 'sign up error',
+            error,
         })
     }
 })
@@ -30,7 +30,7 @@ router.post('/login', async (req, res, next) => {
             next({
                 api: req.originalUrl,
                 method: req.method,
-                ...dbres
+                ...dbres,
             })
         }
         res.send(dbres)
@@ -38,11 +38,10 @@ router.post('/login', async (req, res, next) => {
         next({
             api: req.originalUrl,
             method: req.method,
-            message: "login in error",
-            error
+            message: 'login in error',
+            error,
         })
     }
-
 })
 
-module.exports = router;
+module.exports = router

@@ -1,7 +1,6 @@
-const express = require('express');
-const router = express.Router();
-const ossadmin = require('../db/view');
-
+const express = require('express')
+const router = express.Router()
+const ossadmin = require('../db/view')
 
 router.get('/getossINDB', async (req, res, next) => {
     try {
@@ -11,8 +10,8 @@ router.get('/getossINDB', async (req, res, next) => {
         next({
             api: req.originalUrl,
             method: req.method,
-            message: "get oss addr in db error",
-            error
+            message: 'get oss addr in db error',
+            error,
         })
     }
 })
@@ -25,10 +24,10 @@ router.get('/setossINDB', async (req, res, next) => {
         next({
             api: req.originalUrl,
             method: req.method,
-            message: "set oss addr in db error",
-            error
+            message: 'set oss addr in db error',
+            error,
         })
     }
 })
 
-module.exports = router;
+module.exports = router

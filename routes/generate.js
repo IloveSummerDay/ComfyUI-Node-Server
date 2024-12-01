@@ -9,30 +9,34 @@
  * @var req.temp_imageVarToModelArgsMap
  * @var req.temp_modelArgsToTextVarMap
  */
-const express = require('express');
-const multer = require('multer');
-const fs = require('fs');
-const FormData = require('form-data');
+const express = require('express')
+const multer = require('multer')
+const fs = require('fs')
+const FormData = require('form-data')
 const axios = require('axios')
-const path = require('path');
-const router = express.Router();
-const allowedMimeTypes = ['image/jpeg', 'image/png'];
-const models = require('../models');
+const path = require('path')
+const router = express.Router()
+const allowedMimeTypes = ['image/jpeg', 'image/png']
+const models = require('../models')
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage, limits: { fileSize: 1024 * 1024 * 100 } }); // 100M
+const storage = multer.memoryStorage()
+const upload = multer({ storage, limits: { fileSize: 1024 * 1024 * 100 } }) // 100M
 
-
-router.post('/',
+router.post(
+    '/',
     upload.fields(models.multerField),
     (req, res, next) => {
         try {
-            models.products.includes(req.query.product) ? null : (() => { throw new Error() })()
+            models.products.includes(req.query.product)
+                ? null
+                : (() => {
+                      throw new Error()
+                  })()
             req.modelArgsToValueMap = []
             req.temp_imageVarToModelArgsMap = undefined
             req.temp_modelArgsToTextVarMap = undefined
             req.modelArgsToTypeMap = undefined
-            models.products.map(product => {
+            models.products.map((product) => {
                 if (product == req.query.product) {
                     req.temp_imageVarToModelArgsMap = models[`${product}_ImageVarToModelArgs`] ? models[`${product}_ImageVarToModelArgs`] : undefined
                     req.temp_modelArgsToTextVarMap = models[`${product}_ModelArgsToTextVarArgs`] ? models[`${product}_ModelArgsToTextVarArgs`] : undefined
@@ -55,10 +59,10 @@ router.post('/',
             const wPromises = []
             const uploadImgsName = []
             if (req.temp_modelArgsToTextVarMap) {
-                req.temp_modelArgsToTextVarMap.map(modelArg => {
+                req.temp_modelArgsToTextVarMap.map((modelArg) => {
                     req.modelArgsToValueMap.push({
-                        key: modelArg.key, value: Number(req.body[modelArg.value]) ?
-                            Number(req.body[modelArg.value]) : req.body[modelArg.value]
+                        key: modelArg.key,
+                        value: Number(req.body[modelArg.value]) ? Number(req.body[modelArg.value]) : req.body[modelArg.value],
                     })
                 })
             }
@@ -74,42 +78,44 @@ router.post('/',
                             api: req.originalUrl,
                             method: req.method,
                             message: '目前仅支持图片类型 jpeg/png',
-                        });
+                        })
                     }
 
-                    req.temp_imageVarToModelArgsMap.map(imageVar => {
+                    req.temp_imageVarToModelArgsMap.map((imageVar) => {
                         if (name == imageVar.key) {
                             req.modelArgsToValueMap.push({
-                                key: imageVar.value, value: file.originalname
+                                key: imageVar.value,
+                                value: file.originalname,
                             })
                         }
                     })
 
                     const writePromise = new Promise((resolve, reject) => {
-                        fs.writeFile(path.resolve(__dirname, '../uploads',
-                            file.originalname,
-                        ), file.buffer, (err) => {
-                            if (err) return reject(false);
-                            resolve(true);
+                        fs.writeFile(path.resolve(__dirname, '../uploads', file.originalname), file.buffer, (err) => {
+                            if (err) return reject(false)
+                            resolve(true)
                         })
                     })
                     wPromises.push(writePromise)
                     uploadImgsName.push(file.originalname)
-
                 })
             })
 
-            if (uploadImgsName.length == 0) { console.log(`[${dayjs()}][no file upload]`); next() }
-            else await Promise.all(wPromises).then(() => {
-                console.log(`[${dayjs()}][all file write local]`)
-            }).catch(error => {
-                return res.status(500).send({
-                    api: req.originalUrl,
-                    method: req.method,
-                    message: 'Node服务器文件写入过程中存在错误, 请重试',
-                });
-            });
-
+            if (uploadImgsName.length == 0) {
+                console.log(`[${dayjs()}][no file upload]`)
+                next()
+            } else
+                await Promise.all(wPromises)
+                    .then(() => {
+                        console.log(`[${dayjs()}][all file write local]`)
+                    })
+                    .catch((error) => {
+                        return res.status(500).send({
+                            api: req.originalUrl,
+                            method: req.method,
+                            message: 'Node服务器文件写入过程中存在错误, 请重试',
+                        })
+                    })
 
             /**
              * @desc download image request body
@@ -122,35 +128,33 @@ router.post('/',
              */
             uploadImgsName.map(async (name, index) => {
                 let imgsFormData = new FormData()
-                imgsFormData.append(
-                    "image",
-                    fs.createReadStream(path.join(__dirname, '../uploads', name))
-                )
+                imgsFormData.append('image', fs.createReadStream(path.join(__dirname, '../uploads', name)))
                 await axios({
                     url: `${process.env.AIGC_BASE_URL}/upload/image`,
                     method: 'post',
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
-                    data: imgsFormData
-                }).then(resp => {
-                    index == uploadImgsName.length - 1 ? next() : null
-
-                }).catch(err => {
-                    console.log(`[${dayjs()}][AI Server image download fail]`);
-                    next({
-                        api: req.originalUrl,
-                        method: req.method,
-                        message: '算力服务端文件下载失败, 请重试',
-                    })
+                    data: imgsFormData,
                 })
+                    .then((resp) => {
+                        index == uploadImgsName.length - 1 ? next() : null
+                    })
+                    .catch((err) => {
+                        console.log(`[${dayjs()}][AI Server image download fail]`)
+                        next({
+                            api: req.originalUrl,
+                            method: req.method,
+                            message: '算力服务端文件下载失败, 请重试',
+                        })
+                    })
             })
         } catch (error) {
             next({
                 api: req.originalUrl,
                 method: req.method,
                 message: 'Node服务器下载文件中间件执行过程中存在错误',
-                error
+                error,
             })
         }
     },
@@ -165,62 +169,62 @@ router.post('/',
                 url: `${process.env.AIGC_BASE_URL}/prompt`,
                 method: 'post',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
                 data: JSON.stringify({
                     client: client,
                     prompt: newWorkFlowOBJ,
-                })
-            }).then(resp => {
-                const res_data = resp.data
+                }),
+            })
+                .then((resp) => {
+                    const res_data = resp.data
 
-                if (Object.keys(res_data.node_errors).length == 0)
-                    return res.status(200).send(resp.data)
-                else {
-                    const new_node_errors = {}
-                    Object.keys(res_data.node_errors).map((node) => {
-                        const errors = []
-                        res_data.node_errors[node].errors.map((err, index) => {
-                            const errTypes = {
-                                type: res_data.node_errors[node].errors[index].type,
-                                message: res_data.node_errors[node].errors[index].message,
-                                extra_info: {
-                                    input_name: res_data.node_errors[node].errors[index].extra_info.input_name,
-                                    received_value: res_data.node_errors[node].errors[index].extra_info.received_value,
+                    if (Object.keys(res_data.node_errors).length == 0) return res.status(200).send(resp.data)
+                    else {
+                        const new_node_errors = {}
+                        Object.keys(res_data.node_errors).map((node) => {
+                            const errors = []
+                            res_data.node_errors[node].errors.map((err, index) => {
+                                const errTypes = {
+                                    type: res_data.node_errors[node].errors[index].type,
+                                    message: res_data.node_errors[node].errors[index].message,
+                                    extra_info: {
+                                        input_name: res_data.node_errors[node].errors[index].extra_info.input_name,
+                                        received_value: res_data.node_errors[node].errors[index].extra_info.received_value,
+                                    },
                                 }
-                            }
-                            errors.push(errTypes)
+                                errors.push(errTypes)
+                            })
+                            new_node_errors[node] = { errors, class_type: node.class_type }
                         })
-                        new_node_errors[node] = { errors, class_type: node.class_type }
-                    })
-                    return res.status(200).json({
+                        return res.status(200).json({
+                            api: req.originalUrl,
+                            method: req.method,
+                            message: '派发任务成功, 但工作流结点有错误信息可能会导致出图失败',
+                            prompt_id: res_data.prompt_id,
+                            number: res_data.number,
+                            node_errors: new_node_errors,
+                        })
+                    }
+                })
+                .catch((error) => {
+                    console.log(`[${dayjs()}][prompt fail]`)
+                    return res.status(500).send({
                         api: req.originalUrl,
                         method: req.method,
-                        message: '派发任务成功, 但工作流结点有错误信息可能会导致出图失败',
-                        prompt_id: res_data.prompt_id,
-                        number: res_data.number,
-                        node_errors: new_node_errors
+                        message: '派发任务失败, 请确认算力端服务启动后重试',
                     })
-                }
-            }).catch(error => {
-                console.log(`[${dayjs()}][prompt fail]`);
-                return res.status(500).send({
-                    api: req.originalUrl,
-                    method: req.method,
-                    message: '派发任务失败, 请确认算力端服务启动后重试',
                 })
-
-            });
         } catch (error) {
             next({
                 api: req.originalUrl,
                 method: req.method,
                 message: 'Node服务器派发绘图任务中间件执行过程中存在错误',
-                error
+                error,
             })
         }
-    })
-
+    }
+)
 
 function handleReplaceNode(workflowOBJ, modelArgsToValueMap, modelArgsToTypeMap) {
     for (let i = 0; i < Object.keys(workflowOBJ).length; i++) {
@@ -235,4 +239,4 @@ function handleReplaceNode(workflowOBJ, modelArgsToValueMap, modelArgsToTypeMap)
     return workflowOBJ
 }
 
-module.exports = router;
+module.exports = router
