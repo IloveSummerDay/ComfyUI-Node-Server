@@ -9,6 +9,7 @@ const FormData = require('form-data')
 const fs = require('fs')
 const multer = require('multer')
 const path = require('path')
+
 const allowed_mime_types = ['image/jpeg', 'image/png']
 
 const upload = multer({

@@ -13,7 +13,6 @@ const viewRouter = require('./routes/view')
 const stylizeRouter = require('./routes/stylize')
 const generateRouter = require('./routes/generate')
 const useradminRouter = require('./routes/useradmin')
-const ossadminRouter = require('./routes/ossadmin-test')
 const app = express()
 
 // middware
@@ -23,7 +22,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 // 用户管理
 app.use('/', useradminRouter)
-app.use('/', ossadminRouter)
 
 // upload + prompt
 app.use('/stylize', stylizeRouter)
@@ -40,6 +38,8 @@ app.use('/generate', generateRouter) // 生成海报
 
 // TEST
 app.use('/test', testRouter)
+
+
 
 /**
  * @desc 兜底的全局错误处理中间件

@@ -1,34 +1,40 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
+const ossadmin = require('../db/view')
 
 router.get('/', (req, res, next) => {
     res.status(200).json({
         message: '测试成功',
         method: 'GET',
     })
-
 })
-router.post('/', (req, res, next) => {
+
+router.get('/getossINDB', async (req, res, next) => {
     try {
-        req.query.test ?
-            res.status(200).json({
-                message: '测试成功',
-                method: 'POST',
-                test: req.query.test
-            }) : res.status(200).json({
-                message: '测试成功',
-                method: 'POST',
-                test: "无"
-            })
+        const dbres = await ossadmin.getOssPhotos(req.body.client, req.body.prompt)
+        res.json(dbres)
     } catch (error) {
         next({
             api: req.originalUrl,
             method: req.method,
-            message: 'POST 测试接口失败，请查看具体 error 字段信息',
+            message: 'get oss addr in db error',
             error,
         })
     }
-
 })
 
-module.exports = router;
+router.get('/setossINDB', async (req, res, next) => {
+    try {
+        const dbres = await ossadmin.setOssPhotos(req.body.client, req.body.prompt, req.body.oss_url, req.body.filename)
+        res.json(dbres)
+    } catch (error) {
+        next({
+            api: req.originalUrl,
+            method: req.method,
+            message: 'set oss addr in db error',
+            error,
+        })
+    }
+})
+
+module.exports = router
