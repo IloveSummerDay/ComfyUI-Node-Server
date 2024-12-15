@@ -6,8 +6,6 @@ const cors = require('cors')
 
 // router
 const testRouter = require('./routes/_test')
-const uploadRouter = require('./routes/_upload')
-const downloadRouter = require('./routes/_download')
 const historyRouter = require('./routes/history')
 const viewRouter = require('./routes/view')
 const stylizeRouter = require('./routes/stylize')
@@ -25,12 +23,6 @@ app.use('/', useradminRouter)
 
 // upload + prompt
 app.use('/stylize', stylizeRouter)
-
-// 文件中转服务 - 流式数据传输
-app.use('/upload', uploadRouter)
-
-// 文件下载服务
-app.use('/download', downloadRouter)
 
 app.use('/view', viewRouter) // 预览图片
 app.use('/history', historyRouter) // 获取/删除用户所有生成图片的历史记录

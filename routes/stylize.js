@@ -26,6 +26,10 @@ router.post(
     '/',
     upload.fields([{ name: 'stylized_image' }, { name: 'bg_image' }]),
     (req, res, next) => {
+        if (Object.keys(req.files).length == 0) {
+            return res.status(401).send({ status: 401, message: '请上传至少一张风格化图片' })
+        }
+
         let images_list = []
         Object.keys(req.files).forEach((key) => {
             const image_list = req.files[key]
@@ -52,11 +56,8 @@ router.post(
             })
             .catch((err) => {
                 console.log(`[${dayjs()}][file download fail in AIGC server]`)
-                res.status(err.response.status).json({
+                res.status(500).json({
                     code: err.code,
-                    statusCode: err.response.status,
-                    statusText: err.response.statusText,
-                    url: err.response.config.url,
                     message: '文件下载失败, 请检查算力端服务是否正常',
                 })
             })

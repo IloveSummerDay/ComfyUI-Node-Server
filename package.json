@@ -7,7 +7,6 @@
     "dev-stylize-local": "dotenvx run --debug --env-file=.env.stylize.dev -- nodemon index.js",
     "dev-pack-local": "dotenvx run --debug --env-file=.env.pack.dev -- nodemon index.js",
     "stylize": "npx dotenvx run --debug --env-file=.env.stylize.prod -- node index.js",
-    "stylize-re": "npx dotenvx run --debug --env-file=.env.stylize.prod -- node index.js",
     "pack": "npx dotenvx run --debug --env-file=/app/.env.pack.prod -- forever start -c 'node --harmony' -l /logs/access.log -e /logs/err.log -a /app/index.js",
     "pack-re": "npx dotenvx run --debug --env-file=/app/.env.pack.prod -- forever restart -c 'node --harmony' -l /logs/access.log -e /logs/err.log -a /app/index.js"
   },
