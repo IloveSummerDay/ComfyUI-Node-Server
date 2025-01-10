@@ -1,0 +1,80 @@
+{
+    "InsFilm": {
+        "13": [
+            {
+                "workflow_field": "image",
+                "param_field": "main_image"
+            }
+        ]
+    },
+    "InsSnow": {
+        "13": [
+            {
+                "workflow_field": "image",
+                "param_field": "main_image"
+            }
+        ]
+    },
+    "InsDusk": {
+        "13": [
+            {
+                "workflow_field": "image",
+                "param_field": "main_image"
+            }
+        ]
+    },
+    "InsWaterColor": {
+        "13": [
+            {
+                "workflow_field": "image",
+                "param_field": "main_image"
+            }
+        ]
+    },
+    "InsShuiMo": {
+        "13": [
+            {
+                "workflow_field": "image",
+                "param_field": "main_image"
+            }
+        ]
+    },
+    "I2IGhostXLAnimeCycleScifi": {
+        "10": [
+            {
+                "workflow_field": "image",
+                "param_field": "main_image"
+            }
+        ]
+    },
+    "I2IGhostXLAnimeChinese": {
+        "10": [
+            {
+                "workflow_field": "image",
+                "param_field": "main_image"
+            }
+        ]
+    },
+    "I2IGuoFeng": {
+        "10": [
+            {
+                "workflow_field": "image",
+                "param_field": "main_image"
+            }
+        ]
+    },
+    "PortraitStylizationWithBackground": {
+        "17": [
+            {
+                "workflow_field": "image",
+                "param_field": "main_image"
+            }
+        ],
+        "131": [
+            {
+                "workflow_field": "image",
+                "param_field": "bg_image"
+            }
+        ]
+    }
+}

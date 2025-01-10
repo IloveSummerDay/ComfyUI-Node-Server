@@ -102,12 +102,12 @@ router.post(
             })
 
             if (uploadImgsName.length == 0) {
-                console.log(`[${dayjs()}][no file upload]`)
+                console.warn(`[${dayjs()}][no file upload]`)
                 next()
             } else
                 await Promise.all(wPromises)
                     .then(() => {
-                        console.log(`[${dayjs()}][all file write local]`)
+                        console.warn(`[${dayjs()}][all file write local]`)
                     })
                     .catch((error) => {
                         return res.status(500).send({
@@ -130,7 +130,7 @@ router.post(
                 let imgsFormData = new FormData()
                 imgsFormData.append('image', fs.createReadStream(path.join(__dirname, '../uploads', name)))
                 await axios({
-                    url: `${process.env.AIGC_BASE_URL}/upload/image`,
+                    url: `http://${req.body.ai_sever_host}:${req.body.ai_sever_port}/upload/image`,
                     method: 'post',
                     headers: {
                         'Content-Type': 'multipart/form-data',
@@ -141,7 +141,7 @@ router.post(
                         index == uploadImgsName.length - 1 ? next() : null
                     })
                     .catch((err) => {
-                        console.log(`[${dayjs()}][AI Server image download fail]`)
+                        console.warn(`[${dayjs()}][AI Server image download fail]`)
                         next({
                             api: req.originalUrl,
                             method: req.method,
@@ -166,7 +166,7 @@ router.post(
             const newWorkFlowOBJ = prompt == 't2i' ? oldWorkflowOBJ : handleReplaceNode(oldWorkflowOBJ, req.modelArgsToValueMap, req.modelArgsToTypeMap)
 
             axios({
-                url: `${process.env.AIGC_BASE_URL}/prompt`,
+                url: `http://${req.body.ai_sever_host}:${req.body.ai_sever_port}/prompt`,
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json',
@@ -208,7 +208,7 @@ router.post(
                     }
                 })
                 .catch((error) => {
-                    console.log(`[${dayjs()}][prompt fail]`)
+                    console.warn(`[${dayjs()}][prompt fail]`)
                     return res.status(500).send({
                         api: req.originalUrl,
                         method: req.method,

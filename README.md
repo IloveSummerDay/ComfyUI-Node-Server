@@ -1,5 +1,1 @@
-# ComfyUI-Node-Server
-
-根据 ComfyUI 接口封装 Node 中间件
-
-# 部署方法可参考 docker.md
+Node service based on comfy ui api service, on the basis of the original api function, adds the functions of interacting with the database and generating online picture links.
