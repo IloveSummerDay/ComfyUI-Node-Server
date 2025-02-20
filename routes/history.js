@@ -5,6 +5,10 @@ const router = express.Router()
 router.get('/get-all', async (req, res) => {
     const { client_id, limit } = req.query
 
+    if (!client_id) {
+        res.status(400).send({ message: '请输入client_id' })
+    }
+
     dbController
         .getAllOssPhotoList(client_id, limit)
         .then((db_query_list) => {
@@ -14,13 +18,22 @@ router.get('/get-all', async (req, res) => {
         })
         .catch(() => {
             return res.status(502).json({
-                message: '数据库操作失败, 请检查数据库连接状态',
+                message: 'Select all数据库操作失败, 请检查数据库连接状态',
             })
         })
 })
 
 router.get('/get-one-prompt', async (req, res) => {
     const { client_id, prompt_id, limit } = req.query
+
+    if (!client_id) {
+        res.status(400).send({ message: '请输入client_id' })
+    }
+
+    if (!prompt_id) {
+        res.status(400).send({ message: '请输入prompt_id' })
+    }
+
     dbController
         .getOssPhotoList(client_id, prompt_id, limit)
         .then((db_query_list) => {
@@ -30,7 +43,7 @@ router.get('/get-one-prompt', async (req, res) => {
         })
         .catch(() => {
             return res.status(502).json({
-                message: '数据库操作失败, 请检查数据库连接状态',
+                message: 'Select one数据库操作失败, 请检查数据库连接状态',
             })
         })
 })
@@ -49,7 +62,7 @@ router.delete('/delete', async (req, res) => {
         })
     } catch (error) {
         return res.status(502).json({
-            message: '数据库操作失败, 请检查数据库连接状态',
+            message: 'Delete数据库操作失败, 请检查数据库连接状态',
         })
     }
 })

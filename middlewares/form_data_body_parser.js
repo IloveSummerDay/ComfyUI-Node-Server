@@ -20,8 +20,4 @@ const multer_inst = multer({
     fields: multer_field,
 })
 
-const form_data_body_parser = () => {
-    return multer_inst.fields(multer_field)
-}
-
-module.exports = form_data_body_parser
+module.exports = multer_inst.fields(multer_field)

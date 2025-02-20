@@ -11,7 +11,7 @@ router.get('/', (req, res, next) => {
         const ai_sever_provider_config = JSON.parse(ai_sever_provider_config_json.toString())
         host_info_list = Object.values(ai_sever_provider_config)
     } catch (err) {
-        return res.status(500).send({ message: '读取ai_sever_provider_config配置文件失败' })
+        return res.status(500).send({ message: '读取ai_sever_provider_config配置文件失败, 请再试一次' })
     }
 
     const promise_list = []
@@ -19,6 +19,7 @@ router.get('/', (req, res, next) => {
         promise_list.push(
             new Promise((resolve) => {
                 const socket = new net.Socket()
+                // const socket = net.createConnection(port, host);
                 socket.setTimeout(5000)
 
                 socket.on('connect', () => {
