@@ -9,7 +9,7 @@ function createWebSocket(server) {
         const query = parsed_url.query
         const { ai_sever_host, ai_sever_port, client_id } = query
 
-        const comfy_socket = new WebSocket(`ws://${ai_sever_host}:${ai_sever_port}/ws?client_id=${client_id}`)
+        const comfy_socket = new WebSocket(`ws://${ai_sever_host}:${ai_sever_port}/ws?clientId=${client_id}`)
 
         comfy_socket.on('message', (message) => {
             const json_message = JSON.parse(message.toString('utf8'))
