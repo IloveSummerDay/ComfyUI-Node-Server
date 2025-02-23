@@ -1,526 +1,526 @@
 {
-  "10": {
-    "inputs": {
-      "seed": 610363749806754,
-      "steps": 8,
-      "cfg": 2.5,
-      "sampler_name": "dpmpp_3m_sde_gpu",
-      "scheduler": "sgm_uniform",
-      "denoise": 1,
-      "model": ["28", 0],
-      "positive": ["28", 1],
-      "negative": ["28", 2],
-      "latent_image": ["39", 0]
+    "10": {
+        "inputs": {
+            "seed": 673122023739125,
+            "steps": 8,
+            "cfg": 2.5,
+            "sampler_name": "dpmpp_3m_sde_gpu",
+            "scheduler": "sgm_uniform",
+            "denoise": 1,
+            "model": ["28", 0],
+            "positive": ["28", 1],
+            "negative": ["28", 2],
+            "latent_image": ["39", 0]
+        },
+        "class_type": "KSampler",
+        "_meta": {
+            "title": "KSampler"
+        }
     },
-    "class_type": "KSampler",
-    "_meta": {
-      "title": "K采样器"
-    }
-  },
-  "11": {
-    "inputs": {
-      "ckpt_name": "dreamshaperXL_v21TurboDPMSDE.safetensors"
+    "11": {
+        "inputs": {
+            "ckpt_name": "dreamshaperXL_v21TurboDPMSDE.safetensors"
+        },
+        "class_type": "CheckpointLoaderSimple",
+        "_meta": {
+            "title": "Load Checkpoint"
+        }
     },
-    "class_type": "CheckpointLoaderSimple",
-    "_meta": {
-      "title": "Checkpoint加载器(简易)"
-    }
-  },
-  "12": {
-    "inputs": {
-      "width": 1024,
-      "height": 1024,
-      "batch_size": 1
+    "12": {
+        "inputs": {
+            "width": 1024,
+            "height": 1024,
+            "batch_size": 1
+        },
+        "class_type": "EmptyLatentImage",
+        "_meta": {
+            "title": "Empty Latent Image"
+        }
     },
-    "class_type": "EmptyLatentImage",
-    "_meta": {
-      "title": "空Latent"
-    }
-  },
-  "13": {
-    "inputs": {
-      "text": ["152", 0],
-      "clip": ["18", 1]
+    "13": {
+        "inputs": {
+            "text": ["152", 0],
+            "clip": ["18", 1]
+        },
+        "class_type": "CLIPTextEncode",
+        "_meta": {
+            "title": "CLIP Text Encode (Prompt)"
+        }
     },
-    "class_type": "CLIPTextEncode",
-    "_meta": {
-      "title": "CLIP文本编码器"
-    }
-  },
-  "14": {
-    "inputs": {
-      "text": "lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, missing fingers, bad hands, missing arms, long neck, Humpbacked, birthmark,white_background,logo",
-      "clip": ["18", 1]
+    "14": {
+        "inputs": {
+            "text": "lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, missing fingers, bad hands, missing arms, long neck, Humpbacked, birthmark,white_background,logo",
+            "clip": ["18", 1]
+        },
+        "class_type": "CLIPTextEncode",
+        "_meta": {
+            "title": "CLIP Text Encode (Prompt)"
+        }
     },
-    "class_type": "CLIPTextEncode",
-    "_meta": {
-      "title": "CLIP文本编码器"
-    }
-  },
-  "15": {
-    "inputs": {
-      "samples": ["10", 0],
-      "vae": ["21", 0]
+    "15": {
+        "inputs": {
+            "samples": ["10", 0],
+            "vae": ["21", 0]
+        },
+        "class_type": "VAEDecode",
+        "_meta": {
+            "title": "VAE Decode"
+        }
     },
-    "class_type": "VAEDecode",
-    "_meta": {
-      "title": "VAE解码"
-    }
-  },
-  "17": {
-    "inputs": {
-      "image": "1425742838_CfiIpU.jpg",
-      "upload": "image"
+    "17": {
+        "inputs": {
+            "image": "a331c15a659b0a9c21750122710fb1c.jpg",
+            "upload": "image"
+        },
+        "class_type": "LoadImage",
+        "_meta": {
+            "title": "Load Image"
+        }
     },
-    "class_type": "LoadImage",
-    "_meta": {
-      "title": "加载图像"
-    }
-  },
-  "18": {
-    "inputs": {
-      "lora_name": "PixarXL (1).safetensors",
-      "strength_model": 0.9,
-      "strength_clip": 1,
-      "model": ["11", 0],
-      "clip": ["11", 1]
+    "18": {
+        "inputs": {
+            "lora_name": "PixarXL (1).safetensors",
+            "strength_model": 0.9,
+            "strength_clip": 1,
+            "model": ["11", 0],
+            "clip": ["11", 1]
+        },
+        "class_type": "LoraLoader",
+        "_meta": {
+            "title": "Load LoRA"
+        }
     },
-    "class_type": "LoraLoader",
-    "_meta": {
-      "title": "LoRA加载器"
-    }
-  },
-  "21": {
-    "inputs": {
-      "vae_name": "sdxl_vae.safetensors"
+    "21": {
+        "inputs": {
+            "vae_name": "sdxl_vae.safetensors"
+        },
+        "class_type": "VAELoader",
+        "_meta": {
+            "title": "Load VAE"
+        }
     },
-    "class_type": "VAELoader",
-    "_meta": {
-      "title": "VAE加载器"
-    }
-  },
-  "24": {
-    "inputs": {
-      "upscale_method": "nearest-exact",
-      "width": 1024,
-      "height": 1024,
-      "crop": "center",
-      "image": ["61", 0]
+    "24": {
+        "inputs": {
+            "upscale_method": "nearest-exact",
+            "width": 1024,
+            "height": 1024,
+            "crop": "center",
+            "image": ["61", 0]
+        },
+        "class_type": "ImageScale",
+        "_meta": {
+            "title": "Upscale Image"
+        }
     },
-    "class_type": "ImageScale",
-    "_meta": {
-      "title": "图像缩放"
-    }
-  },
-  "28": {
-    "inputs": {
-      "weight": 0.5,
-      "start_at": 0,
-      "end_at": 1,
-      "instantid": ["29", 0],
-      "insightface": ["32", 0],
-      "control_net": ["30", 0],
-      "image": ["24", 0],
-      "model": ["18", 0],
-      "positive": ["13", 0],
-      "negative": ["14", 0],
-      "image_kps": ["35", 0]
+    "28": {
+        "inputs": {
+            "weight": 0.5,
+            "start_at": 0,
+            "end_at": 1,
+            "instantid": ["29", 0],
+            "insightface": ["32", 0],
+            "control_net": ["30", 0],
+            "image": ["24", 0],
+            "model": ["18", 0],
+            "positive": ["13", 0],
+            "negative": ["14", 0],
+            "image_kps": ["35", 0]
+        },
+        "class_type": "ApplyInstantID",
+        "_meta": {
+            "title": "Apply InstantID"
+        }
     },
-    "class_type": "ApplyInstantID",
-    "_meta": {
-      "title": "应用InstantID"
-    }
-  },
-  "29": {
-    "inputs": {
-      "instantid_file": "ip-adapter.bin"
+    "29": {
+        "inputs": {
+            "instantid_file": "ip-adapter.bin"
+        },
+        "class_type": "InstantIDModelLoader",
+        "_meta": {
+            "title": "Load InstantID Model"
+        }
     },
-    "class_type": "InstantIDModelLoader",
-    "_meta": {
-      "title": "InstnatID模型加载器"
-    }
-  },
-  "30": {
-    "inputs": {
-      "control_net_name": "diffusion_pytorch_model.safetensors"
+    "30": {
+        "inputs": {
+            "control_net_name": "diffusion_pytorch_model.safetensors"
+        },
+        "class_type": "ControlNetLoader",
+        "_meta": {
+            "title": "Load ControlNet Model"
+        }
     },
-    "class_type": "ControlNetLoader",
-    "_meta": {
-      "title": "ControlNet加载器"
-    }
-  },
-  "32": {
-    "inputs": {
-      "provider": "CUDA"
+    "32": {
+        "inputs": {
+            "provider": "CUDA"
+        },
+        "class_type": "PulidInsightFaceLoader",
+        "_meta": {
+            "title": "Load InsightFace (PuLID)"
+        }
     },
-    "class_type": "PulidInsightFaceLoader",
-    "_meta": {
-      "title": "PuLIDInsightFace加载器"
-    }
-  },
-  "33": {
-    "inputs": {
-      "seed": 824936554020545,
-      "steps": 8,
-      "cfg": 2.52,
-      "sampler_name": "dpmpp_3m_sde_gpu",
-      "scheduler": "sgm_uniform",
-      "denoise": 1,
-      "model": ["18", 0],
-      "positive": ["37", 0],
-      "negative": ["38", 0],
-      "latent_image": ["34", 0]
+    "33": {
+        "inputs": {
+            "seed": 50618877528220,
+            "steps": 8,
+            "cfg": 2.52,
+            "sampler_name": "dpmpp_3m_sde_gpu",
+            "scheduler": "sgm_uniform",
+            "denoise": 1,
+            "model": ["18", 0],
+            "positive": ["37", 0],
+            "negative": ["38", 0],
+            "latent_image": ["34", 0]
+        },
+        "class_type": "KSampler",
+        "_meta": {
+            "title": "KSampler"
+        }
     },
-    "class_type": "KSampler",
-    "_meta": {
-      "title": "K采样器"
-    }
-  },
-  "34": {
-    "inputs": {
-      "width": 1024,
-      "height": 1024,
-      "batch_size": 1
+    "34": {
+        "inputs": {
+            "width": 1024,
+            "height": 1024,
+            "batch_size": 1
+        },
+        "class_type": "EmptyLatentImage",
+        "_meta": {
+            "title": "Empty Latent Image"
+        }
     },
-    "class_type": "EmptyLatentImage",
-    "_meta": {
-      "title": "空Latent"
-    }
-  },
-  "35": {
-    "inputs": {
-      "samples": ["33", 0],
-      "vae": ["21", 0]
+    "35": {
+        "inputs": {
+            "samples": ["33", 0],
+            "vae": ["21", 0]
+        },
+        "class_type": "VAEDecode",
+        "_meta": {
+            "title": "VAE Decode"
+        }
     },
-    "class_type": "VAEDecode",
-    "_meta": {
-      "title": "VAE解码"
-    }
-  },
-  "37": {
-    "inputs": {
-      "text": ["152", 0],
-      "clip": ["18", 1]
+    "37": {
+        "inputs": {
+            "text": ["152", 0],
+            "clip": ["18", 1]
+        },
+        "class_type": "CLIPTextEncode",
+        "_meta": {
+            "title": "CLIP Text Encode (Prompt)"
+        }
     },
-    "class_type": "CLIPTextEncode",
-    "_meta": {
-      "title": "CLIP文本编码器"
-    }
-  },
-  "38": {
-    "inputs": {
-      "text": "lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, missing fingers, bad hands, missing arms, long neck, Humpbacked,  birthmark,background，logo",
-      "clip": ["18", 1]
+    "38": {
+        "inputs": {
+            "text": "lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, missing fingers, bad hands, missing arms, long neck, Humpbacked,  birthmark,background，logo",
+            "clip": ["18", 1]
+        },
+        "class_type": "CLIPTextEncode",
+        "_meta": {
+            "title": "CLIP Text Encode (Prompt)"
+        }
     },
-    "class_type": "CLIPTextEncode",
-    "_meta": {
-      "title": "CLIP文本编码器"
-    }
-  },
-  "39": {
-    "inputs": {
-      "width": 1024,
-      "height": 1024,
-      "batch_size": 1
+    "39": {
+        "inputs": {
+            "width": 1024,
+            "height": 1024,
+            "batch_size": 1
+        },
+        "class_type": "EmptyLatentImage",
+        "_meta": {
+            "title": "Empty Latent Image"
+        }
     },
-    "class_type": "EmptyLatentImage",
-    "_meta": {
-      "title": "空Latent"
-    }
-  },
-  "40": {
-    "inputs": {
-      "images": ["35", 0]
+    "40": {
+        "inputs": {
+            "images": ["35", 0]
+        },
+        "class_type": "PreviewImage",
+        "_meta": {
+            "title": "Preview Image"
+        }
     },
-    "class_type": "PreviewImage",
-    "_meta": {
-      "title": "预览图像"
-    }
-  },
-  "59": {
-    "inputs": {
-      "confidence": 0.8,
-      "margin": 32,
-      "model": ["67", 0],
-      "image": ["17", 0]
+    "59": {
+        "inputs": {
+            "confidence": 0.8,
+            "margin": 32,
+            "model": ["67", 0],
+            "image": ["17", 0]
+        },
+        "class_type": "Crop Face",
+        "_meta": {
+            "title": "Crop Face"
+        }
     },
-    "class_type": "Crop Face",
-    "_meta": {
-      "title": "Crop Face"
-    }
-  },
-  "61": {
-    "inputs": {
-      "upscale_model": ["62", 0],
-      "image": ["59", 0]
+    "61": {
+        "inputs": {
+            "upscale_model": ["62", 0],
+            "image": ["59", 0]
+        },
+        "class_type": "ImageUpscaleWithModel",
+        "_meta": {
+            "title": "Upscale Image (using Model)"
+        }
     },
-    "class_type": "ImageUpscaleWithModel",
-    "_meta": {
-      "title": "图像通过模型放大"
-    }
-  },
-  "62": {
-    "inputs": {
-      "model_name": "4x-UltraSharp.pth"
+    "62": {
+        "inputs": {
+            "model_name": "4x-UltraSharp.pth"
+        },
+        "class_type": "UpscaleModelLoader",
+        "_meta": {
+            "title": "Load Upscale Model"
+        }
     },
-    "class_type": "UpscaleModelLoader",
-    "_meta": {
-      "title": "放大模型加载器"
-    }
-  },
-  "67": {
-    "inputs": {},
-    "class_type": "Load RetinaFace",
-    "_meta": {
-      "title": "Load RetinaFace"
-    }
-  },
-  "82": {
-    "inputs": {
-      "text": " masterpiece, best quality, Asian,solo, cg,3d, full_body,white_background,cartoon,{{pixar style}},pixar,chibi,\tlooking_at_viewer,white_background,pure_color_clothes,chibi,\t",
-      "seed": 38,
-      "autorefresh": "No"
+    "67": {
+        "inputs": {},
+        "class_type": "Load RetinaFace",
+        "_meta": {
+            "title": "Load RetinaFace"
+        }
     },
-    "class_type": "DPRandomGenerator",
-    "_meta": {
-      "title": "动态提示词(随机)"
-    }
-  },
-  "83": {
-    "inputs": {
-      "text": ["152", 0],
-      "text2": " masterpiece, best quality, Asian,solo, cg,3d, full_body,white_background,cartoon,pixar style,pixar,chibi,  looking_at_viewer,white_background,pure_color_clothes,chibi,    , solo, looking_at_viewer, short_hair, simple_background, shirt, black_hair, 1boy, standing, jacket, white_shirt, full_body, male_focus, open_clothes, shoes, collared_shirt, pants, belt, open_jacket, black_background, denim, brown_jacket, jeans, hands_in_pockets"
+    "82": {
+        "inputs": {
+            "text": " masterpiece, best quality, Asian,solo, cg,3d, full_body,white_background,{{pixar style}},pixar,chibi,cartoon,looking_at_viewer,white_background,simple_clothes,",
+            "seed": 371,
+            "autorefresh": "No"
+        },
+        "class_type": "DPRandomGenerator",
+        "_meta": {
+            "title": "Random Prompts"
+        }
     },
-    "class_type": "ShowText|pysssss",
-    "_meta": {
-      "title": "展示文本"
-    }
-  },
-  "106": {
-    "inputs": {
-      "filename_prefix": "ComfyUI",
-      "images": ["108", 0]
+    "83": {
+        "inputs": {
+            "text": ["152", 0],
+            "text2": " masterpiece, best quality, Asian,solo, cg,3d, full_body,white_background,pixar style,pixar,chibi,cartoon,looking_at_viewer,white_background,simple_clothes,, solo, shirt, brown_hair, 1boy, male_focus, necktie"
+        },
+        "class_type": "ShowText|pysssss",
+        "_meta": {
+            "title": "Show Text 🐍"
+        }
     },
-    "class_type": "SaveImage",
-    "_meta": {
-      "title": "保存图像"
-    }
-  },
-  "107": {
-    "inputs": {
-      "upscale_type": "latent",
-      "hires_ckpt_name": "(use same)",
-      "latent_upscaler": "nearest-exact",
-      "pixel_upscaler": "4x-UltraSharp.pth",
-      "upscale_by": 1.5,
-      "use_same_seed": true,
-      "seed": 248643985762484,
-      "hires_steps": 8,
-      "denoise": 0.6,
-      "iterations": 1,
-      "use_controlnet": false,
-      "control_net_name": "control_v11p_sd15_lineart_fp16.safetensors",
-      "strength": 1,
-      "preprocessor": "none",
-      "preprocessor_imgs": false
+    "106": {
+        "inputs": {
+            "filename_prefix": "ComfyUI",
+            "images": ["149", 0]
+        },
+        "class_type": "SaveImage",
+        "_meta": {
+            "title": "Save Image"
+        }
     },
-    "class_type": "HighRes-Fix Script",
-    "_meta": {
-      "title": "高清修复"
-    }
-  },
-  "108": {
-    "inputs": {
-      "brightness": 0.05,
-      "contrast": 0.8,
-      "saturation": 0.9,
-      "sharpness": 0.9,
-      "blur": 0,
-      "gaussian_blur": 0,
-      "edge_enhance": 0,
-      "detail_enhance": "true",
-      "image": ["109", 5]
+    "107": {
+        "inputs": {
+            "upscale_type": "latent",
+            "hires_ckpt_name": "(use same)",
+            "latent_upscaler": "nearest-exact",
+            "pixel_upscaler": "4x-UltraSharp.pth",
+            "upscale_by": 1.5,
+            "use_same_seed": true,
+            "seed": 248643985762484,
+            "hires_steps": 8,
+            "denoise": 0.6,
+            "iterations": 1,
+            "use_controlnet": false,
+            "control_net_name": "control_v11p_sd15_lineart_fp16.safetensors",
+            "strength": 1,
+            "preprocessor": "none",
+            "preprocessor_imgs": false
+        },
+        "class_type": "HighRes-Fix Script",
+        "_meta": {
+            "title": "HighRes-Fix Script"
+        }
     },
-    "class_type": "Image Filter Adjustments",
-    "_meta": {
-      "title": "颜色调整"
-    }
-  },
-  "109": {
-    "inputs": {
-      "seed": 3,
-      "steps": 8,
-      "cfg": 3,
-      "sampler_name": "dpmpp_3m_sde_gpu",
-      "scheduler": "sgm_uniform",
-      "denoise": 0.6,
-      "preview_method": "none",
-      "vae_decode": "true",
-      "model": ["28", 0],
-      "positive": ["28", 1],
-      "negative": ["28", 2],
-      "latent_image": ["10", 0],
-      "optional_vae": ["21", 0],
-      "script": ["107", 0]
+    "108": {
+        "inputs": {
+            "brightness": 0.05,
+            "contrast": 0.8,
+            "saturation": 0.9,
+            "sharpness": 0.9,
+            "blur": 0,
+            "gaussian_blur": 0,
+            "edge_enhance": 0,
+            "detail_enhance": "true",
+            "image": ["109", 5]
+        },
+        "class_type": "Image Filter Adjustments",
+        "_meta": {
+            "title": "Image Filter Adjustments"
+        }
     },
-    "class_type": "KSampler (Efficient)",
-    "_meta": {
-      "title": "K采样器(效率)"
-    }
-  },
-  "112": {
-    "inputs": {
-      "images": ["15", 0]
+    "109": {
+        "inputs": {
+            "seed": 3,
+            "steps": 8,
+            "cfg": 3,
+            "sampler_name": "dpmpp_3m_sde_gpu",
+            "scheduler": "sgm_uniform",
+            "denoise": 0.6,
+            "preview_method": "none",
+            "vae_decode": "true",
+            "model": ["28", 0],
+            "positive": ["28", 1],
+            "negative": ["28", 2],
+            "latent_image": ["10", 0],
+            "optional_vae": ["21", 0],
+            "script": ["107", 0]
+        },
+        "class_type": "KSampler (Efficient)",
+        "_meta": {
+            "title": "KSampler (Efficient)"
+        }
     },
-    "class_type": "PreviewImage",
-    "_meta": {
-      "title": "预览图像"
-    }
-  },
-  "114": {
-    "inputs": {
-      "images": ["109", 5]
+    "112": {
+        "inputs": {
+            "images": ["15", 0]
+        },
+        "class_type": "PreviewImage",
+        "_meta": {
+            "title": "Preview Image"
+        }
     },
-    "class_type": "PreviewImage",
-    "_meta": {
-      "title": "预览图像"
-    }
-  },
-  "117": {
-    "inputs": {
-      "text": ["150", 0],
-      "text2": "solo, looking_at_viewer, short_hair, simple_background, shirt, black_hair, 1boy, standing, jacket, white_shirt, full_body, male_focus, open_clothes, shoes, collared_shirt, pants, belt, open_jacket, black_background, denim, brown_jacket, jeans, hands_in_pockets"
+    "114": {
+        "inputs": {
+            "images": ["109", 5]
+        },
+        "class_type": "PreviewImage",
+        "_meta": {
+            "title": "Preview Image"
+        }
     },
-    "class_type": "ShowText|pysssss",
-    "_meta": {
-      "title": "展示文本"
-    }
-  },
-  "125": {
-    "inputs": {
-      "images": ["24", 0]
+    "117": {
+        "inputs": {
+            "text": ["150", 0],
+            "text2": "solo, shirt, brown_hair, 1boy, male_focus, necktie"
+        },
+        "class_type": "ShowText|pysssss",
+        "_meta": {
+            "title": "Show Text 🐍"
+        }
     },
-    "class_type": "PreviewImage",
-    "_meta": {
-      "title": "预览图像"
-    }
-  },
-  "129": {
-    "inputs": {
-      "detail_method": "PyMatting",
-      "detail_erode": 20,
-      "detail_dilate": 6,
-      "black_point": 0.91,
-      "white_point": 0.93,
-      "process_detail": true,
-      "device": "cuda",
-      "max_megapixels": 2,
-      "image": ["108", 0]
+    "125": {
+        "inputs": {
+            "images": ["24", 0]
+        },
+        "class_type": "PreviewImage",
+        "_meta": {
+            "title": "Preview Image"
+        }
     },
-    "class_type": "LayerMask: RmBgUltra V2",
-    "_meta": {
-      "title": "移除背景_V2"
-    }
-  },
-  "130": {
-    "inputs": {
-      "images": ["129", 0]
+    "129": {
+        "inputs": {
+            "detail_method": "PyMatting",
+            "detail_erode": 20,
+            "detail_dilate": 6,
+            "black_point": 0.91,
+            "white_point": 0.93,
+            "process_detail": true,
+            "device": "cuda",
+            "max_megapixels": 2,
+            "image": ["108", 0]
+        },
+        "class_type": "LayerMask: RmBgUltra V2",
+        "_meta": {
+            "title": "LayerMask: RmBgUltra V2"
+        }
     },
-    "class_type": "PreviewImage",
-    "_meta": {
-      "title": "预览图像"
-    }
-  },
-  "131": {
-    "inputs": {
-      "image": "03ff8329a55346dcec8372b028040e3.jpg",
-      "upload": "image"
+    "130": {
+        "inputs": {
+            "images": ["129", 0]
+        },
+        "class_type": "PreviewImage",
+        "_meta": {
+            "title": "Preview Image"
+        }
     },
-    "class_type": "LoadImage",
-    "_meta": {
-      "title": "加载图像"
-    }
-  },
-  "132": {
-    "inputs": {
-      "images": ["149", 0]
+    "131": {
+        "inputs": {
+            "image": "03ff8329a55346dcec8372b028040e3.jpg",
+            "upload": "image"
+        },
+        "class_type": "LoadImage",
+        "_meta": {
+            "title": "Load Image"
+        }
     },
-    "class_type": "PreviewImage",
-    "_meta": {
-      "title": "预览图像"
-    }
-  },
-  "149": {
-    "inputs": {
-      "invert_mask": true,
-      "blend_mode": "normal",
-      "opacity": 100,
-      "x_percent": 50,
-      "y_percent": 70,
-      "mirror": "None",
-      "scale": 0.45,
-      "aspect_ratio": 1,
-      "rotate": 0,
-      "transform_method": "lanczos",
-      "anti_aliasing": 0,
-      "background_image": ["131", 0],
-      "layer_image": ["129", 0]
+    "132": {
+        "inputs": {
+            "images": ["108", 0]
+        },
+        "class_type": "PreviewImage",
+        "_meta": {
+            "title": "Preview Image"
+        }
     },
-    "class_type": "LayerUtility: ImageBlendAdvance",
-    "_meta": {
-      "title": "混合(高级)"
-    }
-  },
-  "150": {
-    "inputs": {
-      "model": "wd-vit-tagger-v3",
-      "threshold": 0.35000000000000003,
-      "character_threshold": 0.6,
-      "replace_underscore": false,
-      "trailing_comma": false,
-      "exclude_tags": "blurry_background,photo_background,style,realistic,",
-      "tags": "solo, looking_at_viewer, short_hair, simple_background, shirt, black_hair, 1boy, standing, jacket, white_shirt, full_body, male_focus, open_clothes, shoes, collared_shirt, pants, belt, open_jacket, black_background, denim, brown_jacket, jeans, hands_in_pockets",
-      "image": ["153", 0]
+    "149": {
+        "inputs": {
+            "invert_mask": true,
+            "blend_mode": "normal",
+            "opacity": 100,
+            "x_percent": 50,
+            "y_percent": 70,
+            "mirror": "None",
+            "scale": 0.45,
+            "aspect_ratio": 1,
+            "rotate": 0,
+            "transform_method": "lanczos",
+            "anti_aliasing": 0,
+            "background_image": ["131", 0],
+            "layer_image": ["129", 0]
+        },
+        "class_type": "LayerUtility: ImageBlendAdvance",
+        "_meta": {
+            "title": "LayerUtility: ImageBlendAdvance"
+        }
     },
-    "class_type": "WD14Tagger|pysssss",
-    "_meta": {
-      "title": "WD14反推提示词"
-    }
-  },
-  "152": {
-    "inputs": {
-      "text_1": ["82", 0],
-      "text_2": ["150", 0]
+    "150": {
+        "inputs": {
+            "model": "wd-vit-tagger-v3",
+            "threshold": 0.75,
+            "character_threshold": 0.6,
+            "replace_underscore": false,
+            "trailing_comma": false,
+            "exclude_tags": "blurry_background,photo_background,style,realistic,black_background,",
+            "tags": "solo, shirt, brown_hair, 1boy, male_focus, necktie",
+            "image": ["153", 0]
+        },
+        "class_type": "WD14Tagger|pysssss",
+        "_meta": {
+            "title": "WD14 Tagger 🐍"
+        }
     },
-    "class_type": "LayerUtility: TextJoin",
-    "_meta": {
-      "title": "文本合并"
-    }
-  },
-  "153": {
-    "inputs": {
-      "detail_method": "PyMatting",
-      "detail_erode": 20,
-      "detail_dilate": 6,
-      "black_point": 0.91,
-      "white_point": 0.93,
-      "process_detail": true,
-      "device": "cuda",
-      "max_megapixels": 2,
-      "image": ["17", 0]
+    "152": {
+        "inputs": {
+            "text_1": ["82", 0],
+            "text_2": ["150", 0]
+        },
+        "class_type": "LayerUtility: TextJoin",
+        "_meta": {
+            "title": "LayerUtility: TextJoin"
+        }
     },
-    "class_type": "LayerMask: RmBgUltra V2",
-    "_meta": {
-      "title": "移除背景_V2"
-    }
-  },
-  "154": {
-    "inputs": {
-      "images": ["153", 0]
+    "153": {
+        "inputs": {
+            "detail_method": "PyMatting",
+            "detail_erode": 20,
+            "detail_dilate": 6,
+            "black_point": 0.91,
+            "white_point": 0.93,
+            "process_detail": true,
+            "device": "cuda",
+            "max_megapixels": 2,
+            "image": ["17", 0]
+        },
+        "class_type": "LayerMask: RmBgUltra V2",
+        "_meta": {
+            "title": "LayerMask: RmBgUltra V2"
+        }
     },
-    "class_type": "PreviewImage",
-    "_meta": {
-      "title": "预览图像"
+    "154": {
+        "inputs": {
+            "images": ["153", 0]
+        },
+        "class_type": "PreviewImage",
+        "_meta": {
+            "title": "Preview Image"
+        }
     }
-  }
 }
