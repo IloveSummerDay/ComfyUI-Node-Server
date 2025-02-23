@@ -1,15 +1,15 @@
 const express = require('express')
 const axios = require('axios')
 const dayjs = require('dayjs')
-const dbController = require('../db/db_controller')
+const db_controller_map = require('../db/db_controller_map')
 
 const router = express.Router()
 
-router.get('/', async (req, res, next) => {
-    const { prompt_id, client_id, ai_sever_host, ai_sever_port } = req.query
+router.get('/', async (req, res) => {
+    const { prompt_id, client_id, ai_sever_host, ai_sever_port, frontend } = req.query
 
     try {
-        const db_query_list = await dbController.getOssPhotoList(client_id, prompt_id)
+        const db_query_list = await db_controller_map[frontend].getOssPhotoList(client_id, prompt_id)
         if (db_query_list.length > 0) {
             return res.status(200).json({
                 data: db_query_list,
@@ -31,29 +31,12 @@ router.get('/', async (req, res, next) => {
      */
     axios({ url: `http://${ai_sever_host}:${ai_sever_port}/history/${prompt_id}` })
         .then(async (response) => {
-            if (!response.data[prompt_id] || !response.data[prompt_id].outputs || Object.values(response.data[prompt_id].outputs).length == 0) {
-                return res.status(200).json({
-                    data: [],
-                    message: '图片生成中，请等待',
-                })
-            }
-
-            const output_image_list = []
-            const outputs = Object.values(response.data[prompt_id].outputs)
-            outputs.forEach((node) => {
-                if (node.images) {
-                    for (let i = 0; i < node.images.length; i++) {
-                        if (node.images[i].type == 'output') {
-                            output_image_list.push(node.images[i])
-                        }
-                    }
-                }
-            })
+            const output_list = Object.values(response.data[prompt_id].outputs)
+            const output_image_list = handleComfyHistoryRawOutput(output_list)
 
             try {
                 const oss_image_list = await handleUpOSS(output_image_list, client_id)
-                const db_insert_success = await dbController.insertOssPhoto(client_id, prompt_id, oss_image_list)
-
+                db_controller_map[frontend].insertOssPhoto(client_id, prompt_id, oss_image_list)
                 return res.status(200).json({ data: oss_image_list, source: 'aliyun oss' })
             } catch (error) {
                 res.status(502).json({
@@ -117,4 +100,24 @@ async function handleUpOSS(output_image_list, client_id) {
                 reject()
             })
     })
+}
+
+/**
+ * @desc 处理Comfy history返回的原生output list, 获得待上传OSS的图片信息列表
+ * @param {Array} output_list Comfy history返回的原生output list
+ * @return {Array} 图片信息列表
+ */
+function handleComfyHistoryRawOutput(output_list) {
+    const output_image_list = []
+    output_list.forEach((node) => {
+        if (node.images) {
+            for (let i = 0; i < node.images.length; i++) {
+                if (node.images[i].type == 'output') {
+                    output_image_list.push(node.images[i])
+                }
+            }
+        }
+    })
+
+    return output_image_list
 }

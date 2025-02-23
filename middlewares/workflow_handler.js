@@ -1,3 +1,7 @@
+/**
+ * @add req.body["workflow_obj"]
+ */
+
 const fs = require('fs')
 const path = require('path')
 
@@ -23,7 +27,7 @@ const workflow_handler = (req, res, next) => {
 
     handleReviseWorkflow(workflow_obj, current_workflow_revise_config, req.body)
 
-    req['workflow_obj'] = workflow_obj
+    req.body['workflow_obj'] = workflow_obj
     next()
 }
 
@@ -38,7 +42,7 @@ module.exports = workflow_handler
  * @returns 返回修正后的工作流信息对象
  */
 function handleReviseWorkflow(workflow_obj, current_workflow_revise_config, data_source) {
-    const need_revise_node_index_list = Object.keys(current_workflow_revise_config, data_source)
+    const need_revise_node_index_list = Object.keys(current_workflow_revise_config)
     need_revise_node_index_list.forEach((node_index) => {
         const node_input_obj = workflow_obj[node_index]['inputs']
         const field_list = current_workflow_revise_config[node_index]

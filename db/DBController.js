@@ -2,13 +2,17 @@ const mysqlx = require('@mysql/xdevapi')
 const moment = require('moment')
 
 class DBController {
-    constructor() {
-        this.dbconfig = {
-            user: process.env.MYSQL_USER,
-            host: process.env.MYSQL_URL,
-            port: process.env.MYSQL_PORT,
-            password: process.env.MYSQL_PASSWORD,
+    constructor(db_config) {
+        this.db_option = {
+            user: db_config.user,
+            host: db_config.url,
+            port: db_config.port,
+            password: db_config.password,
         }
+
+        this.database = db_config.database
+        this.data_photo_table = 'photos'
+        this.data_user_table = 'users'
     }
 
     /**
@@ -21,12 +25,12 @@ class DBController {
     async getOssPhotoList(client, prompt, limit) {
         return new Promise((resolve, reject) => {
             mysqlx
-                .getSession(this.dbconfig)
+                .getSession(this.db_option)
                 .then(async (session) => {
                     const query = session
-                        .getSchema(process.env.MYSQL_DATABASE)
-                        .getTable('photos')
-                        .select(['client', 'prompt', 'filename', 'oss_url'])
+                        .getSchema(this.database)
+                        .getTable(this.data_photo_table)
+                        .select(['id', 'created_at', 'filename', 'oss_url'])
                         .where('client = :client and prompt = :prompt')
                         .bind('client', client)
                         .bind('prompt', prompt)
@@ -45,6 +49,8 @@ class DBController {
                             const oss_photo_list = []
                             query_info_list.forEach((query_info) => {
                                 oss_photo_list.push({
+                                    id: query_info[0],
+                                    created_at: query_info[1],
                                     filename: query_info[2],
                                     oss_url: query_info[3],
                                 })
@@ -69,12 +75,12 @@ class DBController {
     async getAllOssPhotoList(client, limit) {
         return new Promise((resolve, reject) => {
             mysqlx
-                .getSession(this.dbconfig)
+                .getSession(this.db_option)
                 .then(async (session) => {
                     const query = session
-                        .getSchema(process.env.MYSQL_DATABASE)
-                        .getTable('photos')
-                        .select(['client', 'prompt', 'filename', 'oss_url'])
+                        .getSchema(this.database)
+                        .getTable(this.data_photo_table)
+                        .select(['id', 'created_at', 'filename', 'oss_url'])
                         .where('client = :client')
                         .bind('client', client)
                         .orderBy('created_at DESC')
@@ -92,6 +98,8 @@ class DBController {
                             const oss_photo_list = []
                             query_info_list.forEach((query_info) => {
                                 oss_photo_list.push({
+                                    id: query_info[0],
+                                    created_at: query_info[1],
                                     filename: query_info[2],
                                     oss_url: query_info[3],
                                 })
@@ -117,9 +125,9 @@ class DBController {
     async insertOssPhoto(client, prompt, oss_image_list) {
         return new Promise((resolve, reject) => {
             mysqlx
-                .getSession(this.dbconfig)
+                .getSession(this.db_option)
                 .then(async (session) => {
-                    const table = session.getSchema(process.env.MYSQL_DATABASE).getTable('photos')
+                    const table = session.getSchema(this.database).getTable(this.data_photo_table)
 
                     /**
                      * @desc 循环插入数据
@@ -162,9 +170,9 @@ class DBController {
     async deleteOssPhoto(client, filename_list) {
         return new Promise((resolve, reject) => {
             mysqlx
-                .getSession(this.dbconfig)
+                .getSession(this.db_option)
                 .then(async (session) => {
-                    const table = session.getSchema(process.env.MYSQL_DATABASE).getTable('photos')
+                    const table = session.getSchema(this.database).getTable(this.data_photo_table)
 
                     const delete_promise_list = []
                     filename_list.forEach((filename) => {
@@ -197,9 +205,9 @@ class DBController {
     async findUser(client) {
         return new Promise((resolve, reject) => {
             mysqlx
-                .getSession(this.dbconfig)
+                .getSession(this.db_option)
                 .then(async (session) => {
-                    const table = session.getSchema(process.env.MYSQL_DATABASE).getTable('users')
+                    const table = session.getSchema(this.database).getTable(this.data_user_table)
                     return table
                         .select(['client'])
                         .where('client = :client')
@@ -231,9 +239,9 @@ class DBController {
     async insertUser(client, pw) {
         return new Promise((resolve, reject) => {
             mysqlx
-                .getSession(this.dbconfig)
+                .getSession(this.db_option)
                 .then(async (session) => {
-                    const table = session.getSchema(process.env.MYSQL_DATABASE).getTable('users')
+                    const table = session.getSchema(this.database).getTable(this.data_user_table)
                     return table
                         .insert(['client', 'pw'])
                         .values([client, pw])
@@ -253,4 +261,4 @@ class DBController {
     }
 }
 
-module.exports = new DBController()
+module.exports = DBController

@@ -76,5 +76,31 @@
                 "param_field": "bg_image"
             }
         ]
+    },
+    "logo": {
+        "1": [
+            {
+                "workflow_field": "text",
+                "param_field": "voice_text"
+            }
+        ],
+        "2": [
+            {
+                "workflow_field": "image",
+                "param_field": "logo"
+            }
+        ],
+        "3": [
+            {
+                "workflow_field": "weight",
+                "param_field": "weight"
+            }
+        ],
+        "21": [
+            {
+                "workflow_field": "seed",
+                "param_field": "seed"
+            }
+        ]
     }
 }

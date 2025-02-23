@@ -3,12 +3,8 @@ const FormData = require('form-data')
 const axios = require('axios')
 
 const prompt_image_uploader = (req, res, next) => {
-    if (req.body.enable_upload_image == 'false') {
-        return
-    }
-
     const promises = []
-    req.file_image_list.map((image) => {
+    req.body.file_image_list.map((image) => {
         if (Buffer.isBuffer(image.buffer)) {
             const image_form_data = new FormData()
             image_form_data.append('image', image.buffer, { filename: image.originalname, contentType: image.mimetype })

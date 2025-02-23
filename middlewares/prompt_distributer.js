@@ -10,7 +10,7 @@ const prompt_distributer = (req, res) => {
         },
         data: JSON.stringify({
             client: req.body.client,
-            prompt: req.workflow_obj,
+            prompt: req.body.workflow_obj,
         }),
     })
         .then((response) => {
@@ -19,8 +19,6 @@ const prompt_distributer = (req, res) => {
         .catch(() => {
             console.warn(`[${dayjs()}][prompt fail]`)
             res.status(502).json({
-                client: req.body.client,
-                prompt: req.workflow_obj,
                 message: '派发任务失败, 请检查算力端服务是否开启',
             })
         })

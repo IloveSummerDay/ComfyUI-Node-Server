@@ -19,7 +19,6 @@ router.get('/', (req, res, next) => {
         promise_list.push(
             new Promise((resolve) => {
                 const socket = new net.Socket()
-                // const socket = net.createConnection(port, host);
                 socket.setTimeout(5000)
 
                 socket.on('connect', () => {

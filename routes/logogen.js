@@ -1,12 +1,13 @@
 /**
  * @author zhangluo
- * @useage 派发风格化图像绘图任务
- * @application AIGC校园照相机
+ * @useage 派发 logo 绘图任务
+ * @application logo应用
  */
 
 const fs = require('fs')
 const path = require('path')
 const express = require('express')
+
 const formDataBodyParser = require('../middlewares/form_data_body_parser')
 const formDataValidReviewer = require('../middlewares/form_data_valid_reviewer')
 const promptImageUploader = require('../middlewares/prompt_image_uploader')
@@ -18,23 +19,16 @@ router.use(formDataBodyParser)
 router.use(formDataValidReviewer)
 
 router.use((req, res, next) => {
-    if (req.body.file_image_list.length == 0) {
-        return res.status(400).send({ message: '请上传至少一张风格化图片' })
+    const logo_buffer = fs.readFileSync(path.resolve(__dirname, `../public/${req.body.logoname}`))
+
+    const logo = {
+        buffer: logo_buffer,
+        originalname: req.body.logoname,
+        mimetype: 'image/png',
     }
 
-    if (req.body.prompt == 'PortraitStylizationWithBackground') {
-        const random_bg_image = Math.round(Math.random()) + 1
-        const bg_image_buffer = fs.readFileSync(path.resolve(__dirname, `../public/cuz_bg_${random_bg_image}.jpg`))
-
-        const bg_image = {
-            buffer: bg_image_buffer,
-            originalname: `cuz_bg_${random_bg_image}.jpg`,
-            mimetype: 'image/jpeg',
-        }
-
-        req.body.file_image_list.push(bg_image)
-        req.body['bg_image'] = bg_image.originalname
-    }
+    req.body.file_image_list.push(logo)
+    req.body['logo'] = logo.originalname
 
     next()
 })

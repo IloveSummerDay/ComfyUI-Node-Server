@@ -1,0 +1,90 @@
+{
+    "21": {
+        "inputs": {
+            "seed": 1,
+            "steps": 8,
+            "cfg": 3,
+            "sampler_name": "ddim",
+            "scheduler": "sgm_uniform",
+            "denoise": 1,
+            "model": ["3", 0],
+            "positive": ["1", 0],
+            "negative": ["25", 0],
+            "latent_image": ["23", 0]
+        },
+        "class_type": "KSampler"
+    },
+    "22": { "inputs": { "ckpt_name": "sdXL_v10VAEFix.safetensors" }, "class_type": "CheckpointLoaderSimple" },
+    "23": { "inputs": { "width": 1024, "height": 1024, "batch_size": 4 }, "class_type": "EmptyLatentImage" },
+    "25": { "inputs": { "text": "", "clip": ["27", 1] }, "class_type": "CLIPTextEncode" },
+    "26": { "inputs": { "samples": ["21", 0], "vae": ["22", 2] }, "class_type": "VAEDecode" },
+    "27": {
+        "inputs": {
+            "lora_name": "LogoRedmondV2-Logo-LogoRedmAF.safetensors",
+            "strength_model": 1,
+            "strength_clip": 1,
+            "model": ["60", 0],
+            "clip": ["60", 1]
+        },
+        "class_type": "LoraLoader"
+    },
+    "1": {
+        "inputs": {
+            "from_translate": "chinese simplified",
+            "to_translate": "english",
+            "add_proxies": "disable",
+            "proxies": "",
+            "auth_data": "",
+            "service": "MyMemoryTranslator [free]",
+            "text": "logo",
+            "Show proxy": "proxy_hide",
+            "Show authorization": "authorization_hide",
+            "clip": ["27", 1]
+        },
+        "class_type": "DeepTranslatorCLIPTextEncodeNode"
+    },
+    "52": {
+        "inputs": {
+            "detail_method": "PyMatting",
+            "detail_erode": 1,
+            "detail_dilate": 1,
+            "black_point": 0.01,
+            "white_point": 0.02,
+            "process_detail": true,
+            "image": ["26", 0]
+        },
+        "class_type": "LayerMask: RmBgUltra V2"
+    },
+    "60": {
+        "inputs": {
+            "lora_name": "Hyper-SDXL-8steps-lora.safetensors",
+            "strength_model": 0.7000000000000001,
+            "strength_clip": 1,
+            "model": ["22", 0],
+            "clip": ["22", 1]
+        },
+        "class_type": "LoraLoader"
+    },
+    "61": { "inputs": { "ipadapter_file": "ip-adapter_sdxl.safetensors" }, "class_type": "IPAdapterModelLoader" },
+    "63": {
+        "inputs": { "clip_name": "CLIP-ViT-bigG-14-laion2B-39B-b160k.safetensors" },
+        "class_type": "CLIPVisionLoader"
+    },
+    "3": {
+        "inputs": {
+            "weight": 0.8,
+            "weight_type": "linear",
+            "combine_embeds": "concat",
+            "start_at": 0,
+            "end_at": 1,
+            "embeds_scaling": "V only",
+            "model": ["27", 0],
+            "ipadapter": ["61", 0],
+            "image": ["2", 0],
+            "clip_vision": ["63", 0]
+        },
+        "class_type": "IPAdapterAdvanced"
+    },
+    "2": { "inputs": { "image": "xiaohui.png", "upload": "image" }, "class_type": "LoadImage" },
+    "100": { "inputs": { "filename_prefix": "Logo", "images": ["52", 0] }, "class_type": "SaveImage" }
+}

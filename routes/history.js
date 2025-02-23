@@ -1,15 +1,15 @@
 const express = require('express')
-const dbController = require('../db/db_controller')
+const db_controller_map = require('../db/db_controller_map')
 const router = express.Router()
 
 router.get('/get-all', async (req, res) => {
-    const { client_id, limit } = req.query
+    const { client_id, limit, frontend } = req.query
 
     if (!client_id) {
         res.status(400).send({ message: '请输入client_id' })
     }
 
-    dbController
+    db_controller_map[frontend]
         .getAllOssPhotoList(client_id, limit)
         .then((db_query_list) => {
             return res.status(200).json({
@@ -24,7 +24,7 @@ router.get('/get-all', async (req, res) => {
 })
 
 router.get('/get-one-prompt', async (req, res) => {
-    const { client_id, prompt_id, limit } = req.query
+    const { client_id, prompt_id, limit, frontend } = req.query
 
     if (!client_id) {
         res.status(400).send({ message: '请输入client_id' })
@@ -34,7 +34,7 @@ router.get('/get-one-prompt', async (req, res) => {
         res.status(400).send({ message: '请输入prompt_id' })
     }
 
-    dbController
+    db_controller_map[frontend]
         .getOssPhotoList(client_id, prompt_id, limit)
         .then((db_query_list) => {
             return res.status(200).json({
@@ -50,13 +50,12 @@ router.get('/get-one-prompt', async (req, res) => {
 
 /**
  * @desc 从数据库中删除用户单个或多个生成图片记录
- * @attention 删除操作时, oss存在限制, 只能一次删除用户所有的历史记录, 需等待后续沟通解决
  */
 router.delete('/delete', async (req, res) => {
-    const { client_id, filename_list } = req.body
+    const { client_id, filename_list, frontend } = req.body
 
     try {
-        const delete_item_count = await dbController.deleteOssPhoto(client_id, filename_list)
+        const delete_item_count = await db_controller_map[frontend].deleteOssPhoto(client_id, filename_list)
         return res.status(200).json({
             data: delete_item_count,
         })
