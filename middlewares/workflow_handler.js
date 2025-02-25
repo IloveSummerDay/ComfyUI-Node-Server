@@ -22,10 +22,14 @@ const workflow_handler = (req, res, next) => {
 
     const current_workflow_revise_config = workflow_revise_config[prompt]
     if (!current_workflow_revise_config) {
-        return res.status(400).send({ message: '未找到对应的工作流修改配置, 请检查workflow_config是否添加此工作流' })
+        return res.status(500).send({ message: '未找到对应的工作流修改配置, 请检查workflow_config是否添加此工作流' })
     }
 
-    handleReviseWorkflow(workflow_obj, current_workflow_revise_config, req.body)
+    try {
+        handleReviseWorkflow(workflow_obj, current_workflow_revise_config, req.body)
+    } catch (error) {
+        return res.status(500).send({ message: '修改工作流失败, 请检查workflow_config是否正确配置此工作流修改项' })
+    }
 
     req.body['workflow_obj'] = workflow_obj
     next()
@@ -50,7 +54,6 @@ function handleReviseWorkflow(workflow_obj, current_workflow_revise_config, data
         field_list.forEach((field_info) => {
             node_input_obj[field_info.workflow_field] = data_source[field_info.param_field]
         })
-
     })
 
     return workflow_obj
