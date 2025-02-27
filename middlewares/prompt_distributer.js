@@ -9,7 +9,7 @@ const prompt_distributer = (req, res) => {
             'Content-Type': 'application/json',
         },
         data: JSON.stringify({
-            client: req.body.client,
+            client_id: req.body.client,
             prompt: req.body.workflow_obj,
         }),
     })

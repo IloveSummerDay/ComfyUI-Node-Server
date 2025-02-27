@@ -1,106 +1,136 @@
 {
     "InsFilm": {
-        "13": [
-            {
-                "workflow_field": "image",
-                "param_field": "main_image"
-            }
-        ]
+        "max_progress": 14,
+        "modify_node": {
+            "13": [
+                {
+                    "workflow_field": "image",
+                    "param_field": "main_image"
+                }
+            ]
+        }
     },
     "InsSnow": {
-        "13": [
-            {
-                "workflow_field": "image",
-                "param_field": "main_image"
-            }
-        ]
+        "max_progress": 12,
+        "modify_node": {
+            "13": [
+                {
+                    "workflow_field": "image",
+                    "param_field": "main_image"
+                }
+            ]
+        }
     },
     "InsDusk": {
-        "13": [
-            {
-                "workflow_field": "image",
-                "param_field": "main_image"
-            }
-        ]
+        "max_progress": 12,
+        "modify_node": {
+            "13": [
+                {
+                    "workflow_field": "image",
+                    "param_field": "main_image"
+                }
+            ]
+        }
     },
     "InsWaterColor": {
-        "13": [
-            {
-                "workflow_field": "image",
-                "param_field": "main_image"
-            }
-        ]
+        "max_progress": 10,
+        "modify_node": {
+            "13": [
+                {
+                    "workflow_field": "image",
+                    "param_field": "main_image"
+                }
+            ]
+        }
     },
     "InsShuiMo": {
-        "13": [
-            {
-                "workflow_field": "image",
-                "param_field": "main_image"
-            }
-        ]
+        "max_progress": 12,
+        "modify_node": {
+            "13": [
+                {
+                    "workflow_field": "image",
+                    "param_field": "main_image"
+                }
+            ]
+        }
     },
     "I2IGhostXLAnimeCycleScifi": {
-        "10": [
-            {
-                "workflow_field": "image",
-                "param_field": "main_image"
-            }
-        ]
+        "max_progress": 14,
+        "modify_node": {
+            "10": [
+                {
+                    "workflow_field": "image",
+                    "param_field": "main_image"
+                }
+            ]
+        }
     },
     "I2IGhostXLAnimeChinese": {
-        "10": [
-            {
-                "workflow_field": "image",
-                "param_field": "main_image"
-            }
-        ]
+        "max_progress": 14,
+        "modify_node": {
+            "10": [
+                {
+                    "workflow_field": "image",
+                    "param_field": "main_image"
+                }
+            ]
+        }
     },
     "I2IGuoFeng": {
-        "10": [
-            {
-                "workflow_field": "image",
-                "param_field": "main_image"
-            }
-        ]
+        "max_progress": 20,
+        "modify_node": {
+            "10": [
+                {
+                    "workflow_field": "image",
+                    "param_field": "main_image"
+                }
+            ]
+        }
     },
     "PortraitStylizationWithBackground": {
-        "17": [
-            {
-                "workflow_field": "image",
-                "param_field": "main_image"
-            }
-        ],
-        "131": [
-            {
-                "workflow_field": "image",
-                "param_field": "bg_image"
-            }
-        ]
+        "max_progress": 36,
+        "modify_node": {
+            "17": [
+                {
+                    "workflow_field": "image",
+                    "param_field": "main_image"
+                }
+            ],
+            "131": [
+                {
+                    "workflow_field": "image",
+                    "param_field": "bg_image"
+                }
+            ]
+        }
     },
     "logo": {
-        "1": [
-            {
-                "workflow_field": "text",
-                "param_field": "voice_text"
-            }
-        ],
-        "2": [
-            {
-                "workflow_field": "image",
-                "param_field": "logo"
-            }
-        ],
-        "101": [
-            {
-                "workflow_field": "weight",
-                "param_field": "weight"
-            }
-        ],
-        "21": [
-            {
-                "workflow_field": "seed",
-                "param_field": "seed"
-            }
-        ]
+        "max_progress": 8,
+        "modify_node": {
+            "1": [
+                {
+                    "workflow_field": "text",
+                    "param_field": "voice_text"
+                }
+            ],
+            "2": [
+                {
+                    "workflow_field": "image",
+                    "param_field": "logo"
+                }
+            ],
+            "101": [
+                {
+                    "workflow_field": "weight",
+                    "param_field": "weight"
+                }
+            ],
+            "21": [
+                {
+                    "workflow_field": "seed",
+                    "param_field": "seed"
+                }
+            ]
+        }
     }
 }
