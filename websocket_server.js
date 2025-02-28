@@ -21,7 +21,6 @@ function createWebSocket(server) {
                 })
             )
             client_socket.close()
-            comfy_socket.close()
         }
 
         const comfy_socket = new WebSocket(`ws://${ai_sever_host}:${ai_sever_port}/ws?clientId=${client_id}`)
