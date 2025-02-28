@@ -7,20 +7,19 @@ const router = express.Router()
 router.get('/', async (req, res) => {
     const { prompt_id, client_id, ai_sever_host, ai_sever_port, frontend } = req.query
 
-    await db_controller_map[frontend]
-        .getOssPhotoList(client_id, prompt_id)
-        .then((result) => {
-            const db_query_list = result.data
+    try {
+        const db_query_list = await db_controller_map[frontend].getOssPhotoList(client_id, prompt_id)
+        if (db_query_list.length > 0) {
             return res.status(200).json({
                 data: db_query_list,
                 source: 'db',
             })
+        }
+    } catch (error) {
+        return res.status(500).json({
+            message: '数据库请求失败，请检查数据库连接状态',
         })
-        .catch(() => {
-            return res.status(500).json({
-                message: '数据库请求失败，请检查数据库连接状态',
-            })
-        })
+    }
 
     /**
      * @desc 数据库中没有，则去AIGC Server应用中查询
