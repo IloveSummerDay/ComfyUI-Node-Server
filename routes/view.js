@@ -80,13 +80,31 @@ async function handleUpOSS(output_image_list, ai_server_host, ai_server_port) {
                 'Content-Type': 'application/json',
             },
             data: JSON.stringify({
-                file_name_list,
-                ai_server_host,
-                ai_server_port,
+                fileNames: file_name_list, // dotnet-oss-arg need delete
+                clientId: 'cuz', // dotnet-oss-arg need delete
+
+                // go-oss
+                // file_name_list,
+                // ai_server_host,
+                // ai_server_port,
             }),
         })
             .then((result) => {
-                resolve(result.data)
+                // dotnet-oss
+                const image_list = []
+                for (let i = 0; i < file_name_list.length; i++) {
+                    let image_info = {}
+                    image_info['filename'] = file_name_list[i]
+                    image_info['oss_url'] = result.data.data[i]
+
+                    image_list.push(image_info)
+                }
+
+                resolve(image_list)
+                //
+
+                // go-oss
+                // resolve(result.data)
             })
             .catch(() => {
                 reject()
