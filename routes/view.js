@@ -32,6 +32,9 @@ router.get('/', async (req, res) => {
         .then(async (response) => {
             const output_list = Object.values(response.data[prompt_id].outputs)
             const output_image_list = handleComfyHistoryRawOutput(output_list)
+            if (output_image_list.length == 0) {
+                return res.status(200).json({ data: [] })
+            }
 
             try {
                 const oss_image_list = await handleUpOSS(output_image_list, ai_sever_host, ai_sever_port)
@@ -61,10 +64,6 @@ module.exports = router
  * @return {Promise} 在线图片信息列表
  */
 async function handleUpOSS(output_image_list, ai_server_host, ai_server_port) {
-    if (output_image_list.length == 0) {
-        return
-    }
-
     const file_name_list = []
     for (let i = 0; i < output_image_list.length; i++) {
         if (output_image_list[i].type == 'output') {
@@ -74,7 +73,7 @@ async function handleUpOSS(output_image_list, ai_server_host, ai_server_port) {
 
     return new Promise((resolve, reject) => {
         axios({
-            url: `${process.env.OSS_URL}/save-oss`,
+            url: `${process.env.OSS_URL}/SaveImgToOSS`, // save-oss
             method: 'post',
             headers: {
                 'Content-Type': 'application/json',
