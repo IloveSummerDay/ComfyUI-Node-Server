@@ -1,7 +1,7 @@
 {
     "1": {
         "inputs": {
-            "from_translate": "english",
+            "from_translate": "simplified chinese",
             "to_translate": "english",
             "add_proxies": "disable",
             "proxies": "",
