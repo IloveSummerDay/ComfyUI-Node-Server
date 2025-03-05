@@ -1,90 +1,23 @@
 {
-    "1": {
-        "inputs": {
-            "from_translate": "simplified chinese",
-            "to_translate": "english",
-            "add_proxies": "disable",
-            "proxies": "",
-            "auth_data": "",
-            "service": "MyMemoryTranslator [free]",
-            "text": "logo,蛋糕切片,,,,,绿色",
-            "Show proxy": "proxy_hide",
-            "Show authorization": "authorization_hide",
-            "clip": ["27", 1]
-        },
-        "class_type": "DeepTranslatorCLIPTextEncodeNode",
-        "_meta": {
-            "title": "Deep Translator CLIP Text Encode Node"
-        }
-    },
-    "2": {
-        "inputs": {
-            "image": "xiaohui.png",
-            "upload": "image"
-        },
-        "class_type": "LoadImage",
-        "_meta": {
-            "title": "加载图像"
-        }
-    },
     "21": {
         "inputs": {
-            "seed": 36178178323928,
+            "seed": "seed",
             "steps": 8,
             "cfg": 3,
             "sampler_name": "ddim",
             "scheduler": "sgm_uniform",
             "denoise": 1,
-            "model": ["101", 0],
+            "model": ["3", 0],
             "positive": ["1", 0],
             "negative": ["25", 0],
             "latent_image": ["23", 0]
         },
-        "class_type": "KSampler",
-        "_meta": {
-            "title": "K采样器"
-        }
+        "class_type": "KSampler"
     },
-    "22": {
-        "inputs": {
-            "ckpt_name": "sdXL_v10VAEFix.safetensors"
-        },
-        "class_type": "CheckpointLoaderSimple",
-        "_meta": {
-            "title": "Checkpoint加载器（简易）"
-        }
-    },
-    "23": {
-        "inputs": {
-            "width": 1024,
-            "height": 1024,
-            "batch_size": 4
-        },
-        "class_type": "EmptyLatentImage",
-        "_meta": {
-            "title": "空Latent图像"
-        }
-    },
-    "25": {
-        "inputs": {
-            "text": "",
-            "clip": ["27", 1]
-        },
-        "class_type": "CLIPTextEncode",
-        "_meta": {
-            "title": "CLIP文本编码"
-        }
-    },
-    "26": {
-        "inputs": {
-            "samples": ["21", 0],
-            "vae": ["22", 2]
-        },
-        "class_type": "VAEDecode",
-        "_meta": {
-            "title": "VAE解码"
-        }
-    },
+    "22": { "inputs": { "ckpt_name": "sdXL_v10VAEFix.safetensors" }, "class_type": "CheckpointLoaderSimple" },
+    "23": { "inputs": { "width": 1024, "height": 1024, "batch_size": 4 }, "class_type": "EmptyLatentImage" },
+    "25": { "inputs": { "text": "", "clip": ["27", 1] }, "class_type": "CLIPTextEncode" },
+    "26": { "inputs": { "samples": ["21", 0], "vae": ["22", 2] }, "class_type": "VAEDecode" },
     "27": {
         "inputs": {
             "lora_name": "LogoRedmondV2-Logo-LogoRedmAF.safetensors",
@@ -93,10 +26,22 @@
             "model": ["60", 0],
             "clip": ["60", 1]
         },
-        "class_type": "LoraLoader",
-        "_meta": {
-            "title": "加载LoRA"
-        }
+        "class_type": "LoraLoader"
+    },
+    "1": {
+        "inputs": {
+            "from_translate": "chinese simplified",
+            "to_translate": "english",
+            "add_proxies": "disable",
+            "proxies": "",
+            "auth_data": "",
+            "service": "MyMemoryTranslator [free]",
+            "text": "logo,",
+            "Show proxy": "proxy_hide",
+            "Show authorization": "authorization_hide",
+            "clip": ["27", 1]
+        },
+        "class_type": "DeepTranslatorCLIPTextEncodeNode"
     },
     "52": {
         "inputs": {
@@ -106,14 +51,9 @@
             "black_point": 0.01,
             "white_point": 0.02,
             "process_detail": true,
-            "device": "cuda",
-            "max_megapixels": 2,
             "image": ["26", 0]
         },
-        "class_type": "LayerMask: RmBgUltra V2",
-        "_meta": {
-            "title": "LayerMask: RmBgUltra V2"
-        }
+        "class_type": "LayerMask: RmBgUltra V2"
     },
     "60": {
         "inputs": {
@@ -123,40 +63,14 @@
             "model": ["22", 0],
             "clip": ["22", 1]
         },
-        "class_type": "LoraLoader",
-        "_meta": {
-            "title": "加载LoRA"
-        }
+        "class_type": "LoraLoader"
     },
-    "61": {
-        "inputs": {
-            "ipadapter_file": "ip-adapter_sdxl.safetensors"
-        },
-        "class_type": "IPAdapterModelLoader",
-        "_meta": {
-            "title": "IPAdapter Model Loader"
-        }
-    },
+    "61": { "inputs": { "ipadapter_file": "ip-adapter_sdxl.safetensors" }, "class_type": "IPAdapterModelLoader" },
     "63": {
-        "inputs": {
-            "clip_name": "CLIP-ViT-bigG-14-laion2B-39B-b160k.safetensors"
-        },
-        "class_type": "CLIPVisionLoader",
-        "_meta": {
-            "title": "加载CLIP视觉"
-        }
+        "inputs": { "clip_name": "CLIP-ViT-bigG-14-laion2B-39B-b160k.safetensors" },
+        "class_type": "CLIPVisionLoader"
     },
-    "100": {
-        "inputs": {
-            "filename_prefix": "Logo",
-            "images": ["52", 0]
-        },
-        "class_type": "SaveImage",
-        "_meta": {
-            "title": "保存图像"
-        }
-    },
-    "101": {
+    "3": {
         "inputs": {
             "weight": 0,
             "weight_type": "linear",
@@ -169,9 +83,8 @@
             "image": ["2", 0],
             "clip_vision": ["63", 0]
         },
-        "class_type": "IPAdapterAdvanced",
-        "_meta": {
-            "title": "IPAdapter Advanced"
-        }
-    }
+        "class_type": "IPAdapterAdvanced"
+    },
+    "2": { "inputs": { "image": "xiaohui.png", "upload": "image" }, "class_type": "LoadImage" },
+    "100": { "inputs": { "filename_prefix": "Logo", "images": ["52", 0] }, "class_type": "SaveImage" }
 }

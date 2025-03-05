@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev-stylize-local": "dotenvx run --debug --env-file=./env/.env.stylize.dev -- nodemon index.js",
-    "stylize": "npx dotenvx run --debug --env-file=./env/.env.stylize.prod -- node index.js"
+    "dev": "dotenvx run --debug --env-file=./env/.env.dev -- nodemon index.js",
+    "comfy": "npx dotenvx run --debug --env-file=./env/.env.prod -- node index.js"
   },
   "keywords": [],
   "author": "",
