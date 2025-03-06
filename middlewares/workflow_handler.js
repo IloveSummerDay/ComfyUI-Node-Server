@@ -4,7 +4,7 @@
 
 const fs = require('fs')
 const path = require('path')
-const workflow_revise_config = require("../configs/workflow_config.json")
+const workflow_revise_config = require('../configs/workflow_config.json')
 
 const workflow_handler = (req, res, next) => {
     const { prompt } = req.body
@@ -23,7 +23,7 @@ const workflow_handler = (req, res, next) => {
     }
 
     try {
-        const current_workflow_modify_node_config = current_workflow_revise_config["modify_node"]
+        const current_workflow_modify_node_config = current_workflow_revise_config['modify_node']
         handleReviseWorkflow(workflow_obj, current_workflow_modify_node_config, req.body)
     } catch (error) {
         return res.status(500).send({ message: '修改工作流失败, 请检查workflow_config是否正确配置此工作流修改项' })
@@ -35,12 +35,11 @@ const workflow_handler = (req, res, next) => {
 
 module.exports = workflow_handler
 
-
 /**
  * @desc 修正工作流
  * @param {Object} workflow_obj 工作流信息对象
  * @param {Object} workflow_modify_node_config 工作流修改配置 结点索引(Key) - 结点字段和参数字段(value)
- * @param {Object} data_source 
+ * @param {Object} data_source
  * @returns 返回修正后的工作流信息对象
  */
 function handleReviseWorkflow(workflow_obj, workflow_modify_node_config, data_source) {
@@ -50,7 +49,8 @@ function handleReviseWorkflow(workflow_obj, workflow_modify_node_config, data_so
         const field_list = workflow_modify_node_config[node_index]
 
         field_list.forEach((field_info) => {
-            node_input_obj[field_info.workflow_field] = data_source[field_info.param_field]
+            const value = data_source[field_info.param_field]
+            node_input_obj[field_info.workflow_field] = value ? value : ''
         })
     })
 
