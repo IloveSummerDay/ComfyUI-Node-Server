@@ -50,7 +50,9 @@ function handleReviseWorkflow(workflow_obj, workflow_modify_node_config, data_so
 
         field_list.forEach((field_info) => {
             const value = data_source[field_info.param_field]
-            node_input_obj[field_info.workflow_field] = value ? value : ''
+            if (value) {
+                node_input_obj[field_info.workflow_field] = value
+            }
         })
     })
 
