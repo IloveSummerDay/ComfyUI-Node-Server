@@ -73,37 +73,19 @@ async function handleUpOSS(output_image_list, ai_server_host, ai_server_port) {
 
     return new Promise((resolve, reject) => {
         axios({
-            url: `${process.env.OSS_URL}/SaveImgToOSS`, // save-oss
+            url: `${process.env.OSS_URL}/save-oss`,
             method: 'post',
             headers: {
                 'Content-Type': 'application/json',
             },
             data: JSON.stringify({
-                fileNames: file_name_list, // dotnet-oss-arg need delete
-                clientId: 'cuz', // dotnet-oss-arg need delete
-
-                // go-oss
-                // file_name_list,
-                // ai_server_host,
-                // ai_server_port,
+                file_name_list,
+                ai_server_host,
+                ai_server_port,
             }),
         })
             .then((result) => {
-                // dotnet-oss
-                const image_list = []
-                for (let i = 0; i < file_name_list.length; i++) {
-                    let image_info = {}
-                    image_info['filename'] = file_name_list[i]
-                    image_info['oss_url'] = result.data.data[i]
-
-                    image_list.push(image_info)
-                }
-
-                resolve(image_list)
-                //
-
-                // go-oss
-                // resolve(result.data)
+                resolve(result.data)
             })
             .catch(() => {
                 reject()
