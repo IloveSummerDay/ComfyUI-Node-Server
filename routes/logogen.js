@@ -19,21 +19,22 @@ router.use(formDataBodyParser)
 router.use(formDataValidReviewer)
 
 router.use((req, res, next) => {
-    const { logoname } = req.body
+    let { logoname } = req.body
+    
     if (!logoname) {
-        next()
-    } else {
-        const logo_buffer = fs.readFileSync(path.resolve(__dirname, `../public/${logoname}`))
-        const logo = {
-            buffer: logo_buffer,
-            originalname: logoname,
-            mimetype: 'image/png',
-        }
-
-        req.body.file_image_list.push(logo)
-        req.body['logo'] = logo.originalname
-        next()
+        logoname = 'xiaohui.png'
     }
+
+    const logo_buffer = fs.readFileSync(path.resolve(__dirname, `../public/${logoname}`))
+    const logo = {
+        buffer: logo_buffer,
+        originalname: logoname,
+        mimetype: 'image/png',
+    }
+
+    req.body.file_image_list.push(logo)
+    req.body['logo'] = logo.originalname
+    next()
 })
 
 router.use(promptImageUploader)
