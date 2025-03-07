@@ -2,6 +2,7 @@ const express = require('express')
 const net = require('net')
 const fs = require('fs')
 const path = require('path')
+const axios = require('axios')
 const router = express.Router()
 
 router.get('/', (req, res, next) => {
@@ -18,34 +19,22 @@ router.get('/', (req, res, next) => {
     host_info_list.forEach((host_info) => {
         promise_list.push(
             new Promise((resolve) => {
-                const socket = new net.Socket()
-                socket.setTimeout(5000)
-
-                socket.on('connect', () => {
-                    resolve({
-                        alive: true,
-                        ...host_info,
-                    })
-                    socket.destroy()
+                axios({
+                    url: `http://${host_info.host}:${host_info.port}/system_stats`,
+                    timeout: 3000,
                 })
-
-                socket.on('error', () => {
-                    resolve({
-                        alive: false,
-                        ...host_info,
+                    .then(() => {
+                        resolve({
+                            alive: true,
+                            ...host_info,
+                        })
                     })
-                    socket.destroy()
-                })
-
-                socket.on('timeout', () => {
-                    resolve({
-                        alive: false,
-                        ...host_info,
+                    .catch(() => {
+                        resolve({
+                            alive: false,
+                            ...host_info,
+                        })
                     })
-                    socket.destroy()
-                })
-
-                socket.connect(host_info.port, host_info.host)
             })
         )
     })
