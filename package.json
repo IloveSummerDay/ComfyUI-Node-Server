@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "dotenvx run --debug --env-file=./env/.env.dev -- nodemon index.js",
+    "dev": "npx dotenvx run --debug --env-file=./env/.env.dev -- nodemon index.js",
     "test": "npx dotenvx run --debug --env-file=./env/.env.test -- node index.js",
     "comfy": "npx dotenvx run --debug --env-file=./env/.env.prod -- node index.js"
   },
