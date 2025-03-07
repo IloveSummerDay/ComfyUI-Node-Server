@@ -1,175 +1,176 @@
 {
-  "3": {
-    "inputs": {
-      "seed": 282552105875226,
-      "steps": 12,
-      "cfg": 2,
-      "sampler_name": "dpmpp_2m_sde",
-      "scheduler": "karras",
-      "denoise": 0.6,
-      "model": ["82", 0],
-      "positive": ["82", 1],
-      "negative": ["82", 2],
-      "latent_image": ["84", 0]
+    "3": {
+        "inputs": {
+            "seed": 831154970633796,
+            "steps": 12,
+            "cfg": 2,
+            "sampler_name": "dpmpp_2m_sde",
+            "scheduler": "karras",
+            "denoise": 0.6,
+            "model": ["82", 0],
+            "positive": ["82", 1],
+            "negative": ["82", 2],
+            "latent_image": ["84", 0]
+        },
+        "class_type": "KSampler",
+        "_meta": {
+            "title": "K采样器"
+        }
     },
-    "class_type": "KSampler",
-    "_meta": {
-      "title": "K采样器"
-    }
-  },
-  "4": {
-    "inputs": {
-      "ckpt_name": "dreamshaperXL_v21TurboDPMSDE.safetensors"
+    "4": {
+        "inputs": {
+            "ckpt_name": "dreamshaperXL_v21TurboDPMSDE.safetensors"
+        },
+        "class_type": "CheckpointLoaderSimple",
+        "_meta": {
+            "title": "Checkpoint加载器(简易)"
+        }
     },
-    "class_type": "CheckpointLoaderSimple",
-    "_meta": {
-      "title": "Checkpoint加载器(简易)"
-    }
-  },
-  "8": {
-    "inputs": {
-      "samples": ["3", 0],
-      "vae": ["4", 2]
+    "8": {
+        "inputs": {
+            "samples": ["3", 0],
+            "vae": ["4", 2]
+        },
+        "class_type": "VAEDecode",
+        "_meta": {
+            "title": "VAE解码"
+        }
     },
-    "class_type": "VAEDecode",
-    "_meta": {
-      "title": "VAE解码"
-    }
-  },
-  "11": {
-    "inputs": {
-      "instantid_file": "ip-adapter.bin"
+    "11": {
+        "inputs": {
+            "instantid_file": "ip-adapter.bin"
+        },
+        "class_type": "InstantIDModelLoader",
+        "_meta": {
+            "title": "Load InstantID Model"
+        }
     },
-    "class_type": "InstantIDModelLoader",
-    "_meta": {
-      "title": "Load InstantID Model"
-    }
-  },
-  "13": {
-    "inputs": {
-      "image": "微信图片_20240308194455 (6).jpg",
-      "upload": "image"
+    "13": {
+        "inputs": {
+            "image": "1726549330398.jpg",
+            "upload": "image"
+        },
+        "class_type": "LoadImage",
+        "_meta": {
+            "title": "加载图像"
+        }
     },
-    "class_type": "LoadImage",
-    "_meta": {
-      "title": "加载图像"
-    }
-  },
-  "16": {
-    "inputs": {
-      "control_net_name": "diffusion_pytorch_model.safetensors"
+    "16": {
+        "inputs": {
+            "control_net_name": "diffusion_pytorch_model.safetensors"
+        },
+        "class_type": "ControlNetLoader",
+        "_meta": {
+            "title": "ControlNet加载器"
+        }
     },
-    "class_type": "ControlNetLoader",
-    "_meta": {
-      "title": "ControlNet加载器"
-    }
-  },
-  "38": {
-    "inputs": {
-      "provider": "CUDA"
+    "38": {
+        "inputs": {
+            "provider": "CUDA"
+        },
+        "class_type": "InstantIDFaceAnalysis",
+        "_meta": {
+            "title": "InstantID Face Analysis"
+        }
     },
-    "class_type": "InstantIDFaceAnalysis",
-    "_meta": {
-      "title": "InstantID Face Analysis"
-    }
-  },
-  "39": {
-    "inputs": {
-      "text": "baixl-shuimo,holding sword,forest,ink wash painting,paint splatter,green theme,",
-      "clip": ["78", 1]
+    "39": {
+        "inputs": {
+            "text": "baixl-shuimo,holding sword,forest,ink wash painting,paint splatter,green theme,",
+            "clip": ["78", 1]
+        },
+        "class_type": "CLIPTextEncode",
+        "_meta": {
+            "title": "CLIP文本编码器"
+        }
     },
-    "class_type": "CLIPTextEncode",
-    "_meta": {
-      "title": "CLIP文本编码器"
-    }
-  },
-  "40": {
-    "inputs": {
-      "text": ["79", 0],
-      "clip": ["78", 1]
+    "40": {
+        "inputs": {
+            "text": ["79", 0],
+            "clip": ["78", 1]
+        },
+        "class_type": "CLIPTextEncode",
+        "_meta": {
+            "title": "CLIP文本编码器"
+        }
     },
-    "class_type": "CLIPTextEncode",
-    "_meta": {
-      "title": "CLIP文本编码器"
-    }
-  },
-  "75": {
-    "inputs": {
-      "filename_prefix": "InsShuiMo",
-      "images": ["8", 0]
+    "75": {
+        "inputs": {
+            "filename_prefix": "InsShuiMo",
+            "images": ["8", 0]
+        },
+        "class_type": "SaveImage",
+        "_meta": {
+            "title": "保存图像"
+        }
     },
-    "class_type": "SaveImage",
-    "_meta": {
-      "title": "保存图像"
-    }
-  },
-  "78": {
-    "inputs": {
-      "lora_name": "SDXLShuiMoHuanJing.safetensors",
-      "strength_model": 0.7000000000000001,
-      "strength_clip": 0.7000000000000001,
-      "model": ["4", 0],
-      "clip": ["4", 1]
+    "78": {
+        "inputs": {
+            "lora_name": "SDXLShuiMoHuanJing.safetensors",
+            "strength_model": 0.7000000000000001,
+            "strength_clip": 0.7000000000000001,
+            "model": ["4", 0],
+            "clip": ["4", 1]
+        },
+        "class_type": "LoraLoader",
+        "_meta": {
+            "title": "LoRA加载器"
+        }
     },
-    "class_type": "LoraLoader",
-    "_meta": {
-      "title": "LoRA加载器"
-    }
-  },
-  "79": {
-    "inputs": {
-      "embedding": "negativeXL_D.safetensors",
-      "emphasis": 1,
-      "append": false,
-      "text": "nsfw, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, artist name\n"
+    "79": {
+        "inputs": {
+            "embedding": "negativeXL_D.safetensors",
+            "emphasis": 1,
+            "append": false,
+            "text": "nsfw, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry, artist name\n"
+        },
+        "class_type": "EmbeddingPicker",
+        "_meta": {
+            "title": "Embedding Picker"
+        }
     },
-    "class_type": "EmbeddingPicker",
-    "_meta": {
-      "title": "Embedding Picker"
-    }
-  },
-  "82": {
-    "inputs": {
-      "ip_weight": 0.6,
-      "cn_strength": 0.8,
-      "start_at": 0,
-      "end_at": 1,
-      "noise": 0,
-      "instantid": ["11", 0],
-      "insightface": ["38", 0],
-      "control_net": ["16", 0],
-      "image": ["13", 0],
-      "model": ["78", 0],
-      "positive": ["39", 0],
-      "negative": ["40", 0],
-      "image_kps": ["13", 0]
+    "82": {
+        "inputs": {
+            "ip_weight": 0.6,
+            "cn_strength": 0.8,
+            "start_at": 0,
+            "end_at": 1,
+            "noise": 0,
+            "combine_embeds": "average",
+            "instantid": ["11", 0],
+            "insightface": ["38", 0],
+            "control_net": ["16", 0],
+            "image": ["13", 0],
+            "model": ["78", 0],
+            "positive": ["39", 0],
+            "negative": ["40", 0],
+            "image_kps": ["13", 0]
+        },
+        "class_type": "ApplyInstantIDAdvanced",
+        "_meta": {
+            "title": "Apply InstantID Advanced"
+        }
     },
-    "class_type": "ApplyInstantIDAdvanced",
-    "_meta": {
-      "title": "Apply InstantID Advanced"
-    }
-  },
-  "83": {
-    "inputs": {
-      "pixels": ["13", 0],
-      "vae": ["4", 2]
+    "83": {
+        "inputs": {
+            "pixels": ["13", 0],
+            "vae": ["4", 2]
+        },
+        "class_type": "VAEEncode",
+        "_meta": {
+            "title": "VAE编码"
+        }
     },
-    "class_type": "VAEEncode",
-    "_meta": {
-      "title": "VAE编码"
+    "84": {
+        "inputs": {
+            "upscale_method": "bilinear",
+            "width": 1000,
+            "height": 1200,
+            "crop": "center",
+            "samples": ["83", 0]
+        },
+        "class_type": "LatentUpscale",
+        "_meta": {
+            "title": "Latent缩放"
+        }
     }
-  },
-  "84": {
-    "inputs": {
-      "upscale_method": "bilinear",
-      "width": 1000,
-      "height": 1200,
-      "crop": "center",
-      "samples": ["83", 0]
-    },
-    "class_type": "LatentUpscale",
-    "_meta": {
-      "title": "Latent缩放"
-    }
-  }
 }
