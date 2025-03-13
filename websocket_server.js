@@ -27,9 +27,9 @@ function createWebSocket(server) {
         comfy_socket.on('message', (message) => {
             const json_message = JSON.parse(message.toString('utf8'))
             const type = json_message.type
-            const data = json_message.data
 
             if (type == 'executing') {
+                const data = json_message.data
                 if (!data.node) {
                     client_socket.send(
                         JSON.stringify({
@@ -39,7 +39,7 @@ function createWebSocket(server) {
                 }
             }
 
-            if (type == 'progress' && prompt_id == data.prompt_id) {
+            if (type == 'progress' && prompt_id == json_message.data.prompt_id) {
                 current_progress = current_progress + 1
                 client_socket.send(
                     JSON.stringify({
