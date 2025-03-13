@@ -34,6 +34,8 @@ router.use((req, res, next) => {
 
         req.body.file_image_list.push(bg_image)
         req.body['bg_image'] = bg_image.originalname
+    } else if (req.body.prompt == 'pulid') {
+        req.body['seed'] = Math.floor(Math.random() * 1000000)
     }
 
     next()
