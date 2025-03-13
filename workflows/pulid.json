@@ -6,7 +6,7 @@
         },
         "class_type": "CLIPTextEncode",
         "_meta": {
-            "title": "CLIP文本编码（提示）"
+            "title": "CLIP文本编码器"
         }
     },
     "10": {
@@ -15,7 +15,7 @@
         },
         "class_type": "VAELoader",
         "_meta": {
-            "title": "加载VAE"
+            "title": "VAE加载器"
         }
     },
     "16": {
@@ -27,25 +27,13 @@
             "title": "K采样器选择"
         }
     },
-    "17": {
-        "inputs": {
-            "scheduler": "simple",
-            "steps": 12,
-            "denoise": 1,
-            "model": ["63", 0]
-        },
-        "class_type": "BasicScheduler",
-        "_meta": {
-            "title": "基本调度器"
-        }
-    },
     "25": {
         "inputs": {
-            "noise_seed": 439155509011165
+            "noise_seed": 233699443071045
         },
         "class_type": "RandomNoise",
         "_meta": {
-            "title": "随机噪声"
+            "title": "随机噪波"
         }
     },
     "26": {
@@ -66,7 +54,7 @@
         },
         "class_type": "EmptySD3LatentImage",
         "_meta": {
-            "title": "空SD3潜空间图像"
+            "title": "空Latent_SD3"
         }
     },
     "45": {
@@ -85,7 +73,7 @@
         },
         "class_type": "BasicGuider",
         "_meta": {
-            "title": "基本引导器"
+            "title": "基础引导"
         }
     },
     "49": {
@@ -119,6 +107,11 @@
             "weight": 0.8,
             "start_at": 0,
             "end_at": 1,
+            "fusion": "mean",
+            "fusion_weight_max": 1,
+            "fusion_weight_min": 0,
+            "train_step": 1000,
+            "use_gray": true,
             "model": ["68", 0],
             "pulid_flux": ["45", 0],
             "eva_clip": ["51", 0],
@@ -137,7 +130,7 @@
         },
         "class_type": "UNETLoader",
         "_meta": {
-            "title": "加载扩散模型"
+            "title": "UNET加载器"
         }
     },
     "64": {
@@ -154,7 +147,7 @@
     },
     "67": {
         "inputs": {
-            "image": "微信图片_20250115120546.jpg",
+            "image": "1726548117564.jpg",
             "upload": "image"
         },
         "class_type": "LoadImage",
@@ -172,7 +165,7 @@
         },
         "class_type": "LoraLoader",
         "_meta": {
-            "title": "加载LoRA"
+            "title": "LoRA加载器"
         }
     },
     "69": {
@@ -190,12 +183,12 @@
             "noise": ["25", 0],
             "guider": ["47", 0],
             "sampler": ["16", 0],
-            "sigmas": ["17", 0],
+            "sigmas": ["81", 0],
             "latent_image": ["27", 0]
         },
         "class_type": "SamplerCustomAdvanced",
         "_meta": {
-            "title": "自定义采样器（高级）"
+            "title": "自定义采样器(高级)"
         }
     },
     "73": {
@@ -206,12 +199,11 @@
             "replace_underscore": false,
             "trailing_comma": false,
             "exclude_tags": "blurry_background,photo_background,style,realistic,black_background,",
-            "tags": "solo, 1boy, male_focus, glasses",
             "image": ["74", 0]
         },
         "class_type": "WD14Tagger|pysssss",
         "_meta": {
-            "title": "WD14 Tagger 🐍"
+            "title": "WD14反推提示词"
         }
     },
     "74": {
@@ -228,7 +220,7 @@
         },
         "class_type": "LayerMask: RmBgUltra V2",
         "_meta": {
-            "title": "LayerMask: RmBgUltra V2"
+            "title": "移除背景 V2"
         }
     },
     "75": {
@@ -243,44 +235,54 @@
     "76": {
         "inputs": {
             "text": ["73", 0],
-            "text2": "solo, 1boy, male_focus, glasses"
+            "text2": "black_hair, glasses, bag"
         },
         "class_type": "ShowText|pysssss",
         "_meta": {
-            "title": "Show Text 🐍"
+            "title": "展示文本"
         }
     },
     "77": {
         "inputs": {
             "text_1": ["79", 0],
-            "text_2": ["73", 0],
-            "text_3": "",
-            "text_4": ""
+            "text_2": ["73", 0]
         },
         "class_type": "LayerUtility: TextJoin",
         "_meta": {
-            "title": "LayerUtility: TextJoin"
+            "title": "文本合并"
         }
     },
     "78": {
         "inputs": {
             "text": ["77", 0],
-            "text2": "A captivating portrait of traditional Chinese lantern, set against an atmospheric backdrop that suggests she or he is in a bustling street or market. An oil painting in the style of Monet.No ornament on a man's hand.\nOn a daytime busy street., solo, 1boy, male_focus, glasses"
+            "text2": "A captivating portrait of traditional Chinese lantern, set against an atmospheric backdrop that suggests she or he is in a bustling street or market. An oil painting in the style of Monet.No ornament on a man's hand.\nOn a daytime busy street., black_hair, glasses, bag"
         },
         "class_type": "ShowText|pysssss",
         "_meta": {
-            "title": "Show Text 🐍"
+            "title": "展示文本"
         }
     },
     "79": {
         "inputs": {
             "text": "A captivating portrait of traditional Chinese lantern, set against an atmospheric backdrop that suggests she or he is in a bustling street or market. An oil painting in the style of Monet.No ornament on a man's hand.\nOn a daytime busy street.",
-            "seed": 1323,
+            "seed": 1359,
             "autorefresh": "Yes"
         },
         "class_type": "DPRandomGenerator",
         "_meta": {
-            "title": "Random Prompts"
+            "title": "动态提示词(随机)"
+        }
+    },
+    "81": {
+        "inputs": {
+            "scheduler": "simple",
+            "steps": 12,
+            "denoise": 1,
+            "model": ["63", 0]
+        },
+        "class_type": "BasicScheduler",
+        "_meta": {
+            "title": "基础调度器"
         }
     }
 }
