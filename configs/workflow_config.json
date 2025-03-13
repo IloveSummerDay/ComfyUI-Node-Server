@@ -104,6 +104,24 @@
             ]
         }
     },
+
+    "pulid": {
+        "max_progress": 12,
+        "modify_node": {
+            "67": [
+                {
+                    "workflow_field": "image",
+                    "param_field": "main_image"
+                }
+            ],
+            "25": [
+                {
+                    "workflow_field": "noise_seed",
+                    "param_field": "seed"
+                }
+            ]
+        }
+    },
     "logo": {
         "max_progress": 8,
         "modify_node": {

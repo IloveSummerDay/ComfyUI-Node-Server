@@ -15,12 +15,12 @@ function createWebSocket(server) {
         try {
             max_progress = workflow_config[prompt]['max_progress']
         } catch (error) {
-            client_socket.send(
+            client_socket.close(
+                400,
                 JSON.stringify({
                     message: 'prompt输入有误或缺失，请检查workflow_config是否添加对应工作流',
                 })
             )
-            client_socket.close()
         }
 
         const comfy_socket = new WebSocket(`ws://${ai_sever_host}:${ai_sever_port}/ws?clientId=${client_id}`)
