@@ -27,28 +27,35 @@ function createWebSocket(server) {
         comfy_socket.on('message', (message) => {
             const is_json = isJson(message)
             if (!is_json) return
-            
-            const json_message = JSON.parse(message.toString('utf8'))
-            const type = json_message.type
 
-            if (type == 'executing') {
-                const data = json_message.data
-                if (!data.node) {
+            try {
+                const json_message = JSON.parse(message.toString('utf8'))
+                const type = json_message.type
+
+                if (type == 'executing') {
+                    const data = json_message.data
+                    if (!data.node) {
+                        client_socket.send(
+                            JSON.stringify({
+                                type: 'finish',
+                            })
+                        )
+                    }
+                } else if (type == 'progress' && prompt_id == json_message.data.prompt_id) {
+                    current_progress = current_progress + 1
                     client_socket.send(
                         JSON.stringify({
-                            type: 'finish',
+                            type,
+                            value: current_progress,
+                            max: max_progress,
                         })
                     )
                 }
-            }
-
-            if (type == 'progress' && prompt_id == json_message.data.prompt_id) {
-                current_progress = current_progress + 1
-                client_socket.send(
+            } catch (error) {
+                client_socket.close(
+                    400,
                     JSON.stringify({
-                        type,
-                        value: current_progress,
-                        max: max_progress,
+                        message: '后端服务与算力服务间websocket通信中断',
                     })
                 )
             }
@@ -62,13 +69,13 @@ function createWebSocket(server) {
 
 function isJson(message) {
     if (typeof message !== 'string' || message.trim() === '') {
-        return false; // 空字符串或非字符串类型直接返回 false
+        return false // 空字符串或非字符串类型直接返回 false
     }
     try {
-        JSON.parse(message);
-        return true;
+        JSON.parse(message)
+        return true
     } catch (error) {
-        return false;
+        return false
     }
 }
 
