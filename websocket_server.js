@@ -25,6 +25,9 @@ function createWebSocket(server) {
 
         const comfy_socket = new WebSocket(`ws://${ai_sever_host}:${ai_sever_port}/ws?clientId=${client_id}`)
         comfy_socket.on('message', (message) => {
+            const is_json = isJson(message)
+            if (!is_json) return
+            
             const json_message = JSON.parse(message.toString('utf8'))
             const type = json_message.type
 
@@ -55,6 +58,18 @@ function createWebSocket(server) {
             comfy_socket.close()
         })
     })
+}
+
+function isJson(message) {
+    if (typeof message !== 'string' || message.trim() === '') {
+        return false; // 空字符串或非字符串类型直接返回 false
+    }
+    try {
+        JSON.parse(message);
+        return true;
+    } catch (error) {
+        return false;
+    }
 }
 
 module.exports = createWebSocket
