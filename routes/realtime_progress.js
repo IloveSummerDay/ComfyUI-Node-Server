@@ -47,12 +47,16 @@ router.get('/', (req, res) => {
 
     res.writeHead(200, sse_header)
 
+    const is_response_closed = false // 用于标记响应是否已经关闭
+
     const comfy_socket = new WebSocket(`ws://${ai_server_host}:${ai_server_port}/ws?clientId=${client_id}`)
     comfy_socket.on('message', (message) => {
+        if (is_response_closed) return
+
         try {
             const is_json = isJson(message)
             if (!is_json) return
-            
+
             const json_message = JSON.parse(message.toString('utf8'))
             const type = json_message.type
 
@@ -60,6 +64,8 @@ router.get('/', (req, res) => {
                 const data = json_message.data
                 if (!data.node) {
                     res.write(`data: ${JSON.stringify({ type: 'finish' })}\n\n`)
+                    res.end()
+                    is_response_closed = true
                 }
             } else if (type === 'progress' && prompt_id === json_message.data.prompt_id) {
                 current_progress += 1
@@ -79,6 +85,7 @@ router.get('/', (req, res) => {
                 })}\n\n`
             )
             res.end()
+            is_response_closed = true
         }
     })
 
@@ -89,12 +96,15 @@ router.get('/', (req, res) => {
 
     // comfy WebSocket关闭时，关闭SSE连接
     comfy_socket.on('close', () => {
-        res.write(
-            `data: ${JSON.stringify({
-                message: '算力服务主动关闭WebSocket',
-            })}\n\n`
-        )
-        res.end()
+        if (!is_response_closed) {
+            res.write(
+                `data: ${JSON.stringify({
+                    message: '算力服务主动关闭WebSocket',
+                })}\n\n`
+            )
+            res.end()
+            is_response_closed = true
+        }
     })
 })
 
