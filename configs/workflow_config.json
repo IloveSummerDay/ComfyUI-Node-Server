@@ -131,18 +131,6 @@
                     "param_field": "voice_text"
                 }
             ],
-            "2": [
-                {
-                    "workflow_field": "image",
-                    "param_field": "logo"
-                }
-            ],
-            "3": [
-                {
-                    "workflow_field": "weight",
-                    "param_field": "weight"
-                }
-            ],
             "21": [
                 {
                     "workflow_field": "seed",

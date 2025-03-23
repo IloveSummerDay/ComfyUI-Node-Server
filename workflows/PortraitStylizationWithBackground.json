@@ -1,7 +1,7 @@
 {
     "10": {
         "inputs": {
-            "seed": 673122023739125,
+            "seed": 143684083697157,
             "steps": 8,
             "cfg": 2.5,
             "sampler_name": "dpmpp_3m_sde_gpu",
@@ -14,7 +14,7 @@
         },
         "class_type": "KSampler",
         "_meta": {
-            "title": "KSampler"
+            "title": "K采样器"
         }
     },
     "11": {
@@ -23,7 +23,7 @@
         },
         "class_type": "CheckpointLoaderSimple",
         "_meta": {
-            "title": "Load Checkpoint"
+            "title": "Checkpoint加载器(简易)"
         }
     },
     "12": {
@@ -34,7 +34,7 @@
         },
         "class_type": "EmptyLatentImage",
         "_meta": {
-            "title": "Empty Latent Image"
+            "title": "空Latent"
         }
     },
     "13": {
@@ -44,7 +44,7 @@
         },
         "class_type": "CLIPTextEncode",
         "_meta": {
-            "title": "CLIP Text Encode (Prompt)"
+            "title": "CLIP文本编码器"
         }
     },
     "14": {
@@ -54,7 +54,7 @@
         },
         "class_type": "CLIPTextEncode",
         "_meta": {
-            "title": "CLIP Text Encode (Prompt)"
+            "title": "CLIP文本编码器"
         }
     },
     "15": {
@@ -64,30 +64,30 @@
         },
         "class_type": "VAEDecode",
         "_meta": {
-            "title": "VAE Decode"
+            "title": "VAE解码"
         }
     },
     "17": {
         "inputs": {
-            "image": "a331c15a659b0a9c21750122710fb1c.jpg",
+            "image": "1742286842923.jpg",
             "upload": "image"
         },
         "class_type": "LoadImage",
         "_meta": {
-            "title": "Load Image"
+            "title": "加载图像"
         }
     },
     "18": {
         "inputs": {
             "lora_name": "PixarXL (1).safetensors",
-            "strength_model": 0.9,
+            "strength_model": 1,
             "strength_clip": 1,
             "model": ["11", 0],
             "clip": ["11", 1]
         },
         "class_type": "LoraLoader",
         "_meta": {
-            "title": "Load LoRA"
+            "title": "LoRA加载器"
         }
     },
     "21": {
@@ -96,12 +96,12 @@
         },
         "class_type": "VAELoader",
         "_meta": {
-            "title": "Load VAE"
+            "title": "VAE加载器"
         }
     },
     "24": {
         "inputs": {
-            "upscale_method": "nearest-exact",
+            "upscale_method": "lanczos",
             "width": 1024,
             "height": 1024,
             "crop": "center",
@@ -109,12 +109,12 @@
         },
         "class_type": "ImageScale",
         "_meta": {
-            "title": "Upscale Image"
+            "title": "图像缩放"
         }
     },
     "28": {
         "inputs": {
-            "weight": 0.5,
+            "weight": 0.45,
             "start_at": 0,
             "end_at": 1,
             "instantid": ["29", 0],
@@ -128,7 +128,7 @@
         },
         "class_type": "ApplyInstantID",
         "_meta": {
-            "title": "Apply InstantID"
+            "title": "应用InstantID"
         }
     },
     "29": {
@@ -137,7 +137,7 @@
         },
         "class_type": "InstantIDModelLoader",
         "_meta": {
-            "title": "Load InstantID Model"
+            "title": "InstnatID模型加载器"
         }
     },
     "30": {
@@ -146,7 +146,7 @@
         },
         "class_type": "ControlNetLoader",
         "_meta": {
-            "title": "Load ControlNet Model"
+            "title": "ControlNet加载器"
         }
     },
     "32": {
@@ -155,12 +155,12 @@
         },
         "class_type": "PulidInsightFaceLoader",
         "_meta": {
-            "title": "Load InsightFace (PuLID)"
+            "title": "PuLIDInsightFace加载器"
         }
     },
     "33": {
         "inputs": {
-            "seed": 50618877528220,
+            "seed": 793495949039779,
             "steps": 8,
             "cfg": 2.52,
             "sampler_name": "dpmpp_3m_sde_gpu",
@@ -173,7 +173,7 @@
         },
         "class_type": "KSampler",
         "_meta": {
-            "title": "KSampler"
+            "title": "K采样器"
         }
     },
     "34": {
@@ -184,7 +184,7 @@
         },
         "class_type": "EmptyLatentImage",
         "_meta": {
-            "title": "Empty Latent Image"
+            "title": "空Latent"
         }
     },
     "35": {
@@ -194,7 +194,7 @@
         },
         "class_type": "VAEDecode",
         "_meta": {
-            "title": "VAE Decode"
+            "title": "VAE解码"
         }
     },
     "37": {
@@ -204,7 +204,7 @@
         },
         "class_type": "CLIPTextEncode",
         "_meta": {
-            "title": "CLIP Text Encode (Prompt)"
+            "title": "CLIP文本编码器"
         }
     },
     "38": {
@@ -214,7 +214,7 @@
         },
         "class_type": "CLIPTextEncode",
         "_meta": {
-            "title": "CLIP Text Encode (Prompt)"
+            "title": "CLIP文本编码器"
         }
     },
     "39": {
@@ -225,7 +225,7 @@
         },
         "class_type": "EmptyLatentImage",
         "_meta": {
-            "title": "Empty Latent Image"
+            "title": "空Latent"
         }
     },
     "40": {
@@ -234,7 +234,7 @@
         },
         "class_type": "PreviewImage",
         "_meta": {
-            "title": "Preview Image"
+            "title": "预览图像"
         }
     },
     "59": {
@@ -256,7 +256,7 @@
         },
         "class_type": "ImageUpscaleWithModel",
         "_meta": {
-            "title": "Upscale Image (using Model)"
+            "title": "图像通过模型放大"
         }
     },
     "62": {
@@ -265,7 +265,7 @@
         },
         "class_type": "UpscaleModelLoader",
         "_meta": {
-            "title": "Load Upscale Model"
+            "title": "放大模型加载器"
         }
     },
     "67": {
@@ -277,23 +277,23 @@
     },
     "82": {
         "inputs": {
-            "text": " masterpiece, best quality, Asian,solo, cg,3d, full_body,white_background,{{pixar style}},pixar,chibi,cartoon,looking_at_viewer,white_background,simple_clothes,",
-            "seed": 371,
+            "text": " masterpiece, best quality, Asian,solo, cg,3d, full_body,white_background,{{pixar style}},pixar,\tlooking_at_viewer,white_background,chibi,simple_clothes,chibi,full_body\t,",
+            "seed": 610,
             "autorefresh": "No"
         },
         "class_type": "DPRandomGenerator",
         "_meta": {
-            "title": "Random Prompts"
+            "title": "动态提示词(随机)"
         }
     },
     "83": {
         "inputs": {
             "text": ["152", 0],
-            "text2": " masterpiece, best quality, Asian,solo, cg,3d, full_body,white_background,pixar style,pixar,chibi,cartoon,looking_at_viewer,white_background,simple_clothes,, solo, shirt, brown_hair, 1boy, male_focus, necktie"
+            "text2": " masterpiece, best quality, Asian,solo, cg,3d, full_body,white_background,pixar style,pixar,        looking_at_viewer,white_background,chibi,simple_clothes,chibi,full_body ,, A woman in a fur coat standing in a hallway."
         },
         "class_type": "ShowText|pysssss",
         "_meta": {
-            "title": "Show Text 🐍"
+            "title": "展示文本"
         }
     },
     "106": {
@@ -303,7 +303,7 @@
         },
         "class_type": "SaveImage",
         "_meta": {
-            "title": "Save Image"
+            "title": "保存图像"
         }
     },
     "107": {
@@ -326,24 +326,7 @@
         },
         "class_type": "HighRes-Fix Script",
         "_meta": {
-            "title": "HighRes-Fix Script"
-        }
-    },
-    "108": {
-        "inputs": {
-            "brightness": 0.05,
-            "contrast": 0.8,
-            "saturation": 0.9,
-            "sharpness": 0.9,
-            "blur": 0,
-            "gaussian_blur": 0,
-            "edge_enhance": 0,
-            "detail_enhance": "true",
-            "image": ["109", 5]
-        },
-        "class_type": "Image Filter Adjustments",
-        "_meta": {
-            "title": "Image Filter Adjustments"
+            "title": "高清修复"
         }
     },
     "109": {
@@ -365,7 +348,7 @@
         },
         "class_type": "KSampler (Efficient)",
         "_meta": {
-            "title": "KSampler (Efficient)"
+            "title": "K采样器(效率)"
         }
     },
     "112": {
@@ -374,7 +357,7 @@
         },
         "class_type": "PreviewImage",
         "_meta": {
-            "title": "Preview Image"
+            "title": "预览图像"
         }
     },
     "114": {
@@ -383,17 +366,7 @@
         },
         "class_type": "PreviewImage",
         "_meta": {
-            "title": "Preview Image"
-        }
-    },
-    "117": {
-        "inputs": {
-            "text": ["150", 0],
-            "text2": "solo, shirt, brown_hair, 1boy, male_focus, necktie"
-        },
-        "class_type": "ShowText|pysssss",
-        "_meta": {
-            "title": "Show Text 🐍"
+            "title": "预览图像"
         }
     },
     "125": {
@@ -402,7 +375,7 @@
         },
         "class_type": "PreviewImage",
         "_meta": {
-            "title": "Preview Image"
+            "title": "预览图像"
         }
     },
     "129": {
@@ -415,11 +388,11 @@
             "process_detail": true,
             "device": "cuda",
             "max_megapixels": 2,
-            "image": ["108", 0]
+            "image": ["109", 5]
         },
         "class_type": "LayerMask: RmBgUltra V2",
         "_meta": {
-            "title": "LayerMask: RmBgUltra V2"
+            "title": "移除背景 V2"
         }
     },
     "130": {
@@ -428,7 +401,7 @@
         },
         "class_type": "PreviewImage",
         "_meta": {
-            "title": "Preview Image"
+            "title": "预览图像"
         }
     },
     "131": {
@@ -438,16 +411,16 @@
         },
         "class_type": "LoadImage",
         "_meta": {
-            "title": "Load Image"
+            "title": "加载图像"
         }
     },
     "132": {
         "inputs": {
-            "images": ["108", 0]
+            "images": ["109", 5]
         },
         "class_type": "PreviewImage",
         "_meta": {
-            "title": "Preview Image"
+            "title": "预览图像"
         }
     },
     "149": {
@@ -468,33 +441,17 @@
         },
         "class_type": "LayerUtility: ImageBlendAdvance",
         "_meta": {
-            "title": "LayerUtility: ImageBlendAdvance"
-        }
-    },
-    "150": {
-        "inputs": {
-            "model": "wd-vit-tagger-v3",
-            "threshold": 0.75,
-            "character_threshold": 0.6,
-            "replace_underscore": false,
-            "trailing_comma": false,
-            "exclude_tags": "blurry_background,photo_background,style,realistic,black_background,",
-            "tags": "solo, shirt, brown_hair, 1boy, male_focus, necktie",
-            "image": ["153", 0]
-        },
-        "class_type": "WD14Tagger|pysssss",
-        "_meta": {
-            "title": "WD14 Tagger 🐍"
+            "title": "混合(高级)"
         }
     },
     "152": {
         "inputs": {
             "text_1": ["82", 0],
-            "text_2": ["150", 0]
+            "text_3": ["155", 2]
         },
         "class_type": "LayerUtility: TextJoin",
         "_meta": {
-            "title": "LayerUtility: TextJoin"
+            "title": "文本合并"
         }
     },
     "153": {
@@ -511,7 +468,7 @@
         },
         "class_type": "LayerMask: RmBgUltra V2",
         "_meta": {
-            "title": "LayerMask: RmBgUltra V2"
+            "title": "移除背景 V2"
         }
     },
     "154": {
@@ -520,7 +477,56 @@
         },
         "class_type": "PreviewImage",
         "_meta": {
-            "title": "Preview Image"
+            "title": "预览图像"
+        }
+    },
+    "155": {
+        "inputs": {
+            "text_input": "",
+            "task": "caption",
+            "fill_mask": true,
+            "keep_model_loaded": false,
+            "max_new_tokens": 1024,
+            "num_beams": 3,
+            "do_sample": true,
+            "output_mask_select": "",
+            "seed": 1055200653147670,
+            "image": ["17", 0],
+            "florence2_model": ["156", 0]
+        },
+        "class_type": "Florence2Run",
+        "_meta": {
+            "title": "Florence2 执行"
+        }
+    },
+    "156": {
+        "inputs": {
+            "model": "Florence-2-large",
+            "precision": "fp16",
+            "attention": "sdpa"
+        },
+        "class_type": "Florence2ModelLoader",
+        "_meta": {
+            "title": "Florence2 模型加载器"
+        }
+    },
+    "157": {
+        "inputs": {
+            "text": ["155", 2],
+            "text2": "A woman in a fur coat standing in a hallway."
+        },
+        "class_type": "ShowText|pysssss",
+        "_meta": {
+            "title": "展示文本"
+        }
+    },
+    "159": {
+        "inputs": {
+            "images": ["17", 0]
+        },
+        "class_type": "PreviewImage",
+        "_meta": {
+            "title": "预览图像"
         }
     }
 }

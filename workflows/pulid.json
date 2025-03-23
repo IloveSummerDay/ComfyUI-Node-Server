@@ -147,7 +147,7 @@
     },
     "67": {
         "inputs": {
-            "image": "1726548117564.jpg",
+            "image": "1732071295822.jpg",
             "upload": "image"
         },
         "class_type": "LoadImage",
@@ -191,21 +191,6 @@
             "title": "自定义采样器(高级)"
         }
     },
-    "73": {
-        "inputs": {
-            "model": "wd-v1-4-moat-tagger-v2",
-            "threshold": 0.65,
-            "character_threshold": 0.5,
-            "replace_underscore": false,
-            "trailing_comma": false,
-            "exclude_tags": "blurry_background,photo_background,style,realistic,black_background,",
-            "image": ["74", 0]
-        },
-        "class_type": "WD14Tagger|pysssss",
-        "_meta": {
-            "title": "WD14反推提示词"
-        }
-    },
     "74": {
         "inputs": {
             "detail_method": "PyMatting",
@@ -232,20 +217,10 @@
             "title": "预览图像"
         }
     },
-    "76": {
-        "inputs": {
-            "text": ["73", 0],
-            "text2": "black_hair, glasses, bag"
-        },
-        "class_type": "ShowText|pysssss",
-        "_meta": {
-            "title": "展示文本"
-        }
-    },
     "77": {
         "inputs": {
             "text_1": ["79", 0],
-            "text_2": ["73", 0]
+            "text_2": ["83", 2]
         },
         "class_type": "LayerUtility: TextJoin",
         "_meta": {
@@ -255,7 +230,7 @@
     "78": {
         "inputs": {
             "text": ["77", 0],
-            "text2": "A captivating portrait of traditional Chinese lantern, set against an atmospheric backdrop that suggests she or he is in a bustling street or market. An oil painting in the style of Monet.No ornament on a man's hand.\nOn a daytime busy street., black_hair, glasses, bag"
+            "text2": "A captivating portrait of traditional Chinese lantern, set against an atmospheric backdrop that suggests she or he is in a bustling street or market. An oil painting in the style of Monet.No ornament on a man's hand.\nOn a daytime busy street., The image is a selfie of a young man standing in a hallway. He is wearing a black jacket over a light blue collared shirt. He has short black hair and is looking directly at the camera with a slight smile on his face. The background is a white wall with a light fixture on the ceiling."
         },
         "class_type": "ShowText|pysssss",
         "_meta": {
@@ -283,6 +258,55 @@
         "class_type": "BasicScheduler",
         "_meta": {
             "title": "基础调度器"
+        }
+    },
+    "83": {
+        "inputs": {
+            "text_input": "",
+            "task": "more_detailed_caption",
+            "fill_mask": true,
+            "keep_model_loaded": false,
+            "max_new_tokens": 1024,
+            "num_beams": 3,
+            "do_sample": true,
+            "output_mask_select": "",
+            "seed": 173768147411445,
+            "image": ["67", 0],
+            "florence2_model": ["85", 0]
+        },
+        "class_type": "Florence2Run",
+        "_meta": {
+            "title": "Florence2 执行"
+        }
+    },
+    "84": {
+        "inputs": {
+            "text": ["83", 2],
+            "text2": "The image is a selfie of a young man standing in a hallway. He is wearing a black jacket over a light blue collared shirt. He has short black hair and is looking directly at the camera with a slight smile on his face. The background is a white wall with a light fixture on the ceiling."
+        },
+        "class_type": "ShowText|pysssss",
+        "_meta": {
+            "title": "展示文本"
+        }
+    },
+    "85": {
+        "inputs": {
+            "model": "Florence-2-large",
+            "precision": "fp16",
+            "attention": "sdpa"
+        },
+        "class_type": "Florence2ModelLoader",
+        "_meta": {
+            "title": "Florence2 模型加载器"
+        }
+    },
+    "88": {
+        "inputs": {
+            "images": ["67", 0]
+        },
+        "class_type": "PreviewImage",
+        "_meta": {
+            "title": "预览图像"
         }
     }
 }

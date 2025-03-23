@@ -47,17 +47,18 @@ router.get('/', (req, res) => {
 
     res.writeHead(200, sse_header)
 
-    const is_response_closed = false // 用于标记响应是否已经关闭
+    let is_response_closed = false // 用于标记响应是否已经关闭
 
     const comfy_socket = new WebSocket(`ws://${ai_server_host}:${ai_server_port}/ws?clientId=${client_id}`)
     comfy_socket.on('message', (message) => {
         if (is_response_closed) return
 
         try {
-            const is_json = isJson(message)
+            const utf8_message = message.toString('utf8')
+            const is_json = isJson(utf8_message)
             if (!is_json) return
 
-            const json_message = JSON.parse(message.toString('utf8'))
+            const json_message = JSON.parse(utf8_message)
             const type = json_message.type
 
             if (type === 'executing') {

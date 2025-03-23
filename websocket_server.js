@@ -25,11 +25,12 @@ function createWebSocket(server) {
 
         const comfy_socket = new WebSocket(`ws://${ai_sever_host}:${ai_sever_port}/ws?clientId=${client_id}`)
         comfy_socket.on('message', (message) => {
-            const is_json = isJson(message)
-            if (!is_json) return
-
             try {
-                const json_message = JSON.parse(message.toString('utf8'))
+                const utf8_message = message.toString('utf8')
+                const is_json = isJson(utf8_message)
+                if (!is_json) return
+
+                const json_message = JSON.parse(utf8_message)
                 const type = json_message.type
 
                 if (type == 'executing') {
