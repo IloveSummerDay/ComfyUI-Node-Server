@@ -17,43 +17,15 @@
             "title": "Deep Translator CLIP Text Encode Node"
         }
     },
-    "2": {
-        "inputs": {
-            "image": "xiaohui.png",
-            "upload": "image"
-        },
-        "class_type": "LoadImage",
-        "_meta": {
-            "title": "加载图像"
-        }
-    },
-    "3": {
-        "inputs": {
-            "weight": 0,
-            "weight_type": "linear",
-            "combine_embeds": "concat",
-            "start_at": 0,
-            "end_at": 1,
-            "embeds_scaling": "V only",
-            "model": ["27", 0],
-            "ipadapter": ["61", 0],
-            "image": ["2", 0],
-            "clip_vision": ["63", 0]
-        },
-        "class_type": "IPAdapterAdvanced",
-        "_meta": {
-            "title": "IPAdapter Advanced"
-        }
-    },
     "21": {
         "inputs": {
-            "seed": 932633023030471,
+            "seed": 724680414051542,
             "steps": 8,
             "cfg": 3,
             "sampler_name": "ddim",
             "scheduler": "sgm_uniform",
             "denoise": 1,
-            "model": ["3", 0],
+            "model": ["27", 0],
             "positive": ["1", 0],
             "negative": ["25", 0],
             "latent_image": ["23", 0]
@@ -144,24 +116,6 @@
         "class_type": "LoraLoader",
         "_meta": {
             "title": "加载LoRA"
-        }
-    },
-    "61": {
-        "inputs": {
-            "ipadapter_file": "ip-adapter_sdxl.safetensors"
-        },
-        "class_type": "IPAdapterModelLoader",
-        "_meta": {
-            "title": "IPAdapter Model Loader"
-        }
-    },
-    "63": {
-        "inputs": {
-            "clip_name": "CLIP-ViT-bigG-14-laion2B-39B-b160k.safetensors"
-        },
-        "class_type": "CLIPVisionLoader",
-        "_meta": {
-            "title": "加载CLIP视觉"
         }
     },
     "100": {
