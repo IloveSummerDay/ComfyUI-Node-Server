@@ -4,8 +4,11 @@ const express = require('express')
 const workflow_config = require('../configs/workflow_config.json')
 const router = express.Router()
 
+const HEARTBEAT_INTERVAL = 3000 // 定义心跳间隔时间
+
 router.get('/test', (req, res) => {
     const sse_header = {
+        'Access-Control-Allow-Origin': '*',
         'Content-Type': 'text/event-stream', // 必须设置为 text/event-stream
         'Cache-Control': 'no-cache', // 禁止缓存
         Connection: 'keep-alive', // 保持连接
@@ -40,6 +43,7 @@ router.get('/', (req, res) => {
 
     // SSE响应头
     const sse_header = {
+        'Access-Control-Allow-Origin': '*',
         'Content-Type': 'text/event-stream', // 必须设置为 text/event-stream
         'Cache-Control': 'no-cache', // 禁止缓存
         Connection: 'keep-alive', // 保持连接
@@ -90,8 +94,15 @@ router.get('/', (req, res) => {
         }
     })
 
+    const heartbeatInterval = setInterval(() => {
+        if (!is_response_closed) {
+            res.write(`data: \n\n`) // 发送空数据作为心跳
+        }
+    }, HEARTBEAT_INTERVAL)
+
     // 客户端关闭SSE连接时，关闭WebSocket连接
     req.on('close', () => {
+        clearInterval(heartbeatInterval)
         comfy_socket.close()
     })
 
