@@ -12,6 +12,7 @@ router.get('/test', (req, res) => {
         'Content-Type': 'text/event-stream', // 必须设置为 text/event-stream
         'Cache-Control': 'no-cache', // 禁止缓存
         Connection: 'keep-alive', // 保持连接
+        'X-Accel-Buffering': 'no', // 禁用 Nginx 的响应缓冲
     }
 
     res.writeHead(200, sse_header)
@@ -47,6 +48,7 @@ router.get('/', (req, res) => {
         'Content-Type': 'text/event-stream', // 必须设置为 text/event-stream
         'Cache-Control': 'no-cache', // 禁止缓存
         Connection: 'keep-alive', // 保持连接
+        'X-Accel-Buffering': 'no', // 禁用 Nginx 的响应缓冲
     }
 
     res.writeHead(200, sse_header)
