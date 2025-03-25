@@ -96,7 +96,7 @@ router.get('/', (req, res) => {
 
     const heartbeatInterval = setInterval(() => {
         if (!is_response_closed) {
-            res.write(`data: \n\n`) // 发送空数据作为心跳
+            res.write(`data: ${JSON.stringify({ type: 'heart' })}\n\n`) // 发送空数据作为心跳
         }
     }, HEARTBEAT_INTERVAL)
 
