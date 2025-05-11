@@ -1,3 +1,7 @@
+/**
+ * @module 图片上传模块
+ */
+
 const dayjs = require('dayjs')
 const FormData = require('form-data')
 const axios = require('axios')

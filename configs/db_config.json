@@ -12,5 +12,12 @@
         "user": "root",
         "password": "800630_mysql",
         "database": "AIlogo"
+    },
+    "model": {
+        "url": "8.149.139.56",
+        "port": 33060,
+        "user": "root",
+        "password": "800630_mysql",
+        "database": "AImodel"
     }
 }

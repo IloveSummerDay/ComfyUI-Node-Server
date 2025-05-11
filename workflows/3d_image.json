@@ -1,0 +1,118 @@
+{
+    "1": {
+        "inputs": {
+            "ckpt_name": "animagineXL40_v4Opt.safetensors"
+        },
+        "class_type": "CheckpointLoaderSimple",
+        "_meta": {
+            "title": "Checkpoint加载器（简易）"
+        }
+    },
+    "2": {
+        "inputs": {
+            "seed": 770469943025649,
+            "steps": 20,
+            "cfg": 6,
+            "sampler_name": "euler_ancestral",
+            "scheduler": "normal",
+            "denoise": 1,
+            "model": ["1", 0],
+            "positive": ["5", 0],
+            "negative": ["6", 0],
+            "latent_image": ["4", 0]
+        },
+        "class_type": "KSampler",
+        "_meta": {
+            "title": "K采样器"
+        }
+    },
+    "3": {
+        "inputs": {
+            "samples": ["2", 0],
+            "vae": ["1", 2]
+        },
+        "class_type": "VAEDecode",
+        "_meta": {
+            "title": "VAE解码"
+        }
+    },
+    "4": {
+        "inputs": {
+            "width": 1024,
+            "height": 1024,
+            "batch_size": 4
+        },
+        "class_type": "EmptyLatentImage",
+        "_meta": {
+            "title": "空Latent图像"
+        }
+    },
+    "5": {
+        "inputs": {
+            "text": ["10", 0],
+            "speak_and_recognation": {
+                "__value__": [false, true]
+            },
+            "clip": ["1", 1]
+        },
+        "class_type": "CLIPTextEncode",
+        "_meta": {
+            "title": "CLIP文本编码"
+        }
+    },
+    "6": {
+        "inputs": {
+            "text": "",
+            "speak_and_recognation": {
+                "__value__": [false, true]
+            },
+            "clip": ["1", 1]
+        },
+        "class_type": "CLIPTextEncode",
+        "_meta": {
+            "title": "CLIP文本编码"
+        }
+    },
+    "8": {
+        "inputs": {
+            "sd_version": "SDXL",
+            "sub_batch_size": 16,
+            "samples": ["2", 0],
+            "images": ["3", 0]
+        },
+        "class_type": "LayeredDiffusionDecodeRGBA",
+        "_meta": {
+            "title": "层次扩散解码（RGBA）"
+        }
+    },
+    "9": {
+        "inputs": {
+            "filename_prefix": "ComfyUI",
+            "images": ["8", 0]
+        },
+        "class_type": "SaveImage",
+        "_meta": {
+            "title": "保存图像"
+        }
+    },
+    "10": {
+        "inputs": {
+            "from_translate": "chinese simplified",
+            "to_translate": "english",
+            "add_proxies": false,
+            "proxies": "",
+            "auth_data": "",
+            "service": "MyMemoryTranslator [free]",
+            "text": "卯兔，古风，水墨纹，云雾",
+            "Show proxy": "proxy_hide",
+            "Show authorization": "authorization_hide",
+            "speak_and_recognation": {
+                "__value__": [false, true]
+            }
+        },
+        "class_type": "DeepTranslatorTextNode",
+        "_meta": {
+            "title": "Deep Translator Text Node"
+        }
+    }
+}

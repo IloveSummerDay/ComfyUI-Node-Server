@@ -33,7 +33,7 @@ router.get('/', async (req, res) => {
             const output_list = Object.values(response.data[prompt_id].outputs)
             const output_image_list = handleComfyHistoryRawOutput(output_list)
             if (output_image_list.length == 0) {
-                return res.status(200).json({ data: [] })
+                return res.status(200).json({ data: output_image_list })
             }
 
             try {
@@ -105,6 +105,14 @@ function handleComfyHistoryRawOutput(output_list) {
             for (let i = 0; i < node.images.length; i++) {
                 if (node.images[i].type == 'output') {
                     output_image_list.push(node.images[i])
+                }
+            }
+        }
+
+        if (node.mesh) {
+            for (let i = 0; i < node.mesh.length; i++) {
+                if (node.mesh[i].type == 'output') {
+                    output_image_list.push(node.mesh[i])
                 }
             }
         }

@@ -2,7 +2,7 @@ const WebSocket = require('ws')
 const url = require('url')
 const workflow_config = require('./configs/workflow_config.json')
 
-function createWebSocket(server) {
+function createWebSocketServer(server) {
     const ws = new WebSocket.Server({ server })
 
     ws.on('connection', (client_socket, req) => {
@@ -80,4 +80,4 @@ function isJson(message) {
     }
 }
 
-module.exports = createWebSocket
+module.exports = createWebSocketServer

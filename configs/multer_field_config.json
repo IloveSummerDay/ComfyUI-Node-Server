@@ -1,0 +1,6 @@
+{
+    "multer_field": [
+        { "name": "main_image", "maxCount": 1 },
+        { "name": "3d_image", "maxCount": 1 }
+    ]
+}

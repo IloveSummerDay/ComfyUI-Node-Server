@@ -138,5 +138,27 @@
                 }
             ]
         }
+    },
+    "3D_model": {
+        "max_progress": 8,
+        "modify_node": {
+            "35": [
+                {
+                    "workflow_field": "image",
+                    "param_field": "3d_image"
+                }
+            ]
+        }
+    },
+    "3d_image": {
+        "max_progress": 8,
+        "modify_node": {
+            "5": [
+                {
+                    "workflow_field": "text",
+                    "param_field": "prompt_text"
+                }
+            ]
+        }
     }
 }

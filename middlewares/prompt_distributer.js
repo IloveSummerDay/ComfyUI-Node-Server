@@ -1,3 +1,7 @@
+/**
+ * @module ComfyUI任务派发模块
+ */
+
 const dayjs = require('dayjs')
 const axios = require('axios')
 

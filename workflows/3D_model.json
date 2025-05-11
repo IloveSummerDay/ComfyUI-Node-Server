@@ -1,0 +1,73 @@
+{
+    "27": {
+        "inputs": {
+            "geometry_resolution": 256,
+            "threshold": 25,
+            "model": ["28", 0],
+            "reference_image": ["31", 0],
+            "reference_mask": ["32", 1]
+        },
+        "class_type": "TripoSRSampler",
+        "_meta": {
+            "title": "TripoSR Sampler"
+        }
+    },
+    "28": {
+        "inputs": {
+            "model": "model.ckpt",
+            "chunk_size": 8192
+        },
+        "class_type": "TripoSRModelLoader",
+        "_meta": {
+            "title": "TripoSR Model Loader"
+        }
+    },
+    "31": {
+        "inputs": {
+            "image": ["32", 0]
+        },
+        "class_type": "ImageRemoveAlpha+",
+        "_meta": {
+            "title": "🔧 Image Remove Alpha"
+        }
+    },
+    "32": {
+        "inputs": {
+            "rembg_session": ["33", 0],
+            "image": ["35", 0]
+        },
+        "class_type": "ImageRemoveBackground+",
+        "_meta": {
+            "title": "🔧 Image Remove Background"
+        }
+    },
+    "33": {
+        "inputs": {
+            "model": "u2net: general purpose",
+            "providers": "CUDA"
+        },
+        "class_type": "RemBGSession+",
+        "_meta": {
+            "title": "🔧 RemBG Session"
+        }
+    },
+    "34": {
+        "inputs": {
+            "filename_prefix": "TripoSR_",
+            "mesh": ["27", 0]
+        },
+        "class_type": "SaveTripoSRMesh",
+        "_meta": {
+            "title": "Save TripoSR Mesh"
+        }
+    },
+    "35": {
+        "inputs": {
+            "image": "ComfyUI_temp_ifluz_00004_.png"
+        },
+        "class_type": "LoadImage",
+        "_meta": {
+            "title": "加载图像"
+        }
+    }
+}
