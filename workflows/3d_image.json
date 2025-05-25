@@ -5,14 +5,14 @@
         },
         "class_type": "CheckpointLoaderSimple",
         "_meta": {
-            "title": "Checkpoint加载器（简易）"
+            "title": "Checkpoint加载器(简易)"
         }
     },
     "2": {
         "inputs": {
-            "seed": 770469943025649,
-            "steps": 20,
-            "cfg": 6,
+            "seed": 184725091910569,
+            "steps": 25,
+            "cfg": 5,
             "sampler_name": "euler_ancestral",
             "scheduler": "normal",
             "denoise": 1,
@@ -44,33 +44,27 @@
         },
         "class_type": "EmptyLatentImage",
         "_meta": {
-            "title": "空Latent图像"
+            "title": "空Latent"
         }
     },
     "5": {
         "inputs": {
-            "text": ["10", 0],
-            "speak_and_recognation": {
-                "__value__": [false, true]
-            },
+            "text": "Chinese dragon,solo,3d,simple background,Chinese-style,masterpiece,best quailty",
             "clip": ["1", 1]
         },
         "class_type": "CLIPTextEncode",
         "_meta": {
-            "title": "CLIP文本编码"
+            "title": "CLIP文本编码器"
         }
     },
     "6": {
         "inputs": {
-            "text": "",
-            "speak_and_recognation": {
-                "__value__": [false, true]
-            },
+            "text": "girl,person,text,human",
             "clip": ["1", 1]
         },
         "class_type": "CLIPTextEncode",
         "_meta": {
-            "title": "CLIP文本编码"
+            "title": "CLIP文本编码器"
         }
     },
     "8": {
@@ -82,7 +76,7 @@
         },
         "class_type": "LayeredDiffusionDecodeRGBA",
         "_meta": {
-            "title": "层次扩散解码（RGBA）"
+            "title": "LayerDiffusion解码(RGBA)"
         }
     },
     "9": {
@@ -93,26 +87,6 @@
         "class_type": "SaveImage",
         "_meta": {
             "title": "保存图像"
-        }
-    },
-    "10": {
-        "inputs": {
-            "from_translate": "chinese simplified",
-            "to_translate": "english",
-            "add_proxies": false,
-            "proxies": "",
-            "auth_data": "",
-            "service": "MyMemoryTranslator [free]",
-            "text": "卯兔，古风，水墨纹，云雾",
-            "Show proxy": "proxy_hide",
-            "Show authorization": "authorization_hide",
-            "speak_and_recognation": {
-                "__value__": [false, true]
-            }
-        },
-        "class_type": "DeepTranslatorTextNode",
-        "_meta": {
-            "title": "Deep Translator Text Node"
         }
     }
 }
