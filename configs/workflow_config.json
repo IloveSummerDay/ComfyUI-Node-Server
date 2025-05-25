@@ -158,6 +158,12 @@
                     "workflow_field": "text",
                     "param_field": "prompt_text"
                 }
+            ],
+            "2": [
+                {
+                    "workflow_field": "seed",
+                    "param_field": "seed"
+                }
             ]
         }
     }

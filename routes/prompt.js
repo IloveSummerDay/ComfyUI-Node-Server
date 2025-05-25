@@ -15,6 +15,15 @@ const promptDistributer = require('../middlewares/prompt_distributer')
 const router = express.Router()
 router.use(formDataBodyParser)
 router.use(formDataValidReviewer)
+
+router.use((req, res, next) => {
+    if (req.body.prompt == '3d_image') {
+        req.body['seed'] = Math.floor(Math.random() * 1000000)
+    }
+
+    next()
+})
+
 router.use(promptImageUploader)
 router.use(workflowHandler)
 router.use(promptDistributer)
